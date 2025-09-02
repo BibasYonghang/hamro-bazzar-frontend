@@ -11,11 +11,11 @@ const Navbar = () => {
   ]
 
   return (
-    <nav className="bg-white shadow-md   flex justify-between items-center pr-5 
+    <nav className="bg-white shadow-md flex justify-between items-center pr-5 
     lg:pl-4 sm:pl-2 
     lg:pr-9 sm:pr-6
    ">
-      <Link to="/" className="text-2xl font-bold text-blue-600"><img src="/favicon.ico" alt="" className="h-18" /></Link>
+      <Link to="/" className="text-2xl font-bold text-blue-600"><img src="/hamro-bazzar-logo.png" alt="" className="h-21" /></Link>
       <div className="space-x-6 flex">
         {navLinks.map(({ name, path, classname }, idx) => (
           <Link
