@@ -1,5 +1,5 @@
 // Navbar.jsx
-import { ShoppingCart } from "lucide-react";
+import { Search, ShoppingCart } from "lucide-react";
 import React from "react";
 
 import { Link } from 'react-router-dom';
@@ -11,11 +11,20 @@ const Navbar = () => {
   ]
 
   return (
-    <nav className="bg-white shadow-md flex justify-between items-center pr-5 
+    <nav className="sticky top-0 w-full bg-white shadow-md flex justify-between items-center pr-5 
     lg:pl-4 sm:pl-2 
     lg:pr-9 sm:pr-6
    ">
       <Link to="/" className="text-2xl font-bold text-blue-600"><img src="/hamro-bazzar-logo.png" alt="" className="h-21" /></Link>
+      <div className="w-[40vw] h-13 border border-blue-500 outline-blue-600 rounded-full">
+        <input type="text" placeholder="Search Hamro Bazzar..." className="w-[35vw] h-13 outline-none placeholder:text-blue-500
+        lg:pl-8 sm:pl-5 pl-3
+        " />
+        <Search className="inline mb-2  hover:cursor-pointer text-blue-800 hover:text-blue-500 
+        lg:ml-2 
+        sm:mr-2
+        " />
+      </div>
       <div className="space-x-6 flex">
         {navLinks.map(({ name, path, classname }, idx) => (
           <Link
