@@ -1,6 +1,6 @@
 // CartPage.jsx
 import React from 'react';
-import Cart from '../components/Cart';
+import Cart from '../pages/Cart';
 import { Link } from 'react-router-dom';
 
 const CartPage = ({ cartItems, onRemove, onUpdateQty }) => {

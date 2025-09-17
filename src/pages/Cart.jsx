@@ -1,10 +1,10 @@
 // Cart.jsx
 import React from 'react';
 
-const Cart = ({ cartItems, onRemove, onUpdateQty }) => (
-  <div>
+const Cart = ({ cartItems = [], onRemove, onUpdateQty }) => (
+  <div className='py-6'>
     {cartItems.length === 0 ? (
-      <p className="text-gray-500">Your cart is empty.</p>
+      <p className=" w-full text-gray-500 text-2xl text-center">Your cart is empty.</p>
     ) : (
       <ul className="divide-y">
         {cartItems.map(item => (

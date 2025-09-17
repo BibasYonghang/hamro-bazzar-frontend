@@ -19,14 +19,12 @@ const Footer = () => {
       <img src="/footer-background.png" alt="" className=' h-full w-full object-cover object-[center_10%]' />
       <img src="/hamro-bazzar-logo.png" alt="" className='absolute top-3
        lg:h-40 md:h-35 h-30
-       xl:pl-20 lg:pl-4 
        ' />
       <div
-        className="absolute z-20 flex gap-3 mt-10
-        lg:top-37 md:top-56 top-98
-        xl:pl-30 lg:pl-15 md:pl-9 pl-8
+        className="absolute z-20 flex gap-3 mt-10 pl-9
+        lg:top-37 md:top-56 sm:top-102 top-96
     ">
-        {socialMediaIcons.map(({ path, className, icon: Icons }, idx) => (
+        {socialMediaIcons.map(({ path, icon: Icons }, idx) => (
 
           <a
             key={idx}
@@ -41,19 +39,19 @@ const Footer = () => {
       lg:top-16 md:top-14 top-30
       lg:flex grid grid-cols-2 
       lg:justify-end 
-      xl:gap-19 lg:gap-10 md:gap-12 gap-8
-      xl:pr-30 lg:pr-7 
+      xl:gap-32 lg:gap-14 md:gap-12 gap-8
+      xl:pr-10 lg:pr-7 
       lg:pl-0 md:pl-65 pl-8
       '>
         <div className=' flex flex-col 
-        md:gap-4 gap-2
+        sm:gap-4 gap-2
         '>
           <h1 className='font-semibold
-          md:text-2xl text-lg 
+          sm:text-2xl text-xl 
           '>Contact Us</h1>
-          <a href="" className='hover:text-blue-700 hover:underline md:text-base text-sm'><Phone size={window.innerWidth < 640 ? 15 : 20} className='inline md:mr-4 mr-1' /> 9808102206</a>
-          <a href="" className='hover:text-blue-700 hover:underline md:text-base text-sm'><Mail size={window.innerWidth < 640 ? 15 : 20} className='inline md:mr-4 mr-1' /> hmrobzr@gmail.com</a>
-          <a href="" className='hover:text-blue-700 hover:underline md:text-base text-sm'><FaWhatsapp size={window.innerWidth < 640 ? 15 : 20} className='inline md:mr-4 mr-1' /> Whatsapp</a>
+          <a href="" className='hover:text-blue-700 hover:underline text-base hover:font-bold'><Phone size={window.innerWidth < 640 ? 15 : 20} className='inline md:mr-4 mr-1' /> 9808102206</a>
+          <a href="" className='hover:text-blue-700 hover:underline text-base '><Mail size={window.innerWidth < 640 ? 15 : 20} className='inline md:mr-4 mr-1' /> hmrobzr@gmail.com</a>
+          <a href="" className='hover:text-blue-700 hover:underline text-base hover:font-bold'><FaWhatsapp size={window.innerWidth < 640 ? 15 : 20} className='inline md:mr-4 mr-1' /> Whatsapp</a>
         </div>
 
         <div
@@ -61,37 +59,33 @@ const Footer = () => {
            md:gap-4 gap-2
            '>
           <h1 className='font-semibold
-          md:text-2xl text-lg
+          sm:text-2xl text-xl 
           '>Information</h1>
-          <a href="" className=' hover:text-blue-700 hover:underline hover:font-bold
-          md:text-base text-sm
-          '>About Us</a>
-          <a href="" className='hover:text-blue-700 hover:underline hover:font-bold
-           md:text-base text-sm'>Blog</a>
-          <a href="" className='hover:text-blue-700 hover:underline hover:font-bold 
-          md:text-base text-sm'>Testimonials</a>
+          <a href="" className='hover:text-blue-700 hover:underline text-base hover:font-bold'>About Us</a>
+          <a href="" className='hover:text-blue-700 hover:underline text-base hover:font-bold'>Blog</a>
+          <a href="" className='hover:text-blue-700 hover:underline text-base hover:font-bold'>Testimonials</a>
         </div>
         <div
           className='flex flex-col
            md:gap-4 gap-2
           '>
-          <h1 className=' font-semibold
-          md:text-2xl text-lg
+          <h1 className='font-semibold
+          sm:text-2xl text-xl 
           '>Helpful Links</h1>
-          <a href="" className='hover:text-blue-700 hover:underline hover:font-bold md:text-base text-sm'>Service</a>
-          <a href="" className='hover:text-blue-700 hover:underline hover:font-bold md:text-base text-sm'>Supports</a>
-          <a href="" className='hover:text-blue-700 hover:underline hover:font-bold md:text-base text-sm'>Terms & Condition</a>
+          <a href="" className='hover:text-blue-700 hover:underline text-base hover:font-bold'>Service</a>
+          <a href="" className='hover:text-blue-700 hover:underline text-base hover:font-bold'>Supports</a>
+          <a href="" className='hover:text-blue-700 hover:underline text-base hover:font-bold'>Terms & Condition</a>
         </div>
         <div
           className='flex flex-col 
            md:gap-4 gap-2
           '>
           <h1 className='font-semibold
-          md:text-2xl text-lg
+          sm:text-2xl text-xl 
           '>Our Services</h1>
-          <a href="" className='hover:text-blue-700 hover:underline hover:font-bold md:text-base text-sm'>Brand</a>
-          <a href="" className='hover:text-blue-700 hover:underline hover:font-bold md:text-base text-sm'>Order</a>
-          <a href="" className='hover:text-blue-700 hover:underline hover:font-bold md:text-base text-sm'>Exchange</a>
+          <a href="" className='hover:text-blue-700 hover:underline text-base hover:font-bold'>Brand</a>
+          <a href="" className='hover:text-blue-700 hover:underline text-base hover:font-bold'>Order</a>
+          <a href="" className='hover:text-blue-700 hover:underline text-base hover:font-bold'>Exchange</a>
         </div>
 
       </div>
@@ -101,7 +95,7 @@ const Footer = () => {
         <span className=' text-center  border-t-1 
         xl:w-[82vw] lg:w-[88vw] sm:w-[90vw] w-[80vw] 
         lg:pt-7 md:pt-5 pt-5
-        md:text-base text-sm
+        md:text-base
         '>&copy; {new Date().getFullYear()} Hamro Bazzar. All rights reserved.</span>
       </div>
 
