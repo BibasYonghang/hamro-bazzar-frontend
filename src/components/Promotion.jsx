@@ -4,11 +4,11 @@ import { Link } from "react-router-dom";
 
 export default function Promotion() {
     return (
-        <section className="relative w-full h-[90vh] overflow-hidden">
+        <section className="relative w-full h-[90vh] overflow-hidden mt-7 rounded-2xl">
             {/* Background Image */}
             <div className="absolute inset-0">
                 <img
-                    src="/images/hero-hiking.jpg" // <- Replace with your hiking image
+                    src="/component-image/promotion-bg-image.png" // <- Replace with your hiking image
                     alt="Hero background"
                     className="w-full h-full object-cover object-center"
                 />
