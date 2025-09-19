@@ -2,11 +2,7 @@ import React from "react";
 import HeroSection from "../components/HeroSection";
 import ProductList from "../components/ProductList";
 import products from "../data/products";
-import Promotion from "../components/Promotion";
-import Testimonials from "../components/Testimonials";
 import LimitedOffer from "../components/LimitedOffer";
-import Newsletter from "../components/Newsletter";
-import BlogSection from "../components/BlogSection";
 
 const Home = ({ onAddToCart }) => {
   const featured = products.slice(0, 4);
@@ -16,19 +12,21 @@ const Home = ({ onAddToCart }) => {
     <>
       <HeroSection />
       <div className="w-[94vw] mx-auto">
-        <section className="mt-12">
-          <h2 className="text-3xl font-bold mb-4">Featured Products</h2>
+        <section className="mt-6">
+          <h2 className=" font-bold mb-1
+          sm:text-3xl text-2xl
+          sm:mx-1  mx-2
+          ">Featured Products</h2>
           <ProductList products={featured} onAddToCart={onAddToCart} />
         </section>
-        <Promotion />
-        <section className="mt-12">
-          <h2 className="text-3xl font-bold mb-4">Best Sellers</h2>
+        <section className="mt-6">
+          <h2 className="font-bold mb-1
+          sm:text-3xl text-2xl
+          sm:mx-1  mx-2
+          ">Best Sellers</h2>
           <ProductList products={bestSellers} onAddToCart={onAddToCart} />
         </section>
-        <Testimonials />
         <LimitedOffer />
-        <Newsletter />
-
       </div>
     </>
 
