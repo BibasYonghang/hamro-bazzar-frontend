@@ -9,7 +9,7 @@ export default function SpecialOffer({
   backgroundImage = "/component-image/promotion-bg-image.png",
   showCountdown = true,
   countdownDays = 3, // default 3 days
-  primaryButton = { text: "Shop Now", link: "/shop" },
+  primaryButton = { text: "Shop Now", link: "/offer-product" },
   secondaryButton = { text: "View Collections", link: "/collections" },
 }) {
   // ---------- Countdown Logic ----------
@@ -97,8 +97,8 @@ export default function SpecialOffer({
       sm:mt-0 mt-5">
         {/* Badge */}
         {badge && (
-          <div className="mb-4">
-            <span className="bg-green-600 text-white px-4 py-1 rounded-full text-sm font-medium shadow-lg animate-bounce">
+          <div className="relative mb-4  animate-bounce">
+            <span className="bg-green-600 text-white px-4 py-1 rounded-full text-sm font-medium shadow-lg">
               {badge}
             </span>
           </div>
@@ -155,9 +155,6 @@ export default function SpecialOffer({
           )}
         </div>
       </div>
-
-      {/* Wave Divider */}
-
     </section>
   );
 }

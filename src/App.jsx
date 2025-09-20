@@ -12,6 +12,7 @@ import NotFound from "./pages/NotFound";
 import Cart from "./pages/Cart";
 import Blog from "./pages/Blog";
 import BlogDetail from "./pages/BlogDetail";
+import OfferProduct from "./pages/OfferProduct";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/shop" element={<Shop />} />
+          <Route path="/offer-product" element={<OfferProduct />} />
           <Route path="/product/:id" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/cart" element={<CartPage />} />
