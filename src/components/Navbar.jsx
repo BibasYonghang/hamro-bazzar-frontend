@@ -12,13 +12,13 @@ const Navbar = () => {
   ]
 
   return (
-    <nav className="sticky top-0 z-50 w-full bg-white shadow-md flex justify-between items-center pr-5 
+    <nav className="sticky top-0 z-50 w-full bg-blue-50 shadow-md flex justify-between items-center pr-5 
     lg:pl-4 sm:pl-2 
     lg:pr-9 sm:pr-6
    ">
       <Link to="/" className="text-2xl font-bold text-blue-600"><img src="/hamro-bazzar-logo.png" alt="" className="h-21" /></Link>
-      <div className="w-[40vw] h-13 border border-blue-500 outline-blue-600 rounded-full">
-        <input type="text" placeholder="Search Hamro Bazzar..." className="w-[35vw] h-13 outline-none placeholder:text-blue-500
+      <div className="w-[40vw] h-13 bg-white border border-gray-500 outline-gray-600 rounded-full">
+        <input type="text" placeholder="Search Hamro Bazzar..." className="w-[35vw] h-13 outline-none  placeholder:text-gray-500
         lg:pl-8 sm:pl-5 pl-3
         " />
         <Search className="inline mb-2  hover:cursor-pointer text-blue-800 hover:text-blue-500 

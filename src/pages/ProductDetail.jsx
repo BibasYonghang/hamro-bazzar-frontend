@@ -8,8 +8,17 @@ const ProductDetail = ({ onAddToCart }) => {
   const navigate = useNavigate();
   const product = products.find(p => p.id === parseInt(id));
 
-  if (!product) return <div>Product not found.</div>;
 
+  const [cartExist, setcartExist] = useState([])
+
+
+  const addToCart = () => {
+    onAddToCart(product);
+    navigate("/cart");
+  };
+
+
+  if (!product) return <div>Product not found.</div>;
   return (
     <div className="max-w-3xl mx-auto p-6 bg-white rounded shadow mt-6">
       <button onClick={() => navigate(-1)} className="mb-4 text-blue-600 hover:underline">&larr; Back</button>
@@ -22,7 +31,7 @@ const ProductDetail = ({ onAddToCart }) => {
           <p className="mb-6">{product.description}</p>
           <button
             className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
-            onClick={() => onAddToCart(product)}
+            onClick={addToCart}
           >
             Add to Cart
           </button>

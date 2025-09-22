@@ -17,10 +17,10 @@ const Cart = ({ cartItems = [], onRemove, onUpdateQty }) => (
               </div>
             </div>
             <div className="flex items-center gap-2">
-              <button onClick={() => onUpdateQty(item.id, item.quantity - 1)} className="px-2 py-1 bg-gray-200 rounded">-</button>
+              <button onClick={() => onUpdateQty(item.id, item.quantity - 1)} className="px-3 py-1 bg-blue-200 font-semibold hover:cursor-pointer rounded">-</button>
               <span>{item.quantity}</span>
-              <button onClick={() => onUpdateQty(item.id, item.quantity + 1)} className="px-2 py-1 bg-gray-200 rounded">+</button>
-              <button onClick={() => onRemove(item.id)} className="ml-4 text-red-500 hover:underline">Remove</button>
+              <button onClick={() => onUpdateQty(item.id, item.quantity + 1)} className="px-2 py-1 bg-blue-200 font-semibold hover:cursor-pointer rounded">+</button>
+              <button onClick={() => onRemove(item.id)} className="ml-4 text-red-500 px-3 font-semibold hover:cursor-pointer hover:underline hover:font-bold">Remove</button>
             </div>
           </li>
         ))}
