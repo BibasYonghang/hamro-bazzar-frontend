@@ -8,9 +8,9 @@ export default function SpecialOffer({
   badge = "🔥 Limited Time Offer – 30% OFF",
   backgroundImage = "/component-image/promotion-bg-image.png",
   showCountdown = true,
-  countdownDays = 3, // default 3 days
+  countdownDays = 4, // default 3 days
   primaryButton = { text: "Shop Now", link: "/offer-product" },
-  secondaryButton = { text: "View Collections", link: "/collections" },
+  secondaryButton = { text: "View Collections", link: "/collections" }
 }) {
   // ---------- Countdown Logic ----------
   const [timeLeft, setTimeLeft] = useState({

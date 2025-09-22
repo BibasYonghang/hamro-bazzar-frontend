@@ -20,7 +20,7 @@ const Cart = ({ cartItems = [], onRemove, onUpdateQty }) => (
               <button onClick={() => onUpdateQty(item.id, item.quantity - 1)} className="px-3 py-1 bg-blue-200 font-semibold hover:cursor-pointer rounded">-</button>
               <span>{item.quantity}</span>
               <button onClick={() => onUpdateQty(item.id, item.quantity + 1)} className="px-2 py-1 bg-blue-200 font-semibold hover:cursor-pointer rounded">+</button>
-              <button onClick={() => onRemove(item.id)} className="ml-4 text-red-500 px-3 font-semibold hover:cursor-pointer hover:underline hover:font-bold">Remove</button>
+              <button onClick={() => onRemove(item.id)} className="ml-4 text-red-500 font-semibold hover:cursor-pointer hover:underline hover:font-bold">Remove</button>
             </div>
           </li>
         ))}

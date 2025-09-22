@@ -18,7 +18,7 @@ const Navbar = () => {
    ">
       <Link to="/" className="text-2xl font-bold text-blue-600"><img src="/hamro-bazzar-logo.png" alt="" className="h-21" /></Link>
       <div className="w-[40vw] h-13 bg-white border border-gray-500 outline-gray-600 rounded-full">
-        <input type="text" placeholder="Search Hamro Bazzar..." className="w-[35vw] h-13 outline-none  placeholder:text-gray-500
+        <input type="text" placeholder="Search Hamro Bazzar..." className="w-[35vw] h-13 pb-1 outline-none  placeholder:text-gray-500
         lg:pl-8 sm:pl-5 pl-3
         " />
         <Search className="inline mb-2  hover:cursor-pointer text-blue-800 hover:text-blue-500 

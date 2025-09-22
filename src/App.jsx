@@ -4,7 +4,6 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Shop from "./pages/Shop";
-import ProductDetail from "./pages/ProductDetail";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import Cart from "./pages/Cart";
@@ -12,6 +11,7 @@ import Blog from "./pages/Blog";
 import BlogDetail from "./pages/BlogDetail";
 import OfferProduct from "./pages/OfferProduct";
 import NotFound from "./pages/NotFound";
+import Collections from "./pages/Collections";
 
 function App() {
   // 1. Create cart state
@@ -31,11 +31,11 @@ function App() {
           <Route path="/" element={<Home onAddToCart={handleAddToCart} />} />
           <Route path="/shop" element={<Shop onAddToCart={handleAddToCart} />} />
           <Route path="/offer-product" element={<OfferProduct />} />
-          <Route path="/product/:id" element={<ProductDetail onAddToCart={handleAddToCart} />} />
           <Route path="/cart" element={<CartPage cart={cart} />} />  {/* Only one cart route */}
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogDetail />} />
+          <Route path="/collections" element={<Collections />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </main>

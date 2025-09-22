@@ -1,38 +1,59 @@
-import React from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 
-export default function ProductCard({ product, onAddToCart }) {
+const ProductCard = ({ onAddToCart }) => {
+  const { id } = useParams();
   const navigate = useNavigate();
 
+  const [product, setProduct] = useState(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchProduct = async () => {
+      try {
+        const res = await fetch(`http://localhost:5000/api/products/${id}`);
+        const data = await res.json();
+        setProduct(data); // <-- Save it here
+        setLoading(false);
+      } catch (error) {
+        console.error(error);
+        setLoading(false);
+      }
+    };
+
+    fetchProduct();
+  }, [id]);
+
+  if (loading) return <div>Loading...</div>;
+  if (!product) return <div>Product not found.</div>;
+
   const addToCart = () => {
-    onAddToCart(product); // add product to cart
-    navigate("/cart");    // redirect to cart page
+    onAddToCart(product);
+    navigate("/cart");
   };
 
   return (
-    <div className="bg-white shadow-2xl hover:shadow-lg flex flex-col mt-2 w-full sm:w-[40vw] md:w-full sm:p-4 p-2">
-      <Link to={`/product/${product.id}`}>
-        <div className='w-full overflow-hidden h-28 sm:h-44 md:h-55'>
-          <img src={product.image} alt={product.name} className="w-full h-full object-cover mb-4 hover:scale-105 duration-200 transition-transform" />
-        </div>
-
-        <h3 className="font-semibold mb-1 hover:underline sm:text-lg text-sm">
-          {product.name}
-        </h3>
-      </Link>
-      <p className="text-gray-500 sm:text-lg text-sm">{product.category}</p>
-      <p className="font-bold text-blue-600 sm:mb-4 mb-1">${product.price}</p>
-      <button
-        className="relative w-38 group overflow-hidden bg-blue-600 text-white rounded transition hover:cursor-pointer sm:h-10 h-8"
-        onClick={addToCart}
-      >
-        <span
-          className="absolute inset-0 h-full w-full bg-blue-500 scale-x-0 group-hover:scale-x-100 origin-center transition-transform duration-300 ease-in-out z-0"
-        ></span>
-        <span className="relative z-10 flex items-center justify-center h-full w-full">
-          Add to Cart
-        </span>
+    <div className="max-w-3xl mx-auto p-6 bg-white rounded shadow mt-6">
+      <button onClick={() => navigate(-1)} className="mb-4 text-blue-600 hover:underline">
+        &larr; Back
       </button>
+      <div className="flex flex-col md:flex-row gap-8">
+        <img src={product.image} alt={product.name} className="h-64 object-contain rounded" />
+        <div>
+          <h2 className="text-3xl font-bold mb-2">{product.name}</h2>
+          <p className="text-gray-500 mb-2">{product.category}</p>
+          <p className="text-xl font-bold text-blue-600 mb-4">${product.price}</p>
+          <p className="mb-6">{product.description}</p>
+          <button
+            className="bg-blue-600 text-white px-6 py-2 rounded hover:bg-blue-700 transition"
+            onClick={addToCart}
+          >
+            Add to Cart
+          </button>
+        </div>
+      </div>
     </div>
   );
-}
+};
+
+export default ProductCard;
