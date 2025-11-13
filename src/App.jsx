@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
 import Home from "./pages/Home";
 import Shop from "./pages/Shop";
 import CartPage from "./pages/CartPage";
@@ -12,6 +10,9 @@ import BlogDetail from "./pages/BlogDetail";
 import OfferProduct from "./pages/OfferProduct";
 import NotFound from "./pages/NotFound";
 import Collections from "./pages/Collections";
+import ProductCard from "./components/shared/ProductCard";
+import Footer from "./components/shared/Footer";
+import Navbar from "./components/shared/Navbar";
 
 function App() {
   // 1. Create cart state
@@ -31,12 +32,14 @@ function App() {
           <Route path="/" element={<Home onAddToCart={handleAddToCart} />} />
           <Route path="/shop" element={<Shop onAddToCart={handleAddToCart} />} />
           <Route path="/offer-product" element={<OfferProduct />} />
-          <Route path="/cart" element={<CartPage cart={cart} />} />  {/* Only one cart route */}
+          <Route path="/cart" element={<CartPage cart={cart} />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogDetail />} />
           <Route path="/collections" element={<Collections />} />
           <Route path="*" element={<NotFound />} />
+          <Route path="/product/:id" element={<ProductCard onAddToCart={handleAddToCart} />} />
+
         </Routes>
       </main>
       <Footer />

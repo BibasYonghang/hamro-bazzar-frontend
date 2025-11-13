@@ -26,7 +26,7 @@ export default function HeroSection() {
   ];
   return (
     <div className='relative
-    xl:h-[88vh] lg:h-[140vh] sm:h-[120vh]  h-[100vh]
+    xl:h-[88vh] sm:h-[120vh]  h-[165vh]
     '>
       <section className="h-full  w-full  rounded-lg 
       ">
@@ -50,7 +50,7 @@ export default function HeroSection() {
       </div>
 
       <div className="absolute bottom-0 z-20 w-full px-[3vw] grid  
-      xl:grid-cols-4 md:grid-cols-3 grid-cols-2
+      xl:grid-cols-4 sm:grid-cols-2 grid-cols-1
       sm:gap-6 gap-4
       ">
         {categories.map((cat, idx) => (

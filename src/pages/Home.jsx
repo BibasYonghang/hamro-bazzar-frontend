@@ -1,8 +1,8 @@
 import React from "react";
-import HeroSection from "../components/HeroSection";
-import ProductList from "../components/ProductList";
+import HeroSection from "../components/home/HeroSection";
+import ProductList from "../components/shared/ProductList";
 import products from "../data/products";
-import LimitedOffer from "../components/LimitedOffer";
+import LimitedOffer from "../components/home/LimitedOffer";
 
 const Home = ({ onAddToCart }) => {
   const featured = products.slice(0, 4);
