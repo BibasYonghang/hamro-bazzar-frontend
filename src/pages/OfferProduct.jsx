@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import ProductList from '../components/shared/ProductList';
 import products from '../data/products';
 
 const OfferProduct = ({ onAddToCart }) => {
@@ -37,7 +36,6 @@ const OfferProduct = ({ onAddToCart }) => {
                     ))}
                 </select>
             </div>
-            <ProductList products={filtered} onAddToCart={onAddToCart} />
         </div>
     );
 };

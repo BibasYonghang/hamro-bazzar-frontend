@@ -10,7 +10,6 @@ import BlogDetail from "./pages/BlogDetail";
 import OfferProduct from "./pages/OfferProduct";
 import NotFound from "./pages/NotFound";
 import Collections from "./pages/Collections";
-import ProductCard from "./components/shared/ProductCard";
 import Footer from "./components/shared/Footer";
 import Navbar from "./components/shared/Navbar";
 
@@ -38,7 +37,6 @@ function App() {
           <Route path="/blog/:slug" element={<BlogDetail />} />
           <Route path="/collections" element={<Collections />} />
           <Route path="*" element={<NotFound />} />
-          <Route path="/product/:id" element={<ProductCard onAddToCart={handleAddToCart} />} />
 
         </Routes>
       </main>

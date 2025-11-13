@@ -1,35 +1,19 @@
 import React from "react";
-import HeroSection from "../components/home/HeroSection";
-import ProductList from "../components/shared/ProductList";
-import products from "../data/products";
-import LimitedOffer from "../components/home/LimitedOffer";
+import HeroSection from "../components/home/HeroSection.jsx";
+import LimitedOffer from "../components/home/LimitedOffer.jsx";
+import FeaturedProducts from "../components/home/FeaturedProducts.jsx";
+import ProductList from "../components/home/ProductList.jsx";
 
-const Home = ({ onAddToCart }) => {
-  const featured = products.slice(0, 4);
-  const bestSellers = products.slice(4, 8);
-
+const Home = () => {
   return (
     <>
       <HeroSection />
-      <div className="w-[94vw] mx-auto">
-        <section className="mt-6">
-          <h2 className=" font-bold mb-1
-          sm:text-3xl text-2xl
-          sm:mx-1  mx-2
-          ">Featured Products</h2>
-          <ProductList products={featured} onAddToCart={onAddToCart} />
-        </section>
-        <section className="mt-6">
-          <h2 className="font-bold mb-1
-          sm:text-3xl text-2xl
-          sm:mx-1  mx-2
-          ">Best Sellers</h2>
-          <ProductList products={bestSellers} onAddToCart={onAddToCart} />
-        </section>
+      <div className="flex w-full flex-col bg-blue-50 px-[1vw]">
+        <FeaturedProducts />
+        <ProductList />
         <LimitedOffer />
       </div>
     </>
-
   );
 };
 

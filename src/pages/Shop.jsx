@@ -1,6 +1,5 @@
 // Shop.jsx
 import React, { useState } from 'react';
-import ProductList from '../components/shared/ProductList';
 import products from '../data/products';
 
 const Shop = ({ onAddToCart }) => {
@@ -38,7 +37,6 @@ const Shop = ({ onAddToCart }) => {
           ))}
         </select>
       </div>
-      <ProductList products={filtered} onAddToCart={onAddToCart} />
     </div>
   );
 };
