@@ -11,8 +11,8 @@ const Navbar = () => {
         "hover:text-blue-700 text-blue-900 font-semibold md:text-xl text-base",
     },
     {
-      name: "Shop",
-      path: "/shop",
+      name: "All Prducts",
+      path: "/all-products",
       classname:
         "hover:text-blue-700 text-blue-900 font-semibold md:text-xl text-base",
     },
@@ -38,11 +38,11 @@ const Navbar = () => {
         </Link>
 
         {/* Search Bar (for sm and above) */}
-        <div className="hidden sm:flex w-full items-center justify-center gap-2 rounded-xl bg-blue-50 px-3 py-1 sm:w-auto md:w-[40vw]">
+        <div className="hidden w-full items-center justify-center gap-2 rounded-xl bg-blue-50 px-3 py-1 sm:flex sm:w-auto md:w-[40vw]">
           <input
             type="text"
             placeholder="Search Hamro Bazzar..."
-            className="w-full flex-1 rounded-full px-3 py-2 text-sm placeholder:text-gray-500 outline-none sm:px-4 sm:text-base"
+            className="w-full flex-1 rounded-full px-3 py-2 text-sm outline-none placeholder:text-gray-500 sm:px-4 sm:text-base"
           />
           <Search className="cursor-pointer text-blue-800 hover:text-blue-500" />
         </div>
@@ -64,11 +64,11 @@ const Navbar = () => {
       </div>
 
       {/* Search Bar (only for small screens) */}
-      <div className="mt-3 flex sm:hidden items-center justify-center gap-2 rounded-xl bg-blue-50 px-3 py-1">
+      <div className="mt-3 flex items-center justify-center gap-2 rounded-xl bg-blue-50 px-3 py-1 sm:hidden">
         <input
           type="text"
           placeholder="Search Hamro Bazzar..."
-          className="w-full flex-1 rounded-full px-3 py-2 text-sm placeholder:text-gray-500 outline-none"
+          className="w-full flex-1 rounded-full px-3 py-2 text-sm outline-none placeholder:text-gray-500"
         />
         <Search className="cursor-pointer text-blue-800 hover:text-blue-500" />
       </div>

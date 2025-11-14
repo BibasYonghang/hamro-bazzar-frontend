@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import Shop from "./pages/Shop";
 import CartPage from "./pages/CartPage";
 import CheckoutPage from "./pages/CheckoutPage";
 import Cart from "./pages/Cart";
@@ -16,6 +15,7 @@ import ElectronicsProducts from "./pages/ElectronicsProducts";
 import PersonalCareProducts from "./pages/PersonalCareProducts";
 import GamingProducts from "./pages/GamingProducts";
 import HomeFurnitureProducts from "./pages/HomeFurnitureProducts";
+import AllProducts from "./pages/AllProducts";
 
 function App() {
   // 1. Create cart state
@@ -34,10 +34,6 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<Home onAddToCart={handleAddToCart} />} />
-          <Route
-            path="/shop"
-            element={<Shop onAddToCart={handleAddToCart} />}
-          />
           <Route path="/offer-product" element={<OfferProduct />} />
           <Route path="/cart" element={<CartPage cart={cart} />} />
           <Route path="/checkout" element={<CheckoutPage />} />
@@ -49,6 +45,7 @@ function App() {
           <Route path="/personal-care" element={<PersonalCareProducts />} />
           <Route path="/gaming" element={<GamingProducts />} />
           <Route path="/home-furniture" element={<HomeFurnitureProducts />} />
+          <Route path="/all-products" element={<AllProducts />} />
         </Routes>
       </main>
       <Footer />
