@@ -31,41 +31,49 @@ export default function ProductList() {
               <div key={idx} className="w-full bg-white p-4">
                 <h1 className="mb-2 w-full text-2xl font-bold">{name}</h1>
                 <div className="grid grid-cols-2 gap-2 py-2">
-                  <Link className="inline-block w-full py-1">
-                    <img
-                      src={image}
-                      alt={name}
-                      className="h-[20vh] w-full bg-contain hover:cursor-pointer"
-                    />
-                    <h1 className="text-sm font-semibold">{name}</h1>
-                  </Link>
-                  <Link className="inline-block w-full py-1">
-                    <img
-                      src={image}
-                      alt={name}
-                      className="h-[20vh] w-full bg-contain hover:cursor-pointer"
-                    />
-                    <h1 className="text-sm font-semibold">{name}</h1>
-                  </Link>
-                  <Link className="inline-block w-full py-1">
-                    <img
-                      src={image}
-                      alt={name}
-                      className="h-[20vh] w-full bg-contain hover:cursor-pointer"
-                    />
-                    <h1 className="text-sm font-semibold">{name}</h1>
-                  </Link>
-                  <Link className="inline-block w-full py-1">
-                    <img
-                      src={image}
-                      alt={name}
-                      className="h-[20vh] w-full bg-contain hover:cursor-pointer"
-                    />
-                    <h1 className="text-sm font-semibold">{name}</h1>
-                  </Link>
+                  <div>
+                    <Link className="inline-block h-[23vh] w-full overflow-hidden">
+                      <img
+                        src={image}
+                        alt={name}
+                        className="h-full w-full transform object-cover duration-150 hover:scale-110 hover:cursor-pointer"
+                      />
+                    </Link>
+                    <h1 className="py-2 text-sm font-semibold">{name}</h1>
+                  </div>
+                  <div>
+                    <Link className="inline-block h-[23vh] w-full overflow-hidden">
+                      <img
+                        src={image}
+                        alt={name}
+                        className="h-full w-full transform object-cover duration-150 hover:scale-110 hover:cursor-pointer"
+                      />
+                    </Link>
+                    <h1 className="py-2 text-sm font-semibold">{name}</h1>
+                  </div>
+                  <div>
+                    <Link className="inline-block h-[23vh] w-full overflow-hidden">
+                      <img
+                        src={image}
+                        alt={name}
+                        className="h-full w-full transform object-cover duration-150 hover:scale-110 hover:cursor-pointer"
+                      />
+                    </Link>
+                    <h1 className="py-2 text-sm font-semibold">{name}</h1>
+                  </div>
+                  <div>
+                    <Link className="inline-block h-[23vh] w-full overflow-hidden">
+                      <img
+                        src={image}
+                        alt={name}
+                        className="h-full w-full transform object-cover duration-150 hover:scale-110 hover:cursor-pointer"
+                      />
+                    </Link>
+                    <h1 className="py-2 text-sm font-semibold">{name}</h1>
+                  </div>
                 </div>
-                <Link className="text-blue-600">
-                  See All <ArrowRight size={18} className="mb-1 inline" />
+                <Link className="text-md transform font-semibold text-blue-600 underline duration-200 hover:font-bold">
+                  See All <ArrowRight size={15} className="mb-1 inline" />
                 </Link>
               </div>
             );

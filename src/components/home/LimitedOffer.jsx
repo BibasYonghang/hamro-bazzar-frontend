@@ -60,7 +60,7 @@ export default function SpecialOffer({
   }, [showCountdown, countdownDays]);
 
   return (
-    <section className="relative w-full h-[90vh] overflow-hidden mt-7 rounded-2xl">
+    <section className="relative w-[96vw] mx-auto h-[90vh] overflow-hidden mt-7 rounded-2xl">
       {/* Background Image */}
       <div className="absolute inset-0">
         <img

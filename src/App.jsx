@@ -12,6 +12,10 @@ import NotFound from "./pages/NotFound";
 import Collections from "./pages/Collections";
 import Footer from "./components/shared/Footer";
 import Navbar from "./components/shared/Navbar";
+import ElectronicsProducts from "./pages/ElectronicsProducts";
+import PersonalCareProducts from "./pages/PersonalCareProducts";
+import GamingProducts from "./pages/GamingProducts";
+import HomeFurnitureProducts from "./pages/HomeFurnitureProducts";
 
 function App() {
   // 1. Create cart state
@@ -25,11 +29,15 @@ function App() {
 
   return (
     <div className="flex flex-col">
-      <Navbar cartCount={cart.length} /> {/* Optional: pass cart count to navbar */}
+      <Navbar cartCount={cart.length} />{" "}
+      {/* Optional: pass cart count to navbar */}
       <main>
         <Routes>
           <Route path="/" element={<Home onAddToCart={handleAddToCart} />} />
-          <Route path="/shop" element={<Shop onAddToCart={handleAddToCart} />} />
+          <Route
+            path="/shop"
+            element={<Shop onAddToCart={handleAddToCart} />}
+          />
           <Route path="/offer-product" element={<OfferProduct />} />
           <Route path="/cart" element={<CartPage cart={cart} />} />
           <Route path="/checkout" element={<CheckoutPage />} />
@@ -37,7 +45,10 @@ function App() {
           <Route path="/blog/:slug" element={<BlogDetail />} />
           <Route path="/collections" element={<Collections />} />
           <Route path="*" element={<NotFound />} />
-
+          <Route path="/electronics" element={<ElectronicsProducts />} />
+          <Route path="/personal-care" element={<PersonalCareProducts />} />
+          <Route path="/gaming" element={<GamingProducts />} />
+          <Route path="/home-furniture" element={<HomeFurnitureProducts />} />
         </Routes>
       </main>
       <Footer />

@@ -4,28 +4,29 @@ import { Link } from "react-router-dom";
 export default function HeroSection() {
   const categories = [
     {
-      name: "Hiking Gear",
-      image: "/categories-image/hiking-gear.png",
-      link: "/category/hiking-gear",
+      name: "Electronics",
+      image: "/categories-image/electronics.png",
+      link: "/electronics",
     },
     {
-      name: "Backpacks",
-      image: "/categories-image/backpacks.png",
-      link: "/category/backpacks",
+      name: "Personal Care",
+      image: "/categories-image/personal-care.png",
+      link: "/personal-care",
     },
     {
-      name: "Camping Essentials",
-      image: "/categories-image/camping.png",
-      link: "/category/camping",
+      name: "Gaming",
+      image: "/categories-image/gaming.png",
+      link: "/gaming",
     },
+
     {
-      name: "Footwear",
-      image: "/categories-image/footwear.png",
-      link: "/category/footwear",
+      name: "Home Furniture",
+      image: "/categories-image/home-furniture.png",
+      link: "/home-furniture",
     },
   ];
   return (
-    <div className="relative h-[165vh] sm:h-[120vh] xl:h-[88vh]">
+    <div className="relative h-[110vh] sm:h-[120vh] lg:h-[90vh] xl:h-[88vh]">
       <section className="h-full w-full rounded-lg">
         <img
           src="/component-image/home-bg-image.png"
@@ -48,20 +49,20 @@ export default function HeroSection() {
         </div>
       </section>
 
-      <div className="via-blue- absolute bottom-30 z-10 h-[40vh] w-full bg-gradient-to-t from-blue-50 to-transparent px-[3vw]"></div>
-      <div className="absolute bottom-0 h-[20vh] w-full bg-blue-50"></div>
+      <div className="via-blue- absolute bottom-30 z-10 h-[40vh] w-full bg-gradient-to-t from-blue-100 to-transparent px-[3vw]"></div>
+      <div className="absolute bottom-0 h-[20vh] w-full bg-blue-100"></div>
 
-      <div className="absolute bottom-0 z-20 grid w-full grid-cols-1 gap-2 px-[1vw] sm:grid-cols-2 sm:gap-3 xl:grid-cols-4">
-        {categories.map((cat, idx) => (
+      <div className="absolute bottom-0 z-20 grid w-full grid-cols-2 gap-2 px-[1vw] sm:gap-3 lg:grid-cols-4">
+        {categories.map(({ link, image, name }, idx) => (
           <Link
-            to={cat.link}
+            to={link}
             key={idx}
-            className="group relative h-[30vh] bg-white p-2 transition sm:h-[40vh] sm:p-3 lg:h-[50vh]"
+            className="group relative h-[35vh] bg-white p-2 transition sm:h-[40vh] sm:p-3 lg:h-[50vh]"
           >
             <div className="relative h-[85%] w-full overflow-hidden">
               <img
-                src={cat.image}
-                alt={cat.name}
+                src={image}
+                alt={name}
                 className="h-full w-full object-cover object-[center_90%] transition duration-300 group-hover:scale-105"
               />
               {/* Overlay stays behind the text */}
@@ -69,7 +70,7 @@ export default function HeroSection() {
               {/* Text goes above the overlay */}
             </div>
             <p className="absolute bottom-2 left-3 z-20 text-base font-semibold text-black sm:bottom-4 sm:text-lg">
-              {cat.name}
+              {name}
             </p>
           </Link>
         ))}

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 
 export default function FeaturedProducts() {
   // const [product, setProduct] = useState([]);
@@ -24,6 +25,7 @@ export default function FeaturedProducts() {
     {
       name: "Electronics",
       image: "/featured-products-image/electronics.png",
+      link: "/",
     },
     {
       name: "Personal Care",
@@ -52,17 +54,22 @@ export default function FeaturedProducts() {
 
   return (
     <>
-      <section className="mx-auto mt-4 w-full bg-white p-2 px-3">
-        <h2 className="mb-2 text-xl font-bold">Featured Products</h2>
-        <div className="grid w-full grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-3 xl:grid-cols-6">
-          {featuredProductsDiv.map(({ name, image }, idx) => {
+      <section className="mx-auto mt-4 w-full bg-white px-3 py-4">
+        <h2 className="mb-2 text-2xl font-bold">Featured Products</h2>
+        <div className="grid w-full grid-cols-2 gap-2 sm:grid-cols-3 sm:gap-4 xl:grid-cols-6">
+          {featuredProductsDiv.map(({ name, image, link }, idx) => {
             return (
               <div key={idx} className="w-full">
-                <img
-                  src={image}
-                  alt={name}
-                  className="h-[30vh] w-full bg-contain hover:cursor-pointer"
-                />
+                <Link
+                  to={link}
+                  className="inline-block h-[30vh]  overflow-hidden w-full"
+                >
+                  <img
+                    src={image}
+                    alt={name}
+                    className="h-full w-full transform object-cover duration-150 hover:scale-110 hover:cursor-pointer"
+                  />
+                </Link>
                 <h1 className="mt-2 w-full font-semibold">{name}</h1>
               </div>
             );
