@@ -49,7 +49,7 @@ export default function GamingProducts() {
         // Fallback: try fetching all products and filtering
         try {
           const allProductsRes = await fetch(
-            "http://localhost:5000/api/products",
+            "http://localhost:5000/api/gaming",
           );
           const allProducts = await allProductsRes.json();
           const gamingProducts = allProducts.filter(
