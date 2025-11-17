@@ -83,7 +83,7 @@ export default function GamingProducts() {
           }
         });
       },
-      { threshold: 0.1, rootMargin: "0px" }
+      { threshold: 0.1, rootMargin: "0px" },
     );
 
     // Observe elements after they're rendered
@@ -142,15 +142,21 @@ export default function GamingProducts() {
       >
         <div className="absolute inset-0 opacity-20">
           <div className="absolute top-10 left-10 h-32 w-32 animate-pulse rounded-full bg-purple-400 blur-3xl"></div>
-          <div className="absolute right-10 bottom-10 h-40 w-40 animate-pulse rounded-full bg-indigo-400 blur-3xl" style={{ animationDelay: "1s" }}></div>
-          <div className="absolute top-1/2 left-1/2 h-36 w-36 -translate-x-1/2 -translate-y-1/2 transform animate-pulse rounded-full bg-pink-400 blur-3xl" style={{ animationDelay: "0.5s" }}></div>
+          <div
+            className="absolute right-10 bottom-10 h-40 w-40 animate-pulse rounded-full bg-indigo-400 blur-3xl"
+            style={{ animationDelay: "1s" }}
+          ></div>
+          <div
+            className="absolute top-1/2 left-1/2 h-36 w-36 -translate-x-1/2 -translate-y-1/2 transform animate-pulse rounded-full bg-pink-400 blur-3xl"
+            style={{ animationDelay: "0.5s" }}
+          ></div>
         </div>
         <div className="relative z-10 mx-auto max-w-7xl px-6">
           <div
             className={`mb-4 flex items-center gap-3 transition-all duration-1000 ${
               isVisible
-                ? "opacity-100 translate-x-0"
-                : "opacity-0 -translate-x-10"
+                ? "translate-x-0 opacity-100"
+                : "-translate-x-10 opacity-0"
             }`}
           >
             <Gamepad2 className="h-8 w-8 animate-pulse" />
@@ -159,8 +165,8 @@ export default function GamingProducts() {
           <p
             className={`mb-4 max-w-2xl text-xl text-purple-100 transition-all duration-1000 ${
               isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-10"
+                ? "translate-y-0 opacity-100"
+                : "translate-y-10 opacity-0"
             }`}
             style={{ transitionDelay: "200ms" }}
           >
@@ -171,8 +177,8 @@ export default function GamingProducts() {
           <div
             className={`flex flex-wrap items-center gap-4 text-purple-100 transition-all duration-1000 ${
               isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-10"
+                ? "translate-y-0 opacity-100"
+                : "translate-y-10 opacity-0"
             }`}
             style={{ transitionDelay: "400ms" }}
           >
@@ -192,12 +198,10 @@ export default function GamingProducts() {
       </div>
 
       {/* Search and Filter Section */}
-      <div className="mx-auto max-w-7xl px-6 py-8">
+      <div className="mx-auto px-3 py-8">
         <div
           className={`mb-8 rounded-xl border border-purple-500/30 bg-gray-800 p-6 shadow-2xl transition-all duration-1000 ${
-            isVisible
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-10"
+            isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
           }`}
           style={{ transitionDelay: "300ms" }}
         >
@@ -220,7 +224,7 @@ export default function GamingProducts() {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="cursor-pointer rounded-lg border-2 border-gray-600 bg-gray-700 px-4 py-3 text-white transition outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50"
+                className="cursor-pointer rounded-lg border-2 border-gray-600 bg-gray-700 px-4 py-3 text-white transition outline-none hover:cursor-pointer focus:border-purple-500 focus:ring-2 focus:ring-purple-500/50"
               >
                 <option value="default">Default</option>
                 <option value="price-low">Price: Low to High</option>
@@ -233,7 +237,7 @@ export default function GamingProducts() {
             <div className="flex gap-2 rounded-lg border-2 border-gray-600 bg-gray-700 p-1">
               <button
                 onClick={() => setViewMode("grid")}
-                className={`rounded p-2 transition ${
+                className={`rounded p-2 transition hover:cursor-pointer ${
                   viewMode === "grid"
                     ? "bg-purple-600 text-white"
                     : "text-gray-400 hover:bg-gray-600"
@@ -243,7 +247,7 @@ export default function GamingProducts() {
               </button>
               <button
                 onClick={() => setViewMode("list")}
-                className={`rounded p-2 transition ${
+                className={`rounded p-2 transition hover:cursor-pointer ${
                   viewMode === "list"
                     ? "bg-purple-600 text-white"
                     : "text-gray-400 hover:bg-gray-600"
@@ -269,8 +273,8 @@ export default function GamingProducts() {
           <div
             className={`rounded-xl border border-purple-500/30 bg-gray-800 py-16 text-center shadow-md transition-all duration-1000 ${
               isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-10"
+                ? "translate-y-0 opacity-100"
+                : "translate-y-10 opacity-0"
             }`}
             style={{ transitionDelay: "400ms" }}
           >
@@ -287,20 +291,20 @@ export default function GamingProducts() {
             ref={productsRef}
             className={
               viewMode === "grid"
-                ? "grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
+                ? "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
                 : "space-y-4"
             }
           >
             {filteredProducts.map((product, idx) => (
               <Link
-                to={`/products/${product._id}`}
+                to="/product-details"
                 key={product._id}
-                className={`group overflow-hidden rounded-xl border border-purple-500/30 bg-gray-800 shadow-lg transition-all duration-500 hover:border-purple-500/60 hover:shadow-2xl transform hover:-translate-y-2 ${
-                  viewMode === "list" ? "flex gap-4" : ""
+                className={`group transform overflow-hidden rounded-xl border border-purple-500/30 bg-gray-800 shadow-lg transition-all duration-500 hover:-translate-y-2 hover:border-purple-500/60 hover:shadow-2xl ${
+                  viewMode === "list" ? "flex gap-2" : ""
                 } ${
                   isVisible
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-10"
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-10 opacity-0"
                 }`}
                 style={{
                   transitionDelay: `${400 + idx * 50}ms`,
@@ -317,7 +321,7 @@ export default function GamingProducts() {
                   <img
                     src={product.image || "/placeholder-gaming.jpg"}
                     alt={product.name}
-                    className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-110"
+                    className="h-full w-full transition-transform duration-300 group-hover:scale-110"
                     onError={(e) => {
                       e.target.src =
                         "https://via.placeholder.com/400x400?text=Gaming+Gear";
@@ -352,40 +356,40 @@ export default function GamingProducts() {
                       {product.description}
                     </p>
                   )}
-
-                  <div className="mt-4 flex items-center justify-between">
-                    <div>
-                      {product.price && (
-                        <div className="flex items-baseline gap-2">
-                          <span className="text-2xl font-bold text-purple-400">
-                            ${product.price}
-                          </span>
-                          {product.originalPrice &&
-                            product.originalPrice > product.price && (
-                              <span className="text-sm text-gray-500 line-through">
-                                ${product.originalPrice}
-                              </span>
-                            )}
+                  <div>
+                    {product.price && (
+                      <div>
+                        <div className="text-2xl font-bold text-purple-600">
+                          Rs.{Math.floor((80 / 100) * product.price)}
                         </div>
-                      )}
-                      {product.rating && (
-                        <div className="mt-1 flex items-center gap-1">
-                          <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                          <span className="text-sm text-gray-400">
-                            {product.rating}
-                          </span>
+                        <div className="text-lg font-bold text-gray-600">
+                          <span className="mr-3 line-through">
+                            Rs.{Math.floor(product.price)}{" "}
+                          </span>{" "}
+                          20% OFF
                         </div>
-                      )}
-                    </div>
+                      </div>
+                    )}
+                  </div>
+                  <div className="mt-4 flex justify-between">
+                    {/* Add to Cart */}
                     <button
                       onClick={(e) => {
                         e.preventDefault();
-                        // Add to cart logic here
+                        alert(`Added ${product.name} to cart!`);
                       }}
-                      className="transform rounded-lg bg-gradient-to-r from-purple-600 to-indigo-600 p-2 text-white shadow-lg transition-all duration-200 hover:scale-105 hover:from-purple-700 hover:to-indigo-700 hover:shadow-xl"
-                      title="Add to cart"
+                      className="hover:bg-pruple-700 flex items-center justify-center gap-1 rounded-lg bg-purple-600 px-7 py-2 text-sm text-white shadow-md hover:cursor-pointer"
                     >
-                      <ShoppingCart className="h-5 w-5" />
+                      <ShoppingCart className="h-4 w-4" />
+                      Add
+                    </button>
+
+                    {/* Buy Now */}
+                    <button
+                      onClick="/product-deatils"
+                      className="rounded-lg bg-purple-600 px-7 py-2 text-sm text-white shadow-md hover:cursor-pointer hover:bg-purple-700"
+                    >
+                      Buy Now
                     </button>
                   </div>
                 </div>

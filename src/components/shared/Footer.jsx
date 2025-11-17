@@ -12,7 +12,7 @@ const Footer = () => {
     { path: "", icon: FaTwitter },
   ]
   return (
-    <footer className="relative  w-full text-blue-800 mt-10
+    <footer className="relative  w-full text-blue-800
     lg:h-[70vh] md:h-[80vh] h-[98vh] 
     ">
       <div className='absolute w-full h-20 bg-gradient-to-br from-white to-transparent'></div>

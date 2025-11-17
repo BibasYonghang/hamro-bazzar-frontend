@@ -42,16 +42,16 @@ const Home = ({ onAddToCart }) => {
   }, []);
 
   return (
-    <div className="overflow-x-hidden bg-blue-50">
+    <div className="overflow-x-hidden bg-blue-100">
       {/* Hero Section */}
       <HeroSection />
 
       {/* Featured Products Section */}
       <div
         ref={featuredRef}
-        className="flex w-full flex-col bg-gradient-to-b from-blue-50 via-blue-100 to-blue-50 px-[1vw] py-8 opacity-0 transition-opacity duration-1000"
+        className="flex w-full flex-col bg-gradient-to-b from-blue-50 px-[1vw] via-blue-100 to-blue-50 py-8 opacity-0 transition-opacity duration-1000"
       >
-        <div className="max-w-7xl mx-auto w-full">
+        <div className=" mx-auto w-full">
           <FeaturedProducts />
         </div>
       </div>
@@ -59,9 +59,9 @@ const Home = ({ onAddToCart }) => {
       {/* Product List Section */}
       <div
         ref={productListRef}
-        className="flex w-full flex-col bg-gradient-to-b from-blue-50 to-blue-100 px-[1vw] py-8 opacity-0 transition-opacity duration-1000"
+        className="flex w-full flex-col bg-gradient-to-b from-blue-50 to-blue-100 px-[1vw] pb-[3vw] opacity-0 transition-opacity duration-1000"
       >
-        <div className="max-w-7xl mx-auto w-full">
+        <div className=" mx-auto w-full">
           <ProductList />
         </div>
       </div>
@@ -69,9 +69,9 @@ const Home = ({ onAddToCart }) => {
       {/* Limited Offer Section */}
       <div
         ref={limitedOfferRef}
-        className="relative bg-gradient-to-b from-blue-100 via-blue-50 to-white min-h-[90vh] py-12 opacity-0 transition-opacity duration-1000"
+        className="relative bg-gradient-to-b from-blue-100 via-blue-50 to-white min-h-[90vh] opacity-0 transition-opacity duration-1000"
       >
-        <div className="absolute bottom-30 z-10 h-[40vh] w-full bg-gradient-to-t from-white to-transparent px-[3vw] pointer-events-none"></div>
+        <div className="absolute bottom-30 z-10 h-[40vh] w-full bg-gradient-to-t from-white to-transparent pointer-events-none"></div>
         <div className="absolute bottom-0 h-[20vh] w-full bg-white pointer-events-none"></div>
         <div className="relative z-20 w-full">
           <LimitedOffer />

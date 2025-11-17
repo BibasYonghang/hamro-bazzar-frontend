@@ -10,12 +10,13 @@ export default function ProductList() {
     return () => clearTimeout(timer);
   }, []);
 
-  const categoryLinks = {
-    Electronics: "/electronics",
-    "Personal Care": "/personal-care",
-    Gaming: "/gaming",
-    "Home Furniture": "/home-furniture",
-  };
+  // Maintain separate product states for each category
+  const [categoryProducts, setCategoryProducts] = useState({
+    "Electronics": [],
+    "Personal Care": [],
+    "Gaming": [],
+    "Home Furniture": [],
+  });
 
   const featuredProductsDiv = [
     {
@@ -23,46 +24,74 @@ export default function ProductList() {
       image: "/featured-products-image/electronics.png",
       link: "/electronics",
       icon: "⚡",
+      api: "http://localhost:5000/api/category-electronics"
     },
     {
       name: "Personal Care",
       image: "/featured-products-image/personal-care.png",
       link: "/personal-care",
       icon: "✨",
+      api: "http://localhost:5000/api/category-personal-care"
     },
     {
       name: "Gaming",
       image: "/featured-products-image/gaming.png",
       link: "/gaming",
       icon: "🎮",
+      api: "http://localhost:5000/api/category-gaming"
     },
     {
       name: "Home Furniture",
       image: "/featured-products-image/home-furniture.png",
       link: "/home-furniture",
       icon: "🏠",
+      api: "http://localhost:5000/api/category-home-furniture"
     },
   ];
 
+  // Fetch all products for each category once when mounted
+  useEffect(() => {
+    featuredProductsDiv.forEach(category => {
+      fetch(category.api)
+        .then(res => res.json())
+        .then(data => {
+          setCategoryProducts(prev => ({
+            ...prev,
+            [category.name]: Array.isArray(data) ? data : [],
+          }));
+        })
+        .catch(err => {
+          setCategoryProducts(prev => ({
+            ...prev,
+            [category.name]: [],
+          }));
+          console.log(err);
+        });
+    });
+    // eslint-disable-next-line
+  }, []);
+
   return (
-    <section className="mx-auto mt-4 w-full">
+    <section className="mx-auto w-full">
       {/* Section Header */}
       <div className="mb-6 flex items-center gap-3 px-3">
-        <TrendingUp className="w-6 h-6 text-blue-600" />
-        <h2 className="text-2xl sm:text-3xl font-bold text-gray-800">
+        <TrendingUp className="h-6 w-6 text-blue-600" />
+        <h2 className="text-2xl font-bold text-gray-800 sm:text-3xl">
           Shop by Category
         </h2>
       </div>
 
       <div className="grid w-full grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 xl:grid-cols-4">
         {featuredProductsDiv.map(({ name, image, link, icon }, idx) => {
+          const products = categoryProducts[name] || [];
+
           return (
             <div
               key={idx}
-              className={`w-full bg-white rounded-2xl shadow-lg p-4 sm:p-6 transition-all duration-500 hover:shadow-2xl transform hover:-translate-y-2 ${
+              className={`w-full transform rounded-2xl bg-white p-4 shadow-lg transition-all duration-500 hover:-translate-y-2 hover:shadow-2xl sm:p-6 ${
                 isVisible
-                  ? "opacity-100 translate-y-0"
-                  : "opacity-0 translate-y-10"
+                  ? "translate-y-0 opacity-100"
+                  : "translate-y-10 opacity-0"
               }`}
               style={{
                 transitionDelay: `${idx * 100}ms`,
@@ -72,7 +101,7 @@ export default function ProductList() {
               <div className="mb-4 flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <span className="text-2xl">{icon}</span>
-                  <h1 className="text-xl sm:text-2xl font-bold text-gray-800">
+                  <h1 className="text-xl font-bold text-gray-800 sm:text-2xl">
                     {name}
                   </h1>
                 </div>
@@ -80,35 +109,42 @@ export default function ProductList() {
 
               {/* Product Grid */}
               <div className="grid grid-cols-2 gap-3 py-2">
-                {[1, 2, 3, 4].map((item) => (
-                  <Link
-                    key={item}
-                    to={link}
-                    className="group relative overflow-hidden rounded-lg bg-gradient-to-br from-gray-50 to-gray-100"
-                  >
-                    <div className="relative h-[23vh] sm:h-[25vh] overflow-hidden">
-                      <img
-                        src={image}
-                        alt={`${name} product ${item}`}
-                        className="h-full w-full transform object-cover transition-transform duration-500 group-hover:scale-110"
-                        onError={(e) => {
-                          e.target.src = "https://via.placeholder.com/200x200?text=Product";
-                        }}
-                      />
-                      {/* Hover Overlay */}
-                      <div className="absolute inset-0 bg-black/0 group-hover:bg-black/30 transition-all duration-300"></div>
-                    </div>
-                    <h3 className="py-2 px-1 text-xs sm:text-sm font-semibold text-gray-700 group-hover:text-blue-600 transition-colors">
-                      {name} {item}
-                    </h3>
-                  </Link>
-                ))}
+                {Array.isArray(products) && products.length > 0 ? (
+                  products.map((item) => (
+                    <Link
+                      key={item._id || item.id || item.name}
+                      to={link}
+                      className="group relative overflow-hidden rounded-lg bg-gradient-to-br from-gray-50 to-gray-100"
+                    >
+                      <div className="relative  h-[23vh] overflow-hidden sm:h-[25vh]">
+                        <img
+                          src={item.image || "/featured-products-image/default.png"}
+                          alt={item.name ? `${name} - ${item.name}` : `Product`}
+                          className="h-full w-full transform transition-transform duration-500 group-hover:scale-110"
+                          onError={(e) => {
+                            e.target.src =
+                              "https://via.placeholder.com/200x200?text=Product";
+                          }}
+                        />
+                        {/* Hover Overlay */}
+                        <div className="absolute inset-0 bg-black/0 transition-all duration-300 group-hover:bg-black/30"></div>
+                      </div>
+                      <h3 className="px-1 py-2 text-xs font-semibold text-gray-700 transition-colors group-hover:text-blue-600 sm:text-sm">
+                        {item.name || "Unnamed Product"}
+                      </h3>
+                    </Link>
+                  ))
+                ) : (
+                  <div className="col-span-2 text-center text-gray-400 py-6">
+                    <span>No products found.</span>
+                  </div>
+                )}
               </div>
 
               {/* See All Link */}
               <Link
                 to={link}
-                className="group mt-4 flex items-center gap-2 text-sm sm:text-base font-semibold text-blue-600 hover:text-blue-700 transition-colors"
+                className="group mt-4 flex items-center gap-2 text-sm font-semibold text-blue-600 transition-colors hover:text-blue-700 sm:text-base"
               >
                 <span>See All</span>
                 <ArrowRight

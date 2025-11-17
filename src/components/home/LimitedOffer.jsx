@@ -67,7 +67,7 @@ export default function SpecialOffer({
   }, []);
 
   return (
-    <section className="relative w-[96vw] mx-auto h-[90vh] overflow-hidden mt-7 rounded-2xl shadow-2xl">
+    <section className="relative w-[97vw] mx-auto h-[90vh] overflow-hidden rounded-2xl shadow-2xl">
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
@@ -77,7 +77,7 @@ export default function SpecialOffer({
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/60" />
         {/* Animated gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-green-600/20 via-transparent to-purple-600/20 animate-pulse-slow"></div>
+        <div className="absolute inset-0 bg-gradient-to-r from-green-600/20 via-transparent to-green-900 animate-pulse-slow"></div>
       </div>
 
       {/* Countdown Overlay - Top Right */}

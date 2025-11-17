@@ -36,7 +36,10 @@ export default function AllProducts() {
   // Update price range when products load
   useEffect(() => {
     if (products.length > 0) {
-      const calculatedMax = Math.max(...products.map((p) => p.price || 0), 1000);
+      const calculatedMax = Math.max(
+        ...products.map((p) => p.price || 0),
+        1000,
+      );
       if (priceRange[1] === 10000 || priceRange[1] < calculatedMax) {
         setPriceRange([0, calculatedMax]);
       }
@@ -54,9 +57,15 @@ export default function AllProducts() {
         } else {
           // If that doesn't work, fetch from all category endpoints
           const [electronics, furniture, personalCare] = await Promise.all([
-            fetch("http://localhost:5000/api/electronics").then((r) => r.json()).catch(() => []),
-            fetch("http://localhost:5000/api/home-furniture").then((r) => r.json()).catch(() => []),
-            fetch("http://localhost:5000/api/personal-care").then((r) => r.json()).catch(() => []),
+            fetch("http://localhost:5000/api/electronics")
+              .then((r) => r.json())
+              .catch(() => []),
+            fetch("http://localhost:5000/api/home-furniture")
+              .then((r) => r.json())
+              .catch(() => []),
+            fetch("http://localhost:5000/api/personal-care")
+              .then((r) => r.json())
+              .catch(() => []),
           ]);
           setProducts([...electronics, ...furniture, ...personalCare]);
         }
@@ -66,9 +75,15 @@ export default function AllProducts() {
         // Fallback: try individual endpoints
         try {
           const [electronics, furniture, personalCare] = await Promise.all([
-            fetch("http://localhost:5000/api/electronics").then((r) => r.json()).catch(() => []),
-            fetch("http://localhost:5000/api/home-furniture").then((r) => r.json()).catch(() => []),
-            fetch("http://localhost:5000/api/personal-care").then((r) => r.json()).catch(() => []),
+            fetch("http://localhost:5000/api/electronics")
+              .then((r) => r.json())
+              .catch(() => []),
+            fetch("http://localhost:5000/api/home-furniture")
+              .then((r) => r.json())
+              .catch(() => []),
+            fetch("http://localhost:5000/api/personal-care")
+              .then((r) => r.json())
+              .catch(() => []),
           ]);
           setProducts([...electronics, ...furniture, ...personalCare]);
         } catch (fallbackError) {
@@ -95,7 +110,7 @@ export default function AllProducts() {
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     setTimeout(() => {
@@ -111,7 +126,10 @@ export default function AllProducts() {
   }, [products.length]);
 
   // Get unique categories
-  const categories = ["all", ...Array.from(new Set(products.map((p) => p.category).filter(Boolean)))];
+  const categories = [
+    "all",
+    ...Array.from(new Set(products.map((p) => p.category).filter(Boolean))),
+  ];
 
   // Filter and sort products
   const filteredProducts = products
@@ -120,8 +138,10 @@ export default function AllProducts() {
         product.name?.toLowerCase().includes(search.toLowerCase()) ||
         product.description?.toLowerCase().includes(search.toLowerCase()) ||
         product.category?.toLowerCase().includes(search.toLowerCase());
-      const matchesCategory = selectedCategory === "all" || product.category === selectedCategory;
-      const matchesPrice = product.price >= priceRange[0] && product.price <= priceRange[1];
+      const matchesCategory =
+        selectedCategory === "all" || product.category === selectedCategory;
+      const matchesPrice =
+        product.price >= priceRange[0] && product.price <= priceRange[1];
       return matchesSearch && matchesCategory && matchesPrice;
     })
     .sort((a, b) => {
@@ -135,7 +155,10 @@ export default function AllProducts() {
   // Pagination
   const totalPages = Math.ceil(filteredProducts.length / productsPerPage);
   const startIndex = (currentPage - 1) * productsPerPage;
-  const paginatedProducts = filteredProducts.slice(startIndex, startIndex + productsPerPage);
+  const paginatedProducts = filteredProducts.slice(
+    startIndex,
+    startIndex + productsPerPage,
+  );
 
   // Reset to page 1 when filters change
   useEffect(() => {
@@ -144,10 +167,12 @@ export default function AllProducts() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-b from-blue-50 to-white">
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-blue-50 to-white">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-16 w-16 border-4 border-blue-600 border-t-transparent mb-4"></div>
-          <p className="text-gray-600 text-xl font-medium">Loading all products...</p>
+          <div className="mb-4 inline-block h-16 w-16 animate-spin rounded-full border-4 border-blue-600 border-t-transparent"></div>
+          <p className="text-xl font-medium text-gray-600">
+            Loading all products...
+          </p>
         </div>
       </div>
     );
@@ -158,47 +183,55 @@ export default function AllProducts() {
       {/* Hero Section */}
       <div
         ref={heroRef}
-        className="bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 text-white py-20 relative overflow-hidden"
+        className="relative overflow-hidden bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 py-20 text-white"
       >
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-20 left-20 w-64 h-64 bg-white rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-20 right-20 w-80 h-80 bg-white rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }}></div>
-        </div>
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="absolute top-20 left-20 h-64 w-64 animate-pulse rounded-full bg-white blur-3xl"></div>
           <div
-            className={`flex items-center gap-3 mb-4 transition-all duration-1000 ${
+            className="absolute right-20 bottom-20 h-80 w-80 animate-pulse rounded-full bg-white blur-3xl"
+            style={{ animationDelay: "1s" }}
+          ></div>
+        </div>
+        <div className="relative z-10 mx-auto max-w-7xl px-6">
+          <div
+            className={`mb-4 flex items-center gap-3 transition-all duration-1000 ${
               isVisible
-                ? "opacity-100 translate-x-0"
-                : "opacity-0 -translate-x-10"
+                ? "translate-x-0 opacity-100"
+                : "-translate-x-10 opacity-0"
             }`}
           >
-            <Sparkles className="w-10 h-10 animate-pulse" />
-            <h1 className="text-5xl md:text-6xl font-bold">All Products</h1>
+            <Sparkles className="h-10 w-10 animate-pulse" />
+            <h1 className="text-5xl font-bold md:text-6xl">All Products</h1>
           </div>
           <p
-            className={`text-xl md:text-2xl text-blue-100 max-w-3xl mb-6 transition-all duration-1000 ${
+            className={`mb-6 max-w-3xl text-xl text-blue-100 transition-all duration-1000 md:text-2xl ${
               isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-10"
+                ? "translate-y-0 opacity-100"
+                : "translate-y-10 opacity-0"
             }`}
             style={{ transitionDelay: "200ms" }}
           >
-            Discover our complete collection of premium products. Everything you need, all in one place.
+            Discover our complete collection of premium products. Everything you
+            need, all in one place.
           </p>
           <div
             className={`flex items-center gap-6 text-blue-100 transition-all duration-1000 ${
               isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-10"
+                ? "translate-y-0 opacity-100"
+                : "translate-y-10 opacity-0"
             }`}
             style={{ transitionDelay: "400ms" }}
           >
             <div className="flex items-center gap-2">
-              <TrendingUp className="w-6 h-6" />
-              <span className="text-lg font-medium">{products.length}+ Products</span>
+              <TrendingUp className="h-6 w-6" />
+              <span className="text-lg font-medium">
+                {products.length}+ Products
+              </span>
             </div>
             <span className="text-blue-200">•</span>
-            <span className="text-lg font-medium">{categories.length - 1} Categories</span>
+            <span className="text-lg font-medium">
+              {categories.length - 1} Categories
+            </span>
             <span className="text-blue-200">•</span>
             <span className="text-lg font-medium">Premium Quality</span>
           </div>
@@ -206,26 +239,24 @@ export default function AllProducts() {
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
+      <div className="mx-auto px-2 py-8">
         {/* Search and Filter Bar */}
         <div
-          className={`bg-white rounded-2xl shadow-xl p-6 mb-8 border border-gray-100 transition-all duration-1000 ${
-            isVisible
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-10"
+          className={`mb-8 rounded-2xl border border-gray-100 bg-white p-6 shadow-xl transition-all duration-1000 ${
+            isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
           }`}
           style={{ transitionDelay: "300ms" }}
         >
-          <div className="flex flex-col lg:flex-row gap-4 items-center">
+          <div className="flex flex-col items-center gap-4 lg:flex-row">
             {/* Search Bar */}
-            <div className="flex-1 w-full relative">
-              <Search className="absolute left-4 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <div className="relative w-full flex-1">
+              <Search className="absolute top-1/2 left-4 h-5 w-5 -translate-y-1/2 transform text-gray-400" />
               <input
                 type="text"
                 placeholder="Search products, categories, descriptions..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-12 pr-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none transition text-lg"
+                className="w-full rounded-xl border-2 border-gray-200 py-3 pr-4 pl-12 text-lg transition outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100"
               />
             </div>
 
@@ -234,7 +265,7 @@ export default function AllProducts() {
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="w-full lg:w-48 px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none transition cursor-pointer text-lg"
+                className="w-full cursor-pointer rounded-xl border-2 border-gray-200 px-4 py-3 text-lg transition outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 lg:w-48"
               >
                 {categories.map((cat) => (
                   <option key={cat} value={cat}>
@@ -249,7 +280,7 @@ export default function AllProducts() {
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="w-full lg:w-48 px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-blue-500 focus:ring-4 focus:ring-blue-100 outline-none transition cursor-pointer text-lg"
+                className="w-full cursor-pointer rounded-xl border-2 border-gray-200 px-4 py-3 text-lg transition outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 lg:w-48"
               >
                 <option value="default">Default</option>
                 <option value="price-low">Price: Low to High</option>
@@ -260,78 +291,100 @@ export default function AllProducts() {
             </div>
 
             {/* View Mode Toggle */}
-            <div className="flex gap-2 border-2 border-gray-200 rounded-xl p-1">
+            <div className="flex gap-2 rounded-xl border-2 border-gray-200 p-1">
               <button
                 onClick={() => setViewMode("grid")}
-                className={`p-3 rounded-lg transition ${
+                className={`rounded-lg p-3 transition ${
                   viewMode === "grid"
                     ? "bg-blue-600 text-white shadow-md"
                     : "text-gray-600 hover:bg-gray-100"
                 }`}
               >
-                <Grid className="w-5 h-5" />
+                <Grid className="h-5 w-5" />
               </button>
               <button
                 onClick={() => setViewMode("list")}
-                className={`p-3 rounded-lg transition ${
+                className={`rounded-lg p-3 transition ${
                   viewMode === "list"
                     ? "bg-blue-600 text-white shadow-md"
                     : "text-gray-600 hover:bg-gray-100"
                 }`}
               >
-                <List className="w-5 h-5" />
+                <List className="h-5 w-5" />
               </button>
             </div>
 
             {/* Advanced Filters Toggle */}
             <button
               onClick={() => setShowFilters(!showFilters)}
-              className="flex items-center gap-2 px-4 py-3 bg-gray-100 hover:bg-gray-200 rounded-xl transition font-medium"
+              className="flex items-center gap-2 rounded-xl bg-gray-100 px-4 py-3 font-medium transition hover:bg-gray-200"
             >
-              <SlidersHorizontal className="w-5 h-5" />
+              <SlidersHorizontal className="h-5 w-5" />
               Filters
             </button>
           </div>
 
           {/* Advanced Filters Panel */}
           {showFilters && (
-            <div className="mt-6 pt-6 border-t border-gray-200">
-              <div className="flex items-center justify-between mb-4">
-                <h3 className="text-lg font-semibold text-gray-800">Price Range</h3>
+            <div className="mt-6 border-t border-gray-200 pt-6">
+              <div className="mb-4 flex items-center justify-between">
+                <h3 className="text-lg font-semibold text-gray-800">
+                  Price Range
+                </h3>
                 <button
                   onClick={() => setShowFilters(false)}
                   className="text-gray-500 hover:text-gray-700"
                 >
-                  <X className="w-5 h-5" />
+                  <X className="h-5 w-5" />
                 </button>
               </div>
               <div className="space-y-4">
                 <div>
-                  <div className="flex justify-between mb-4">
+                  <div className="mb-4 flex justify-between">
                     <div className="flex flex-col">
-                      <label className="text-sm font-medium text-gray-600 mb-1">Min Price</label>
+                      <label className="mb-1 text-sm font-medium text-gray-600">
+                        Min Price
+                      </label>
                       <input
                         type="number"
                         min="0"
                         max={maxPrice}
                         value={priceRange[0]}
-                        onChange={(e) => setPriceRange([Math.min(parseInt(e.target.value) || 0, priceRange[1]), priceRange[1]])}
-                        className="w-32 px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none"
+                        onChange={(e) =>
+                          setPriceRange([
+                            Math.min(
+                              parseInt(e.target.value) || 0,
+                              priceRange[1],
+                            ),
+                            priceRange[1],
+                          ])
+                        }
+                        className="w-32 rounded-lg border-2 border-gray-200 px-3 py-2 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
                       />
                     </div>
                     <div className="flex flex-col">
-                      <label className="text-sm font-medium text-gray-600 mb-1">Max Price</label>
+                      <label className="mb-1 text-sm font-medium text-gray-600">
+                        Max Price
+                      </label>
                       <input
                         type="number"
                         min={priceRange[0]}
                         max={maxPrice}
                         value={priceRange[1]}
-                        onChange={(e) => setPriceRange([priceRange[0], Math.max(parseInt(e.target.value) || maxPrice, priceRange[0])])}
-                        className="w-32 px-3 py-2 border-2 border-gray-200 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-100 outline-none"
+                        onChange={(e) =>
+                          setPriceRange([
+                            priceRange[0],
+                            Math.max(
+                              parseInt(e.target.value) || maxPrice,
+                              priceRange[0],
+                            ),
+                          ])
+                        }
+                        className="w-32 rounded-lg border-2 border-gray-200 px-3 py-2 outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-100"
                       />
                     </div>
                   </div>
-                  <div className="flex justify-between text-xs text-gray-500 mt-2">
+                  <div className="mt-2 flex justify-between text-xs text-gray-500">
                     <span>$0</span>
                     <span>${maxPrice}</span>
                   </div>
@@ -343,7 +396,10 @@ export default function AllProducts() {
           {/* Results Count and Active Filters */}
           <div className="mt-4 flex flex-wrap items-center gap-4">
             <div className="text-gray-600">
-              Showing <span className="font-semibold text-blue-600">{filteredProducts.length}</span>{" "}
+              Showing{" "}
+              <span className="font-semibold text-blue-600">
+                {filteredProducts.length}
+              </span>{" "}
               {filteredProducts.length === 1 ? "product" : "products"}
               {selectedCategory !== "all" && (
                 <span className="ml-2">
@@ -357,9 +413,9 @@ export default function AllProducts() {
                   setSelectedCategory("all");
                   setPriceRange([0, maxPrice]);
                 }}
-                className="text-sm text-blue-600 hover:text-blue-700 font-medium flex items-center gap-1"
+                className="flex items-center gap-1 text-sm font-medium text-blue-600 hover:text-blue-700"
               >
-                <X className="w-4 h-4" />
+                <X className="h-4 w-4" />
                 Clear filters
               </button>
             )}
@@ -368,10 +424,12 @@ export default function AllProducts() {
 
         {/* Products Grid/List */}
         {paginatedProducts.length === 0 ? (
-          <div className="text-center py-20 bg-white rounded-2xl shadow-md border border-gray-100">
-            <Search className="w-20 h-20 text-gray-300 mx-auto mb-4" />
-            <h3 className="text-3xl font-semibold text-gray-700 mb-2">No products found</h3>
-            <p className="text-gray-500 text-lg mb-6">
+          <div className="rounded-2xl border border-gray-100 bg-white py-20 text-center shadow-md">
+            <Search className="mx-auto mb-4 h-20 w-20 text-gray-300" />
+            <h3 className="mb-2 text-3xl font-semibold text-gray-700">
+              No products found
+            </h3>
+            <p className="mb-6 text-lg text-gray-500">
               Try adjusting your search or filter criteria
             </p>
             <button
@@ -380,7 +438,7 @@ export default function AllProducts() {
                 setSelectedCategory("all");
                 setPriceRange([0, maxPrice]);
               }}
-              className="px-6 py-3 bg-blue-600 text-white rounded-xl hover:bg-blue-700 transition font-medium"
+              className="rounded-xl bg-blue-600 px-6 py-3 font-medium text-white transition hover:bg-blue-700"
             >
               Reset Filters
             </button>
@@ -391,7 +449,7 @@ export default function AllProducts() {
               ref={productsRef}
               className={
                 viewMode === "grid"
-                  ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+                  ? "grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
                   : "space-y-4"
               }
             >
@@ -399,12 +457,12 @@ export default function AllProducts() {
                 <Link
                   to={`/products/${product._id}`}
                   key={product._id}
-                  className={`bg-white rounded-2xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden group border border-gray-100 hover:border-blue-200 transform hover:-translate-y-2 ${
+                  className={`group transform overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-lg transition-all duration-500 hover:-translate-y-2 hover:border-blue-200 hover:shadow-2xl ${
                     viewMode === "list" ? "flex gap-6" : ""
                   } ${
                     isVisible
-                      ? "opacity-100 translate-y-0"
-                      : "opacity-0 translate-y-10"
+                      ? "translate-y-0 opacity-100"
+                      : "translate-y-10 opacity-0"
                   }`}
                   style={{
                     transitionDelay: `${400 + idx * 50}ms`,
@@ -413,91 +471,102 @@ export default function AllProducts() {
                   {/* Product Image */}
                   <div
                     className={`relative overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100 ${
-                      viewMode === "list" ? "w-64 h-64 flex-shrink-0" : "w-full h-72"
+                      viewMode === "list"
+                        ? "h-64 w-64 flex-shrink-0"
+                        : "h-72 w-full"
                     }`}
                   >
                     <img
                       src={product.image || "/placeholder.jpg"}
                       alt={product.name}
-                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                      className="h-full w-full transition-transform duration-500 group-hover:scale-110"
                       onError={(e) => {
-                        e.target.src = "https://via.placeholder.com/400x400?text=Product";
+                        e.target.src =
+                          "https://via.placeholder.com/400x400?text=Product";
                       }}
                     />
                     {product.price && (
-                      <div className="absolute top-4 right-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg">
+                      <div className="absolute top-4 right-4 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 text-sm font-bold text-white shadow-lg">
                         ${product.price}
                       </div>
                     )}
                     {product.featured && (
-                      <div className="absolute top-4 left-4 bg-yellow-500 text-gray-900 px-3 py-1 rounded-full text-xs font-bold flex items-center gap-1 shadow-md">
-                        <Sparkles className="w-3 h-3" />
+                      <div className="absolute top-4 left-4 flex items-center gap-1 rounded-full bg-yellow-500 px-3 py-1 text-xs font-bold text-gray-900 shadow-md">
+                        <Sparkles className="h-3 w-3" />
                         Featured
                       </div>
                     )}
                   </div>
 
                   {/* Product Info */}
-                  <div className={`p-6 ${viewMode === "list" ? "flex-1 flex flex-col justify-between" : ""}`}>
+                  <div
+                    className={`p-6 ${viewMode === "list" ? "flex flex-1 flex-col justify-between" : ""}`}
+                  >
                     <div>
                       <div className="mb-3">
                         <span
-                          className={`inline-block text-xs font-semibold px-3 py-1 rounded-full ${
+                          className={`inline-block rounded-full px-3 py-1 text-xs font-semibold ${
                             product.category === "Electronics"
                               ? "bg-blue-100 text-blue-700"
                               : product.category === "Personal Care"
-                              ? "bg-pink-100 text-pink-700"
-                              : product.category === "Home Furniture"
-                              ? "bg-amber-100 text-amber-700"
-                              : "bg-gray-100 text-gray-700"
+                                ? "bg-pink-100 text-pink-700"
+                                : product.category === "Home Furniture"
+                                  ? "bg-amber-100 text-amber-700"
+                                  : "bg-gray-100 text-gray-700"
                           }`}
                         >
                           {product.category || "Product"}
                         </span>
                       </div>
-                      <h3 className="text-xl font-bold text-gray-800 mb-2 line-clamp-2 group-hover:text-blue-600 transition">
+                      <h3 className="mb-2 line-clamp-2 text-xl font-bold text-gray-800 transition group-hover:text-blue-600">
                         {product.name}
                       </h3>
                       {product.description && (
-                        <p className="text-gray-600 text-sm mb-4 line-clamp-2">
+                        <p className="mb-4 line-clamp-2 text-sm text-gray-600">
                           {product.description}
                         </p>
                       )}
                     </div>
-
-                    <div className="flex items-center justify-between mt-4 pt-4 border-t border-gray-100">
-                      <div>
-                        {product.price && (
-                          <div className="flex items-baseline gap-2">
-                            <span className="text-2xl font-bold text-blue-600">
-                              ${product.price}
-                            </span>
-                            {product.originalPrice && product.originalPrice > product.price && (
-                              <span className="text-sm text-gray-400 line-through">
-                                ${product.originalPrice}
-                              </span>
-                            )}
+                    <div>
+                      {product.price && (
+                        <div className="">
+                          <div className="text-2xl font-bold text-blue-600">
+                            Rs.{Math.floor((80 / 100) * product.price)}
                           </div>
-                        )}
-                        {product.rating && (
-                          <div className="flex items-center gap-1 mt-2">
-                            <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                            <span className="text-sm text-gray-600 font-medium">
-                              {product.rating}
-                            </span>
+                          <div className="text-lg font-bold text-gray-600">
+                            <span className="mr-3 line-through">
+                              Rs.{Math.floor(product.price)}{" "}
+                            </span>{" "}
+                            20% OFF
                           </div>
-                        )}
-                      </div>
+                        </div>
+                      )}
+                      {product.rating && (
+                        <div className="mt-2 flex items-center gap-1">
+                          <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
+                          <span className="text-sm font-medium text-gray-600">
+                            {product.rating}
+                          </span>
+                        </div>
+                      )}
+                    </div>
+                    <div className="mt-4 flex items-center justify-between border-t border-gray-100 pt-4">
                       <button
                         onClick={(e) => {
                           e.preventDefault();
-                          // Add to cart logic here
                         }}
-                        className="bg-gradient-to-r from-blue-600 to-indigo-600 hover:from-blue-700 hover:to-indigo-700 text-white p-3 rounded-xl transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105"
+                        className="transform rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-7 py-2 text-white shadow-md transition-all duration-200 hover:scale-105 hover:cursor-pointer hover:from-blue-700 hover:to-indigo-700 hover:shadow-lg"
                         title="Add to cart"
                       >
-                        <ShoppingCart className="w-5 h-5" />
+                        Add <ShoppingCart className="inline h-5 w-5" />
                       </button>
+                      <Link
+                        to="/product-details"
+                        className="transform rounded-lg bg-gradient-to-r from-purple-800 to-indigo-900 px-7 py-2 text-white shadow-lg transition-all duration-200 hover:scale-105 hover:cursor-pointer hover:from-purple-700 hover:to-indigo-700 hover:shadow-xl"
+                        title="Add to cart"
+                      >
+                        Buy Now
+                      </Link>
                     </div>
                   </div>
                 </Link>
@@ -506,11 +575,13 @@ export default function AllProducts() {
 
             {/* Pagination */}
             {totalPages > 1 && (
-              <div className="mt-12 flex justify-center items-center gap-2">
+              <div className="mt-12 flex items-center justify-center gap-2">
                 <button
-                  onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.max(1, prev - 1))
+                  }
                   disabled={currentPage === 1}
-                  className="px-4 py-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition"
+                  className="rounded-lg border border-gray-300 px-4 py-2 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   Previous
                 </button>
@@ -525,24 +596,33 @@ export default function AllProducts() {
                       <button
                         key={page}
                         onClick={() => setCurrentPage(page)}
-                        className={`px-4 py-2 rounded-lg border transition ${
+                        className={`rounded-lg border px-4 py-2 transition ${
                           currentPage === page
-                            ? "bg-blue-600 text-white border-blue-600"
+                            ? "border-blue-600 bg-blue-600 text-white"
                             : "border-gray-300 hover:bg-gray-50"
                         }`}
                       >
                         {page}
                       </button>
                     );
-                  } else if (page === currentPage - 2 || page === currentPage + 2) {
-                    return <span key={page} className="px-2">...</span>;
+                  } else if (
+                    page === currentPage - 2 ||
+                    page === currentPage + 2
+                  ) {
+                    return (
+                      <span key={page} className="px-2">
+                        ...
+                      </span>
+                    );
                   }
                   return null;
                 })}
                 <button
-                  onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
+                  onClick={() =>
+                    setCurrentPage((prev) => Math.min(totalPages, prev + 1))
+                  }
                   disabled={currentPage === totalPages}
-                  className="px-4 py-2 rounded-lg border border-gray-300 disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50 transition"
+                  className="rounded-lg border border-gray-300 px-4 py-2 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   Next
                 </button>

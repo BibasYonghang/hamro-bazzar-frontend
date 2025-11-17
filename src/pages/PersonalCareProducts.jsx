@@ -1,6 +1,15 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
-import { Search, Filter, Grid, List, Star, ShoppingCart, Sparkles, Heart } from "lucide-react";
+import {
+  Search,
+  Filter,
+  Grid,
+  List,
+  Star,
+  ShoppingCart,
+  Sparkles,
+  Heart,
+} from "lucide-react";
 
 export default function PersonalCareProducts() {
   const [products, setProducts] = useState([]);
@@ -38,7 +47,7 @@ export default function PersonalCareProducts() {
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.1 },
     );
 
     if (heroRef.current) observer.observe(heroRef.current);
@@ -52,9 +61,10 @@ export default function PersonalCareProducts() {
 
   // Filter and sort products
   const filteredProducts = products
-    .filter((product) =>
-      product.name?.toLowerCase().includes(search.toLowerCase()) ||
-      product.description?.toLowerCase().includes(search.toLowerCase())
+    .filter(
+      (product) =>
+        product.name?.toLowerCase().includes(search.toLowerCase()) ||
+        product.description?.toLowerCase().includes(search.toLowerCase()),
     )
     .sort((a, b) => {
       if (sortBy === "price-low") return a.price - b.price;
@@ -65,10 +75,12 @@ export default function PersonalCareProducts() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">
-          <div className="inline-block animate-spin rounded-full h-12 w-12 border-b-2 border-pink-600 mb-4"></div>
-          <p className="text-gray-600 text-lg">Loading personal care products...</p>
+          <div className="mb-4 inline-block h-12 w-12 animate-spin rounded-full border-b-2 border-pink-600"></div>
+          <p className="text-lg text-gray-600">
+            Loading personal care products...
+          </p>
         </div>
       </div>
     );
@@ -79,78 +91,84 @@ export default function PersonalCareProducts() {
       {/* Hero Section */}
       <div
         ref={heroRef}
-        className="bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 text-white py-16 relative overflow-hidden"
+        className="relative overflow-hidden bg-gradient-to-r from-pink-500 via-rose-500 to-purple-600 py-16 text-white"
       >
         <div className="absolute inset-0 opacity-10">
-          <div className="absolute top-10 left-10 w-32 h-32 bg-white rounded-full blur-3xl animate-pulse"></div>
-          <div className="absolute bottom-10 right-10 w-40 h-40 bg-white rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }}></div>
-        </div>
-        <div className="max-w-7xl mx-auto px-6 relative z-10">
+          <div className="absolute top-10 left-10 h-32 w-32 animate-pulse rounded-full bg-white blur-3xl"></div>
           <div
-            className={`flex items-center gap-3 mb-4 transition-all duration-1000 ${
+            className="absolute right-10 bottom-10 h-40 w-40 animate-pulse rounded-full bg-white blur-3xl"
+            style={{ animationDelay: "1s" }}
+          ></div>
+        </div>
+        <div className="relative z-10 mx-auto max-w-7xl px-6">
+          <div
+            className={`mb-4 flex items-center gap-3 transition-all duration-1000 ${
               isVisible
-                ? "opacity-100 translate-x-0"
-                : "opacity-0 -translate-x-10"
+                ? "translate-x-0 opacity-100"
+                : "-translate-x-10 opacity-0"
             }`}
           >
-            <Sparkles className="w-8 h-8 animate-pulse" />
-            <h1 className="text-4xl md:text-5xl font-bold">Personal Care & Beauty</h1>
+            <Sparkles className="h-8 w-8 animate-pulse" />
+            <h1 className="text-4xl font-bold md:text-5xl">
+              Personal Care & Beauty
+            </h1>
           </div>
           <p
-            className={`text-xl text-pink-100 max-w-2xl transition-all duration-1000 ${
+            className={`max-w-2xl text-xl text-pink-100 transition-all duration-1000 ${
               isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-10"
+                ? "translate-y-0 opacity-100"
+                : "translate-y-10 opacity-0"
             }`}
             style={{ transitionDelay: "200ms" }}
           >
-            Pamper yourself with our premium collection of personal care products. 
-            From skincare to wellness, discover products that make you feel beautiful inside and out.
+            Pamper yourself with our premium collection of personal care
+            products. From skincare to wellness, discover products that make you
+            feel beautiful inside and out.
           </p>
           <div
             className={`mt-6 flex items-center gap-2 text-pink-100 transition-all duration-1000 ${
               isVisible
-                ? "opacity-100 translate-y-0"
-                : "opacity-0 translate-y-10"
+                ? "translate-y-0 opacity-100"
+                : "translate-y-10 opacity-0"
             }`}
             style={{ transitionDelay: "400ms" }}
           >
-            <Heart className="w-5 h-5 fill-pink-200 animate-pulse" />
-            <span className="text-lg">Premium Quality • Natural Ingredients • Affordable Prices</span>
+            <Heart className="h-5 w-5 animate-pulse fill-pink-200" />
+            <span className="text-lg">
+              Premium Quality • Natural Ingredients • Affordable Prices
+            </span>
           </div>
         </div>
       </div>
 
       {/* Search and Filter Section */}
-      <div className="max-w-7xl mx-auto px-6 py-8">
+      <div className="mx-auto px-3 py-8">
         <div
-          className={`bg-white rounded-xl shadow-lg p-6 mb-8 border border-pink-100 transition-all duration-1000 ${
-            isVisible
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-10"
+          className={`mb-8 rounded-xl border border-pink-100 bg-white p-6 shadow-lg transition-all duration-1000 ${
+            isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
           }`}
           style={{ transitionDelay: "300ms" }}
         >
-          <div className="flex flex-col md:flex-row gap-4 items-center">
+          <div className="flex flex-col items-center gap-4 md:flex-row">
             {/* Search Bar */}
-            <div className="flex-1 w-full relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <div className="relative w-full flex-1">
+              <Search className="absolute top-1/2 left-3 h-5 w-5 -translate-y-1/2 transform text-gray-400" />
               <input
                 type="text"
                 placeholder="Search personal care products..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full pl-10 pr-4 py-3 border-2 border-gray-200 rounded-lg focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition"
+                className="w-full rounded-lg border-2 border-gray-200 py-3 pr-4 pl-10 transition outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-200"
               />
             </div>
 
             {/* Sort Dropdown */}
-            <div className="flex items-center gap-2 w-full md:w-auto">
-              <Filter className="text-gray-500 w-5 h-5" />
+            <div className="flex w-full items-center gap-2 md:w-auto">
+              <Filter className="h-5 w-5 text-gray-500" />
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="px-4 py-3 border-2 border-gray-200 rounded-lg focus:border-pink-500 focus:ring-2 focus:ring-pink-200 outline-none transition cursor-pointer"
+                className="cursor-pointer rounded-lg border-2 border-gray-200 px-4 py-3 transition outline-none focus:border-pink-500 focus:ring-2 focus:ring-pink-200"
               >
                 <option value="default">Default</option>
                 <option value="price-low">Price: Low to High</option>
@@ -160,50 +178,57 @@ export default function PersonalCareProducts() {
             </div>
 
             {/* View Mode Toggle */}
-            <div className="flex gap-2 border-2 border-gray-200 rounded-lg p-1">
+            <div className="flex gap-2 rounded-lg border-2 border-gray-200 p-1">
               <button
                 onClick={() => setViewMode("grid")}
-                className={`p-2 rounded transition ${
+                className={`rounded p-2 transition hover:cursor-pointer ${
                   viewMode === "grid"
                     ? "bg-pink-600 text-white"
                     : "text-gray-600 hover:bg-gray-100"
                 }`}
               >
-                <Grid className="w-5 h-5" />
+                <Grid className="h-5 w-5" />
               </button>
               <button
                 onClick={() => setViewMode("list")}
-                className={`p-2 rounded transition ${
+                className={`rounded p-2 transition hover:cursor-pointer ${
                   viewMode === "list"
                     ? "bg-pink-600 text-white"
                     : "text-gray-600 hover:bg-gray-100"
                 }`}
               >
-                <List className="w-5 h-5" />
+                <List className="h-5 w-5" />
               </button>
             </div>
           </div>
 
           {/* Results Count */}
           <div className="mt-4 text-gray-600">
-            Showing <span className="font-semibold text-pink-600">{filteredProducts.length}</span>{" "}
+            Showing{" "}
+            <span className="font-semibold text-pink-600">
+              {filteredProducts.length}
+            </span>{" "}
             {filteredProducts.length === 1 ? "product" : "products"}
           </div>
         </div>
 
         {/* Products Grid/List */}
         {filteredProducts.length === 0 ? (
-          <div className="text-center py-16 bg-white rounded-xl shadow-md border border-pink-100">
-            <Search className="w-16 h-16 text-gray-300 mx-auto mb-4" />
-            <h3 className="text-2xl font-semibold text-gray-700 mb-2">No products found</h3>
-            <p className="text-gray-500">Try adjusting your search or filter criteria</p>
+          <div className="rounded-xl border border-pink-100 bg-white py-16 text-center shadow-md">
+            <Search className="mx-auto mb-4 h-16 w-16 text-gray-300" />
+            <h3 className="mb-2 text-2xl font-semibold text-gray-700">
+              No products found
+            </h3>
+            <p className="text-gray-500">
+              Try adjusting your search or filter criteria
+            </p>
           </div>
         ) : (
           <div
             ref={productsRef}
             className={
               viewMode === "grid"
-                ? "grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
+                ? "grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4"
                 : "space-y-4"
             }
           >
@@ -211,12 +236,12 @@ export default function PersonalCareProducts() {
               <Link
                 to={`/products/${product._id}`}
                 key={product._id}
-                className={`bg-white rounded-xl shadow-md hover:shadow-2xl transition-all duration-500 overflow-hidden group border border-pink-50 hover:border-pink-200 transform hover:-translate-y-2 ${
+                className={`group transform overflow-hidden rounded-xl border border-pink-50 bg-white shadow-md transition-all duration-500 hover:-translate-y-2 hover:border-pink-200 hover:shadow-2xl ${
                   viewMode === "list" ? "flex gap-4" : ""
                 } ${
                   isVisible
-                    ? "opacity-100 translate-y-0"
-                    : "opacity-0 translate-y-10"
+                    ? "translate-y-0 opacity-100"
+                    : "translate-y-10 opacity-0"
                 }`}
                 style={{
                   transitionDelay: `${400 + idx * 50}ms`,
@@ -225,26 +250,29 @@ export default function PersonalCareProducts() {
                 {/* Product Image */}
                 <div
                   className={`relative overflow-hidden bg-gradient-to-br from-pink-50 to-purple-50 ${
-                    viewMode === "list" ? "w-48 h-48 flex-shrink-0" : "w-full h-64"
+                    viewMode === "list"
+                      ? "h-48 w-48 flex-shrink-0"
+                      : "h-64 w-full"
                   }`}
                 >
                   <img
                     src={product.image || "/placeholder-personal-care.jpg"}
                     alt={product.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                    className="h-full w-full transition-transform duration-300 group-hover:scale-110"
                     onError={(e) => {
-                      e.target.src = "https://via.placeholder.com/400x400?text=Personal+Care";
+                      e.target.src =
+                        "https://via.placeholder.com/400x400?text=Personal+Care";
                     }}
                   />
                   {product.price && (
-                    <div className="absolute top-3 right-3 bg-gradient-to-r from-pink-600 to-rose-600 text-white px-3 py-1 rounded-full text-sm font-semibold shadow-lg">
+                    <div className="absolute top-3 right-3 rounded-full bg-gradient-to-r from-pink-600 to-rose-600 px-3 py-1 text-sm font-semibold text-white shadow-lg">
                       ${product.price}
                     </div>
                   )}
                   {/* Badge for featured/new products */}
                   {product.featured && (
-                    <div className="absolute top-3 left-3 bg-white text-pink-600 px-2 py-1 rounded-full text-xs font-bold flex items-center gap-1">
-                      <Sparkles className="w-3 h-3" />
+                    <div className="absolute top-3 left-3 flex items-center gap-1 rounded-full bg-white px-2 py-1 text-xs font-bold text-pink-600">
+                      <Sparkles className="h-3 w-3" />
                       Featured
                     </div>
                   )}
@@ -253,49 +281,54 @@ export default function PersonalCareProducts() {
                 {/* Product Info */}
                 <div className={`p-5 ${viewMode === "list" ? "flex-1" : ""}`}>
                   <div className="mb-2">
-                    <span className="inline-block bg-pink-100 text-pink-700 text-xs font-semibold px-2 py-1 rounded">
+                    <span className="inline-block rounded bg-pink-100 px-2 py-1 text-xs font-semibold text-pink-700">
                       {product.category || "Personal Care"}
                     </span>
                   </div>
-                  <h3 className="text-lg font-bold text-gray-800 mb-2 line-clamp-2 group-hover:text-pink-600 transition">
+                  <h3 className="mb-2 line-clamp-2 text-lg font-bold text-gray-800 transition group-hover:text-pink-600">
                     {product.name}
                   </h3>
                   {product.description && (
-                    <p className="text-gray-600 text-sm mb-3 line-clamp-2">
+                    <p className="mb-3 line-clamp-2 text-sm text-gray-600">
                       {product.description}
                     </p>
                   )}
-                  
-                  <div className="flex items-center justify-between mt-4">
-                    <div>
-                      {product.price && (
-                        <div className="flex items-baseline gap-2">
-                          <span className="text-2xl font-bold text-pink-600">
-                            ${product.price}
-                          </span>
-                          {product.originalPrice && product.originalPrice > product.price && (
-                            <span className="text-sm text-gray-400 line-through">
-                              ${product.originalPrice}
-                            </span>
-                          )}
+                  <div>
+                    {product.price && (
+                      <div>
+                        <div className="text-2xl font-bold text-pink-600">
+                          Rs.{Math.floor((80 / 100) * product.price)}
                         </div>
-                      )}
-                      {product.rating && (
-                        <div className="flex items-center gap-1 mt-1">
-                          <Star className="w-4 h-4 fill-yellow-400 text-yellow-400" />
-                          <span className="text-sm text-gray-600">{product.rating}</span>
+                        <div className="text-lg font-bold text-gray-600">
+                          <span className="mr-3 line-through">
+                            Rs.{Math.floor(product.price)}{" "}
+                          </span>{" "}
+                          20% OFF
                         </div>
-                      )}
-                    </div>
+                      </div>
+                    )}
+                  </div>
+                  <div className="mt-4 flex justify-between">
                     <button
                       onClick={(e) => {
                         e.preventDefault();
                         // Add to cart logic here
                       }}
-                      className="bg-gradient-to-r from-pink-600 to-rose-600 hover:from-pink-700 hover:to-rose-700 text-white p-2 rounded-lg transition-all duration-200 shadow-md hover:shadow-lg transform hover:scale-105"
+                      className="transform hover:cursor-pointer rounded-lg bg-gradient-to-r from-pink-600 to-rose-600 p-2 text-white shadow-md transition-all duration-200 hover:scale-105 hover:from-pink-700 hover:to-rose-700 hover:shadow-lg"
                       title="Add to cart"
                     >
-                      <ShoppingCart className="w-5 h-5" />
+                      <span>Add</span>{" "}
+                      <ShoppingCart className="inline h-5 w-5" />
+                    </button>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        // Add to cart logic here
+                      }}
+                      className="transform rounded-lg bg-gradient-to-r from-pink-800 to-rose-900 p-2 text-white shadow-md transition-all duration-200 hover:scale-105 hover:cursor-pointer hover:from-pink-700 hover:to-rose-700 hover:shadow-lg"
+                      title="Add to cart"
+                    >
+                      Buy Now
                     </button>
                   </div>
                 </div>

@@ -16,6 +16,7 @@ import PersonalCareProducts from "./pages/PersonalCareProducts";
 import GamingProducts from "./pages/GamingProducts";
 import HomeFurnitureProducts from "./pages/HomeFurnitureProducts";
 import AllProducts from "./pages/AllProducts";
+import ProductDetails from "./pages/ProductDetails";
 
 function App() {
   // 1. Create cart state
@@ -46,6 +47,7 @@ function App() {
           <Route path="/gaming" element={<GamingProducts />} />
           <Route path="/home-furniture" element={<HomeFurnitureProducts />} />
           <Route path="/all-products" element={<AllProducts />} />
+          <Route path="/product-details" element={<ProductDetails />} />
         </Routes>
       </main>
       <Footer />

@@ -32,7 +32,7 @@ export default function FeaturedProducts() {
   }, []);
 
   return (
-    <section className="mx-auto mt-4 w-full rounded-2xl bg-white px-3 py-6 shadow-lg sm:px-6 sm:py-8">
+    <section className="mx-auto mt-4 w-full rounded-2xl bg-white px-3 py-6 shadow-lg sm:px-3">
       {/* Header */}
       <div className="mb-6 flex items-center justify-between">
         <div className="flex items-center gap-3">
@@ -71,7 +71,7 @@ export default function FeaturedProducts() {
                 <img
                   src={image}
                   alt={name}
-                  className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-110"
+                  className="h-full w-full transition-transform duration-500 group-hover:scale-110"
                   onError={(e) => {
                     e.target.src =
                       "https://via.placeholder.com/300x300?text=Product";
@@ -100,7 +100,6 @@ export default function FeaturedProducts() {
             </Link>
           );
         })}
-        ;
       </div>
 
       {/* Mobile View All Button */}
