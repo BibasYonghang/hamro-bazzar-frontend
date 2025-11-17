@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Search,
   Filter,
@@ -19,6 +20,8 @@ export default function ElectronicsProducts() {
   const [isVisible, setIsVisible] = useState(false);
   const heroRef = useRef(null);
   const productsRef = useRef(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -304,13 +307,18 @@ export default function ElectronicsProducts() {
                     >
                       Add <ShoppingCart className="inline h-5 w-5" />
                     </button>
-                    <Link
-                      to="/product-details"
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigate(`/products/${product._id}`, {
+                          state: { product },
+                        });
+                      }}
                       className="rounded-lg bg-blue-800 p-2 text-white transition-colors hover:cursor-pointer hover:bg-blue-900"
                       title="Add to cart"
                     >
                       Buy Now
-                    </Link>
+                    </button>
                   </div>
                 </div>
               </Link>

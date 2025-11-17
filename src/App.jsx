@@ -17,6 +17,8 @@ import GamingProducts from "./pages/GamingProducts";
 import HomeFurnitureProducts from "./pages/HomeFurnitureProducts";
 import AllProducts from "./pages/AllProducts";
 import ProductDetails from "./pages/ProductDetails";
+import ScrollToTop from "./components/shared/ScrollToTop.jsx";
+import PaymentChoice from "./pages/PaymentChoice.jsx";
 
 function App() {
   // 1. Create cart state
@@ -30,8 +32,8 @@ function App() {
 
   return (
     <div className="flex flex-col">
-      <Navbar cartCount={cart.length} />{" "}
-      {/* Optional: pass cart count to navbar */}
+      <Navbar cartCount={cart.length} />
+      <ScrollToTop />
       <main>
         <Routes>
           <Route path="/" element={<Home onAddToCart={handleAddToCart} />} />
@@ -47,7 +49,8 @@ function App() {
           <Route path="/gaming" element={<GamingProducts />} />
           <Route path="/home-furniture" element={<HomeFurnitureProducts />} />
           <Route path="/all-products" element={<AllProducts />} />
-          <Route path="/product-details" element={<ProductDetails />} />
+          <Route path="/products/:id" element={<ProductDetails />} />
+          <Route path="/payment-choice" element={<PaymentChoice />} />
         </Routes>
       </main>
       <Footer />

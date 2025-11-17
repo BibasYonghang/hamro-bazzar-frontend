@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Search,
   Filter,
@@ -21,6 +22,8 @@ export default function GamingProducts() {
   const [isVisible, setIsVisible] = useState(false);
   const heroRef = useRef(null);
   const productsRef = useRef(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -386,7 +389,12 @@ export default function GamingProducts() {
 
                     {/* Buy Now */}
                     <button
-                      onClick="/product-deatils"
+                      onClick={(e) => {
+                        e.preventDefault();
+                        navigate(`/products/${product._id}`, {
+                          state: { product },
+                        });
+                      }}
                       className="rounded-lg bg-purple-600 px-7 py-2 text-sm text-white shadow-md hover:cursor-pointer hover:bg-purple-700"
                     >
                       Buy Now

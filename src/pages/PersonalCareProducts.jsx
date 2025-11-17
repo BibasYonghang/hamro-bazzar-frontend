@@ -1,5 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+
 import {
   Search,
   Filter,
@@ -20,6 +22,8 @@ export default function PersonalCareProducts() {
   const [isVisible, setIsVisible] = useState(false);
   const heroRef = useRef(null);
   const productsRef = useRef(null);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -314,7 +318,7 @@ export default function PersonalCareProducts() {
                         e.preventDefault();
                         // Add to cart logic here
                       }}
-                      className="transform hover:cursor-pointer rounded-lg bg-gradient-to-r from-pink-600 to-rose-600 p-2 text-white shadow-md transition-all duration-200 hover:scale-105 hover:from-pink-700 hover:to-rose-700 hover:shadow-lg"
+                      className="transform rounded-lg bg-gradient-to-r from-pink-600 to-rose-600 px-7 py-2 text-white shadow-md transition-all duration-200 hover:scale-105 hover:cursor-pointer hover:from-pink-700 hover:to-rose-700 hover:shadow-lg"
                       title="Add to cart"
                     >
                       <span>Add</span>{" "}
@@ -323,9 +327,11 @@ export default function PersonalCareProducts() {
                     <button
                       onClick={(e) => {
                         e.preventDefault();
-                        // Add to cart logic here
+                        navigate(`/products/${product._id}`, {
+                          state: { product },
+                        });
                       }}
-                      className="transform rounded-lg bg-gradient-to-r from-pink-800 to-rose-900 p-2 text-white shadow-md transition-all duration-200 hover:scale-105 hover:cursor-pointer hover:from-pink-700 hover:to-rose-700 hover:shadow-lg"
+                      className="transform rounded-lg bg-gradient-to-r from-pink-800 to-rose-900 px-7 py-2 text-white shadow-md transition-all duration-200 hover:scale-105 hover:cursor-pointer hover:from-pink-700 hover:to-rose-700 hover:shadow-lg"
                       title="Add to cart"
                     >
                       Buy Now

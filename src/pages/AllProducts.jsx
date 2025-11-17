@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import {
   Search,
   Filter,
@@ -29,6 +30,7 @@ export default function AllProducts() {
   const [isVisible, setIsVisible] = useState(false);
   const heroRef = useRef(null);
   const productsRef = useRef(null);
+  const navigate = useNavigate();
 
   // Get max price for range slider
   const maxPrice = Math.max(...products.map((p) => p.price || 0), 1000);
@@ -50,7 +52,7 @@ export default function AllProducts() {
     const fetchProducts = async () => {
       try {
         // Try to fetch all products from /api/products
-        const res = await fetch("http://localhost:5000/api/products");
+        const res = await fetch("http://localhost:5000/api/all-products");
         if (res.ok) {
           const data = await res.json();
           setProducts(data);
@@ -560,13 +562,18 @@ export default function AllProducts() {
                       >
                         Add <ShoppingCart className="inline h-5 w-5" />
                       </button>
-                      <Link
-                        to="/product-details"
+                      <button
+                        onClick={(e) => {
+                          e.preventDefault();
+                          navigate(`/products/${product._id}`, {
+                            state: { product },
+                          });
+                        }}
                         className="transform rounded-lg bg-gradient-to-r from-purple-800 to-indigo-900 px-7 py-2 text-white shadow-lg transition-all duration-200 hover:scale-105 hover:cursor-pointer hover:from-purple-700 hover:to-indigo-700 hover:shadow-xl"
                         title="Add to cart"
                       >
                         Buy Now
-                      </Link>
+                      </button>
                     </div>
                   </div>
                 </Link>
@@ -581,7 +588,7 @@ export default function AllProducts() {
                     setCurrentPage((prev) => Math.max(1, prev - 1))
                   }
                   disabled={currentPage === 1}
-                  className="rounded-lg border border-gray-300 px-4 py-2 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="rounded-lg border border-gray-300 px-4 py-2 transition hover:cursor-pointer hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   Previous
                 </button>
@@ -596,7 +603,7 @@ export default function AllProducts() {
                       <button
                         key={page}
                         onClick={() => setCurrentPage(page)}
-                        className={`rounded-lg border px-4 py-2 transition ${
+                        className={`rounded-lg border px-4 py-2 transition hover:cursor-pointer ${
                           currentPage === page
                             ? "border-blue-600 bg-blue-600 text-white"
                             : "border-gray-300 hover:bg-gray-50"
@@ -622,7 +629,7 @@ export default function AllProducts() {
                     setCurrentPage((prev) => Math.min(totalPages, prev + 1))
                   }
                   disabled={currentPage === totalPages}
-                  className="rounded-lg border border-gray-300 px-4 py-2 transition hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
+                  className="rounded-lg border border-gray-300 px-4 py-2 transition hover:cursor-pointer hover:bg-gray-50 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   Next
                 </button>
