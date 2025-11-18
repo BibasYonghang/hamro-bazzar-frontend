@@ -1,13 +1,15 @@
-import React, { useRef } from "react";
+import React, { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Sparkles, ShieldCheck, CreditCard, ArrowLeft } from "lucide-react";
 
 // 4D/3D tilt card animation hook (inspired by use3DTilt)
-function use4DTilt(maxAngle = 27) {
+function use4DTilt(maxAngle = 27, stopAnimation = false) {
   const ref = useRef(null);
 
   function handleMove(e) {
+    if (stopAnimation) return;
     const card = ref.current;
+    if (!card) return;
     const bounds = card.getBoundingClientRect();
     const x = e.clientX - bounds.left;
     const y = e.clientY - bounds.top;
@@ -22,12 +24,24 @@ function use4DTilt(maxAngle = 27) {
   }
 
   function handleLeave() {
+    if (stopAnimation) return;
     const card = ref.current;
+    if (!card) return;
     card.style.transform =
       "perspective(1400px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)";
     card.style.boxShadow =
       "0 8px 28px 0 rgba(59,130,246,0.18), 0 4px 18px 0 rgba(139,92,246,0.13)";
   }
+
+  // Reset tilt if animation is stopped (when button is hovered/clicked/pressed)
+  React.useEffect(() => {
+    if (stopAnimation && ref.current) {
+      ref.current.style.transform =
+        "perspective(1400px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)";
+      ref.current.style.boxShadow =
+        "0 8px 28px 0 rgba(59,130,246,0.18), 0 4px 18px 0 rgba(139,92,246,0.13)";
+    }
+  }, [stopAnimation]);
 
   return { ref, handleMove, handleLeave };
 }
@@ -38,7 +52,7 @@ const PAYMENTS = [
     label: "eSewa",
     bgGradient: "from-green-200 via-green-300 to-green-500",
     accent: "bg-green-500",
-    img: "https://upload.wikimedia.org/wikipedia/commons/7/7e/eSewa_Logo.png",
+    img: "https://res.cloudinary.com/dorwxf5yq/image/upload/v1763390605/esewa-removebg-preview_nsaprz.png",
     desc: "Pay seamlessly with your eSewa wallet.\nSecure, fast & widely trusted in Nepal.",
     button: {
       text: "Pay with eSewa",
@@ -52,7 +66,7 @@ const PAYMENTS = [
     label: "Khalti",
     bgGradient: "from-violet-200 via-purple-200 to-violet-500",
     accent: "bg-violet-600",
-    img: "https://upload.wikimedia.org/wikipedia/en/5/5f/Khalti_logo.png",
+    img: "https://res.cloudinary.com/dorwxf5yq/image/upload/v1763389595/636d065d9c7e80680e0a5f5bpng_aey0fz.png",
     desc: "Ace your checkout with Khalti wallet.\nLightning-fast & super reliable.",
     button: {
       text: "Pay with Khalti",
@@ -65,16 +79,31 @@ const PAYMENTS = [
 
 export default function PaymentChoice() {
   const navigate = useNavigate();
-  const tilt1 = use4DTilt();
-  const tilt2 = use4DTilt();
 
+  // Manage tilt lock for each payment card separately
+  const [tiltLockedArr, setTiltLockedArr] = useState([false, false]);
+
+  // Pass state to both tilt hooks
+  const tilt1 = use4DTilt(27, tiltLockedArr[0]);
+  const tilt2 = use4DTilt(27, tiltLockedArr[1]);
+
+  // Utility functions
+  const setTiltLock = (idx, val) => {
+    setTiltLockedArr((old) => {
+      if (old[idx] === val) return old;
+      const arr = [...old];
+      arr[idx] = val;
+      return arr;
+    });
+  };
+
+  // Payment choice + navigation
   const handlePayment = (method) => {
-    // Animate card out, then navigate
-    navigate(`/payment/${method}`);
+    setTimeout(() => navigate(`/payment/${method}`), 0);
   };
 
   return (
-    <div className="relative min-h-screen w-full overflow-x-hidden bg-gradient-to-br from-cyan-50 via-sky-100 to-gray-50 transition-colors dark:from-black dark:via-gray-900 dark:to-gray-950">
+    <div className="relative min-h-screen w-full bg-gradient-to-br from-cyan-50 via-sky-100 to-gray-50 transition-colors dark:from-black dark:via-gray-900 dark:to-gray-950">
       {/* Animated Sparkle BG */}
       <div className="pointer-events-none absolute inset-0 -z-10 select-none">
         {/* Top Left Glow */}
@@ -104,7 +133,7 @@ export default function PaymentChoice() {
       </div>
       {/* Header */}
       <section className="mx-auto mt-4 mb-10 w-full max-w-3xl px-2 text-start sm:mt-2 sm:text-center">
-        <h1 className="mb-3 bg-gradient-to-tr from-cyan-800 via-blue-900 to-violet-800 bg-clip-text text-2xl font-extrabold tracking-tighter text-transparent drop-shadow-lg sm:text-4xl md:text-5xl lg:text-6xl">
+        <h1 className="mb-3 bg-gradient-to-tr from-cyan-800 via-blue-900 to-violet-800 bg-clip-text text-2xl font-extrabold text-transparent drop-shadow-lg sm:text-3xl md:text-4xl">
           Select Payment Method
         </h1>
         <div className="flex max-w-2xl flex-col gap-2 sm:mx-auto sm:items-center md:flex-row md:justify-center">
@@ -122,14 +151,14 @@ export default function PaymentChoice() {
             </span>
           </div>
         </div>
-        <p className="mx-auto mt-3 max-w-xl text-base text-gray-500 dark:text-gray-300">
+        <p className="mx-auto mt-3 text-base text-gray-500 dark:text-gray-300">
           Pay with your favorite Nepali wallet. Just tap one card and finish in
           under a minute!
         </p>
       </section>
       {/* Payment Cards */}
       <main className="mx-auto w-full max-w-5xl px-2">
-        <div className="grid grid-cols-1 gap-x-9 gap-y-7 sm:grid-cols-2">
+        <div className="grid grid-cols-1 gap-x-15 gap-y-7 sm:grid-cols-2">
           {PAYMENTS.map((p, i) => {
             const tilt = i === 0 ? tilt1 : tilt2;
             return (
@@ -137,22 +166,35 @@ export default function PaymentChoice() {
                 key={p.key}
                 ref={tilt.ref}
                 tabIndex={0}
-                onMouseMove={tilt.handleMove}
-                onMouseLeave={tilt.handleLeave}
-                onTouchStart={(e) => {
-                  // fallback: some mobile 3d effect
-                  tilt.ref.current.style.transform =
-                    "perspective(1400px) rotateX(5deg) scale3d(1.04,1.04,1.04)";
-                  tilt.ref.current.style.boxShadow =
-                    "0 8px 32px 5px #fffdbb99, 0 2px 33px 2px #a7ffea44";
+                onMouseMove={tiltLockedArr[i] ? undefined : tilt.handleMove}
+                onMouseLeave={(e) => {
+                  // If button is pressed/hovering, keep locked -- otherwise unlock
+                  setTiltLock(i, false);
+                  tilt.handleLeave(e);
                 }}
-                onTouchEnd={tilt.handleLeave}
+                onTouchStart={
+                  tiltLockedArr[i]
+                    ? undefined
+                    : (e) => {
+                        tilt.ref.current.style.transform =
+                          "perspective(1400px) rotateX(5deg) scale3d(1.04,1.04,1.04)";
+                        tilt.ref.current.style.boxShadow =
+                          "0 8px 32px 5px #fffdbb99, 0 2px 33px 2px #a7ffea44";
+                      }
+                }
+                onTouchEnd={(e) => {
+                  setTiltLock(i, false);
+                  tilt.handleLeave(e);
+                }}
                 className={
                   `relative flex flex-col items-center gap-1 rounded-[2.3rem] bg-gradient-to-br p-7 pb-6 ${p.bgGradient} shadow-xl ring-2 transition-all hover:shadow-2xl ${p.ring} ${p.glow} outline-none hover:scale-[1.038] focus:scale-[1.03] active:scale-[0.97] ` +
                   " " +
                   "payment-card"
                 }
-                onClick={() => handlePayment(p.key)}
+                onClick={() => {
+                  // Card click: Only navigate to payment if NOT clicking button (i.e., click bubble-up avoided by button)
+                  handlePayment(p.key);
+                }}
                 style={{
                   minHeight: "320px",
                   boxShadow:
@@ -189,14 +231,21 @@ export default function PaymentChoice() {
                 </p>
                 {/* Action */}
                 <button
-                  className={`relative z-10 mt-auto hover:cursor-pointer rounded-lg px-7 py-2.5 text-lg font-extrabold tracking-tight text-white uppercase shadow-lg ring-2 ring-white/10 outline-none focus:outline-none ${p.button.bg} drop-shadow-md transition-all`}
+                  className={`relative z-10 mt-auto rounded-lg px-7 py-2.5 text-lg font-extrabold tracking-tight text-white uppercase shadow-lg ring-2 ring-white/10 outline-none hover:cursor-pointer focus:outline-none ${p.button.bg} drop-shadow-md transition-all`}
                   tabIndex={-1}
+                  // Mouse: Lock tilt on mouse enter, unlock on mouse leave
+                  onMouseEnter={() => setTiltLock(i, true)}
+                  onMouseLeave={() => setTiltLock(i, false)}
+                  // Touch: Lock on touch start, unlock on touch end/cancel
+                  onTouchStart={() => setTiltLock(i, true)}
+                  onTouchEnd={() => setTiltLock(i, false)}
+                  // Stop event bubbling to card
                   onClick={(e) => {
                     e.stopPropagation();
                     handlePayment(p.key);
                   }}
                 >
-                  <span className="absolute -top-3 z-50 -left-3 h-3 w-3 animate-pulse rounded-full bg-white/30 opacity-80 blur-[2.5px] cursor-pointer" />
+                  <span className="absolute -top-3 -left-3 z-50 h-3 w-3 animate-pulse cursor-pointer rounded-full bg-white/30 opacity-80 blur-[2.5px]" />
                   {p.button.text}
                 </button>
                 {/* Animated Sparkles */}

@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, Sparkles } from "lucide-react";
+
+// Optionally, define a fallbackProducts array here if not defined elsewhere
+const fallbackProducts = [];
 
 export default function FeaturedProducts() {
   const [isVisible, setIsVisible] = useState(false);
   const [featuredProducts, setFeaturedProducts] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 100);
@@ -15,7 +19,7 @@ export default function FeaturedProducts() {
     const fetchFeaturedProducts = async () => {
       try {
         const response = await fetch(
-          "http://localhost:5000/api/featured-products",
+          "http://localhost:5000/api/featured-products"
         );
         const data = await response.json();
         if (Array.isArray(data) && data.length > 0) {
@@ -52,11 +56,11 @@ export default function FeaturedProducts() {
 
       {/* Products Grid */}
       <div className="grid w-full grid-cols-2 gap-3 sm:grid-cols-3 sm:gap-4 xl:grid-cols-6">
-        {featuredProducts.map(({ name, image, link, icon }, idx) => {
+        {featuredProducts.map((product, idx) => {
+          const { name, image, icon, _id } = product;
           return (
-            <Link
-              key={idx}
-              to={link}
+            <div
+              key={_id || idx}
               className={`group relative w-full transform overflow-hidden rounded-xl bg-white shadow-md transition-all duration-300 hover:-translate-y-2 hover:shadow-xl ${
                 isVisible
                   ? "translate-y-0 opacity-100"
@@ -64,6 +68,17 @@ export default function FeaturedProducts() {
               }`}
               style={{
                 transitionDelay: `${idx * 50}ms`,
+                cursor: "pointer"
+              }}
+              onClick={() =>
+                navigate(`/products/${_id}`, { state: { product } })
+              }
+              tabIndex={0}
+              role="button"
+              onKeyDown={e => {
+                if (e.key === "Enter" || e.key === " ") {
+                  navigate(`/products/${_id}`, { state: { product } });
+                }
               }}
             >
               {/* Image Container */}
@@ -72,7 +87,7 @@ export default function FeaturedProducts() {
                   src={image}
                   alt={name}
                   className="h-full w-full transition-transform duration-500 group-hover:scale-110"
-                  onError={(e) => {
+                  onError={e => {
                     e.target.src =
                       "https://via.placeholder.com/300x300?text=Product";
                   }}
@@ -97,7 +112,7 @@ export default function FeaturedProducts() {
               <div className="absolute right-3 bottom-3 translate-x-[-10px] transform opacity-0 transition-all duration-300 group-hover:translate-x-0 group-hover:opacity-100">
                 <ArrowRight className="h-5 w-5 text-white" />
               </div>
-            </Link>
+            </div>
           );
         })}
       </div>
