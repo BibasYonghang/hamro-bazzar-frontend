@@ -65,7 +65,7 @@ export default function BlogDetail() {
           <div className="absolute top-20 left-20 w-64 h-64 bg-white rounded-full blur-3xl animate-pulse"></div>
           <div className="absolute bottom-20 right-20 w-80 h-80 bg-white rounded-full blur-3xl animate-pulse" style={{ animationDelay: "1s" }}></div>
         </div>
-        <div className="max-w-4xl mx-auto px-6 relative z-10">
+        <div className="w-[95vw] mx-auto px-6 relative z-10">
           <Link
             to="/blog"
             className={`inline-flex items-center gap-2 text-green-100 hover:text-white mb-6 transition-all duration-1000 ${
@@ -112,7 +112,7 @@ export default function BlogDetail() {
       </div>
 
       {/* Blog Content */}
-      <article className="max-w-4xl mx-auto px-6 py-16">
+      <article className=" mx-auto px-6 py-16">
         <div
           ref={contentRef}
           className={`bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 transition-all duration-1000 ${

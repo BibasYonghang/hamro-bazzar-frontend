@@ -19,6 +19,9 @@ import AllProducts from "./pages/AllProducts";
 import ProductDetails from "./pages/ProductDetails";
 import ScrollToTop from "./components/shared/ScrollToTop.jsx";
 import PaymentChoice from "./pages/PaymentChoice.jsx";
+import PaymentFailure from "./pages/PaymentFailure.jsx";
+import PaymentSuccess from "./pages/PaymentSucess.jsx";
+import ThankYou from "./pages/ThankYou.jsx";
 
 function App() {
   // 1. Create cart state
@@ -37,7 +40,7 @@ function App() {
       <main>
         <Routes>
           <Route path="/" element={<Home onAddToCart={handleAddToCart} />} />
-          <Route path="/offer-product" element={<OfferProduct />} />
+          <Route path="/offered-products" element={<OfferProduct />} />
           <Route path="/cart" element={<CartPage cart={cart} />} />
           <Route path="/checkout" element={<CheckoutPage />} />
           <Route path="/blog" element={<Blog />} />
@@ -51,6 +54,10 @@ function App() {
           <Route path="/all-products" element={<AllProducts />} />
           <Route path="/products/:id" element={<ProductDetails />} />
           <Route path="/payment-choice" element={<PaymentChoice />} />
+
+          <Route path="/payment-success" element={<PaymentSuccess />} />
+          <Route path="/payment-failure" element={<PaymentFailure />} />
+          <Route path="/thank-you" element={<ThankYou />} />
         </Routes>
       </main>
       <Footer />

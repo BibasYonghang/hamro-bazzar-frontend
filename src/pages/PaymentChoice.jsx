@@ -1,57 +1,161 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Sparkles, ShieldCheck, CreditCard, ArrowLeft } from "lucide-react";
+import { isAuthenticated } from "../auth";
+import { APP_URL } from "../config";
+import axios from "axios";
+import { toast } from "react-hot-toast";
 
-// 4D/3D tilt card animation hook (inspired by use3DTilt)
-function use4DTilt(maxAngle = 27, stopAnimation = false) {
+// -----------------------------
+// Utilities: clamp & lerp
+// -----------------------------
+const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
+const lerp = (a, b, t) => a + (b - a) * t;
+
+// -----------------------------
+// Hook: per-card 4D tilt
+// -----------------------------
+function use4DTilt({
+  maxAngle = 36,
+  scale = 1.09,
+  spring = 0.12,
+  stop = false,
+} = {}) {
   const ref = useRef(null);
+  const state = useRef({ rx: 0, ry: 0, tx: 0, ty: 0 });
+  const raf = useRef(null);
 
-  function handleMove(e) {
-    if (stopAnimation) return;
-    const card = ref.current;
-    if (!card) return;
-    const bounds = card.getBoundingClientRect();
-    const x = e.clientX - bounds.left;
-    const y = e.clientY - bounds.top;
-    const cx = bounds.width / 2;
-    const cy = bounds.height / 2;
-    const rotY = ((x - cx) / cx) * maxAngle;
-    const rotX = ((cy - y) / cy) * maxAngle;
-    card.style.transform = `perspective(1400px) rotateX(${rotX}deg) rotateY(${rotY}deg) scale3d(1.08,1.08,1.08)`;
-    card.style.boxShadow =
-      `0 16px 46px 0 rgba(69,150,255,0.20), 0 6px 22px 0 rgba(162,88,249,0.14), 0 0 42px 6px #b5fff7bb` +
-      (Math.abs(rotY) > 13 ? ", 0 0 72px 14px #6fd4c2" : "");
-  }
+  useEffect(() => {
+    return () => cancelAnimationFrame(raf.current);
+  }, []);
 
-  function handleLeave() {
-    if (stopAnimation) return;
-    const card = ref.current;
-    if (!card) return;
-    card.style.transform =
-      "perspective(1400px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)";
-    card.style.boxShadow =
-      "0 8px 28px 0 rgba(59,130,246,0.18), 0 4px 18px 0 rgba(139,92,246,0.13)";
-  }
+  const apply = () => {
+    const el = ref.current;
+    if (!el) return;
 
-  // Reset tilt if animation is stopped (when button is hovered/clicked/pressed)
-  React.useEffect(() => {
-    if (stopAnimation && ref.current) {
+    state.current.rx = lerp(state.current.rx, state.current.tx, spring);
+    state.current.ry = lerp(state.current.ry, state.current.ty, spring);
+
+    const rx = state.current.rx;
+    const ry = state.current.ry;
+
+    el.style.transform = `perspective(1500px) rotateX(${rx}deg) rotateY(${ry}deg) scale3d(${scale},${scale},${scale})`;
+
+    const glow = Math.min(1, (Math.abs(rx) + Math.abs(ry)) / (maxAngle * 1.2));
+    el.style.boxShadow = `0 ${10 + glow * 40}px ${28 + glow * 60}px ${Math.round(
+      6 + glow * 18,
+    )}px rgba(80,120,255,${0.08 + glow * 0.18}), 0 6px 30px rgba(160,86,255,${0.06 + glow * 0.12})`;
+
+    raf.current = requestAnimationFrame(apply);
+  };
+
+  const handlePointer = (e) => {
+    if (stop) return;
+    const el = ref.current;
+    if (!el) return;
+
+    const rect = el.getBoundingClientRect();
+    const px = (e.clientX - rect.left) / rect.width;
+    const py = (e.clientY - rect.top) / rect.height;
+
+    const ry = (px - 0.5) * 2 * maxAngle;
+    const rx = (0.5 - py) * 2 * maxAngle;
+
+    state.current.tx = clamp(rx, -maxAngle, maxAngle);
+    state.current.ty = clamp(ry, -maxAngle, maxAngle);
+
+    if (!raf.current) raf.current = requestAnimationFrame(apply);
+  };
+
+  const reset = () => {
+    const el = ref.current;
+    if (!el) return;
+
+    const duration = 180; // ms
+    const start = performance.now();
+    const startRx = state.current.rx;
+    const startRy = state.current.ry;
+
+    const step = (time) => {
+      const t = clamp((time - start) / duration, 0, 1);
+      state.current.rx = lerp(startRx, 0, t);
+      state.current.ry = lerp(startRy, 0, t);
+
+      el.style.transform = `perspective(1500px) rotateX(${state.current.rx}deg) rotateY(${state.current.ry}deg) scale3d(${scale},${scale},${scale})`;
+
+      const glow = Math.min(
+        1,
+        (Math.abs(state.current.rx) + Math.abs(state.current.ry)) /
+          (maxAngle * 1.2),
+      );
+      el.style.boxShadow = `0 ${10 + glow * 40}px ${28 + glow * 60}px ${Math.round(
+        6 + glow * 18,
+      )}px rgba(80,120,255,${0.08 + glow * 0.18}), 0 6px 30px rgba(160,86,255,${0.06 + glow * 0.12})`;
+
+      if (t < 1) requestAnimationFrame(step);
+    };
+
+    requestAnimationFrame(step);
+  };
+
+  useEffect(() => {
+    if (stop && ref.current) {
+      cancelAnimationFrame(raf.current);
+      raf.current = null;
       ref.current.style.transform =
-        "perspective(1400px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)";
+        "perspective(1500px) rotateX(0deg) rotateY(0deg) scale3d(1,1,1)";
       ref.current.style.boxShadow =
-        "0 8px 28px 0 rgba(59,130,246,0.18), 0 4px 18px 0 rgba(139,92,246,0.13)";
+        "0 10px 30px rgba(59,130,246,0.14), 0 4px 18px rgba(139,92,246,0.08)";
     }
-  }, [stopAnimation]);
+  }, [stop]);
 
-  return { ref, handleMove, handleLeave };
+  return { ref, handlePointer, reset };
 }
 
+// -----------------------------
+// Hook: scene / parallax tilt
+// -----------------------------
+function useSceneTilt({ intensity = 8, ease = 0.08 } = {}) {
+  const target = useRef({ x: 0, y: 0 });
+  const current = useRef({ x: 0, y: 0 });
+  const raf = useRef(null);
+
+  useEffect(() => () => cancelAnimationFrame(raf.current), []);
+
+  const onMove = (e) => {
+    target.current.x = (e.clientX / window.innerWidth - 0.5) * intensity;
+    target.current.y = (e.clientY / window.innerHeight - 0.5) * intensity;
+    if (!raf.current) raf.current = requestAnimationFrame(tick);
+  };
+
+  const tick = () => {
+    current.current.x = lerp(current.current.x, target.current.x, ease);
+    current.current.y = lerp(current.current.y, target.current.y, ease);
+    raf.current = null;
+    if (
+      Math.abs(current.current.x - target.current.x) > 0.001 ||
+      Math.abs(current.current.y - target.current.y) > 0.001
+    ) {
+      raf.current = requestAnimationFrame(tick);
+    }
+  };
+
+  const getRotation = () => ({
+    x: current.current.y * -1,
+    y: current.current.x,
+  });
+
+  return { onMove, getRotation };
+}
+
+// -----------------------------
+// Payment Data
+// -----------------------------
 const PAYMENTS = [
   {
     key: "esewa",
     label: "eSewa",
     bgGradient: "from-green-200 via-green-300 to-green-500",
-    accent: "bg-green-500",
     img: "https://res.cloudinary.com/dorwxf5yq/image/upload/v1763390605/esewa-removebg-preview_nsaprz.png",
     desc: "Pay seamlessly with your eSewa wallet.\nSecure, fast & widely trusted in Nepal.",
     button: {
@@ -59,13 +163,11 @@ const PAYMENTS = [
       bg: "bg-emerald-600 hover:bg-emerald-700 focus:ring-2 focus:ring-emerald-300/70",
     },
     ring: "ring-emerald-400/30",
-    glow: "shadow-[0_0_32px_8px_#00ffad88]",
   },
   {
     key: "khalti",
     label: "Khalti",
     bgGradient: "from-violet-200 via-purple-200 to-violet-500",
-    accent: "bg-violet-600",
     img: "https://res.cloudinary.com/dorwxf5yq/image/upload/v1763389595/636d065d9c7e80680e0a5f5bpng_aey0fz.png",
     desc: "Ace your checkout with Khalti wallet.\nLightning-fast & super reliable.",
     button: {
@@ -73,67 +175,148 @@ const PAYMENTS = [
       bg: "bg-violet-600 hover:bg-violet-700 focus:ring-2 focus:ring-violet-400/80",
     },
     ring: "ring-violet-400/30",
-    glow: "shadow-[0_0_32px_8px_#a586ff88]",
   },
 ];
 
-export default function PaymentChoice() {
+// -----------------------------
+// Component
+// -----------------------------
+export default function PaymentChoice3D() {
+  const { token } = isAuthenticated();
   const navigate = useNavigate();
 
-  // Manage tilt lock for each payment card separately
-  const [tiltLockedArr, setTiltLockedArr] = useState([false, false]);
+  const [locked, setLocked] = useState([false, false]);
+  const [selectedMethod, setSelectedMethod] = useState(null); // NEW STATE
 
-  // Pass state to both tilt hooks
-  const tilt1 = use4DTilt(27, tiltLockedArr[0]);
-  const tilt2 = use4DTilt(27, tiltLockedArr[1]);
+  const scene = useSceneTilt({ intensity: 12, ease: 0.09 });
+  const tiltHooks = [
+    use4DTilt({ maxAngle: 44, scale: 1.095 }),
+    use4DTilt({ maxAngle: 44, scale: 1.095 }),
+  ];
+  const setLock = (i, v) =>
+    setLocked((s) => s.map((x, idx) => (idx === i ? v : x)));
 
-  // Utility functions
-  const setTiltLock = (idx, val) => {
-    setTiltLockedArr((old) => {
-      if (old[idx] === val) return old;
-      const arr = [...old];
-      arr[idx] = val;
-      return arr;
-    });
+  const handlePayment = (method) => {
+    window.navigator.vibrate?.(30);
+    setSelectedMethod(method); // SELECT METHOD ON CLICK
   };
 
-  // Payment choice + navigation
-  const handlePayment = (method) => {
-    setTimeout(() => navigate(`/payment/${method}`), 0);
+  const bgRef = useRef(null);
+  useEffect(() => {
+    const updateParallax = () => {
+      const rot = scene.getRotation();
+      if (bgRef.current) {
+        bgRef.current.style.transform = `translate3d(${rot.y * -10}px, ${rot.x * -10}px, 0) rotate(${rot.y * 0.12}deg)`;
+      }
+    };
+    let rafId = null;
+    const loop = () => {
+      updateParallax();
+      rafId = requestAnimationFrame(loop);
+    };
+    rafId = requestAnimationFrame(loop);
+    return () => cancelAnimationFrame(rafId);
+  }, [scene]);
+
+  const handleProceed = async (e) => {
+    e.preventDefault();
+    if (!selectedMethod) {
+      toast.error("Please select a payment method first!");
+      return;
+    }
+
+    const paymentData = {
+      amount: 1000,
+      phone: "9801234567",
+      fullName: "Bibas Yonghang",
+    };
+
+    try {
+      if (selectedMethod === "esewa") {
+        const { data } = await axios.post(
+          `${APP_URL}/api/generate-signature`,
+          paymentData,
+          {
+            headers: {
+              "Content-Type": "application/json",
+              Authorization: `Bearer ${token}`,
+            },
+          },
+        );
+
+        const formData = {
+          ...data,
+          success_url: `${window.location.origin}/payment-success`,
+          failure_url: `${window.location.origin}/payment-failure`,
+          signed_field_names: "total_amount,transaction_uuid,product_code",
+        };
+
+        const form = document.createElement("form");
+        form.method = "POST";
+        form.action = "https://rc-epay.esewa.com.np/api/epay/main/v2/form";
+
+        Object.keys(formData).forEach((key) => {
+          const input = document.createElement("input");
+          input.type = "hidden";
+          input.name = key;
+          input.value = formData[key];
+          form.appendChild(input);
+        });
+
+        document.body.appendChild(form);
+        form.submit();
+      } else {
+        alert("Khalti integration coming soon!");
+      }
+    } catch (err) {
+      console.error("Payment initiation failed:", err);
+      toast.error("Something went wrong. Redirecting...");
+    }
   };
 
   return (
-    <div className="relative min-h-screen w-full bg-gradient-to-br from-cyan-50 via-sky-100 to-gray-50 transition-colors dark:from-black dark:via-gray-900 dark:to-gray-950">
-      {/* Animated Sparkle BG */}
-      <div className="pointer-events-none absolute inset-0 -z-10 select-none">
-        {/* Top Left Glow */}
-        <div className="absolute top-[-16vh] left-[-11vw] h-[35vw] w-[35vw] rounded-full bg-gradient-to-tr from-cyan-300/40 via-blue-300/10 to-transparent blur-3xl" />
-        {/* Bottom Right Glow */}
-        <div className="absolute right-[-15vw] bottom-[-14vh] h-[28vw] w-[33vw] rounded-full bg-gradient-to-br from-violet-300/40 via-emerald-300/10 to-transparent blur-3xl" />
-        {/* Random Sparks */}
-        <Sparkles
-          color="#77fdfadb"
-          className="absolute top-24 left-24 h-8 w-8 animate-bounce"
-        />
-        <Sparkles
-          color="#c494fd91"
-          className="absolute right-16 bottom-36 h-7 w-7 animate-pulse"
-        />
+    <div
+      className="relative min-h-screen w-full overflow-hidden bg-gradient-to-br from-black via-slate-900 to-violet-950 text-white"
+      onMouseMove={scene.onMove}
+      onTouchMove={(e) => scene.onMove(e.touches ? e.touches[0] : e)}
+      style={{ WebkitFontSmoothing: "antialiased" }}
+    >
+      {/* Parallax BG */}
+      <div
+        ref={bgRef}
+        className="pointer-events-none absolute inset-0 -z-10 transition-transform will-change-transform"
+      >
+        <div className="absolute -top-48 -left-56 h-[60vw] w-[60vw] rounded-full bg-gradient-to-tr from-cyan-400/30 via-emerald-300/10 to-transparent blur-3xl" />
+        <div className="absolute -right-56 -bottom-48 h-[50vw] w-[50vw] rounded-full bg-gradient-to-br from-violet-400/30 via-fuchsia-300/10 to-transparent blur-3xl" />
+        <svg
+          className="absolute inset-0 h-full w-full opacity-10"
+          preserveAspectRatio="none"
+        >
+          <defs>
+            <linearGradient id="g1" x1="0" x2="1">
+              <stop offset="0%" stopColor="#00ffd6" stopOpacity="0.06" />
+              <stop offset="100%" stopColor="#a586ff" stopOpacity="0.02" />
+            </linearGradient>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#g1)" />
+        </svg>
       </div>
-      {/* Navigation Back */}
-      <div className="mt-4 flex w-full max-w-7xl items-center px-2 sm:px-8">
+
+      {/* Nav */}
+      <div className="mt-6 flex w-full max-w-7xl items-center px-4 sm:px-8">
         <button
           onClick={() => navigate(-1)}
           type="button"
-          className="flex items-center gap-2 rounded-xl bg-gradient-to-br from-gray-900/80 via-cyan-900/80 to-violet-900/80 px-3 py-[7px] font-semibold text-cyan-100 shadow-sm ring-1 ring-cyan-400/20 transition hover:scale-[1.04] active:scale-[.98]"
+          className="flex items-center gap-2 rounded-xl bg-white/5 px-3 py-2 font-semibold text-white/90 shadow-sm ring-1 ring-white/5 backdrop-blur-md transition-transform hover:scale-[1.03]"
         >
-          <ArrowLeft size={21} className="text-cyan-400" />
+          <ArrowLeft size={18} />
           <span className="text-sm font-bold">Back</span>
         </button>
       </div>
+
       {/* Header */}
-      <section className="mx-auto mt-4 mb-10 w-full max-w-3xl px-2 text-start sm:mt-2 sm:text-center">
-        <h1 className="mb-3 bg-gradient-to-tr from-cyan-800 via-blue-900 to-violet-800 bg-clip-text text-2xl font-extrabold text-transparent drop-shadow-lg sm:text-3xl md:text-4xl">
+      <header className="mx-auto mb-10 w-full max-w-3xl px-2 text-start sm:text-center">
+        <h1 className="mb-3 animate-pulse bg-gradient-to-tr text-2xl font-extrabold text-sky-400 drop-shadow-lg sm:text-3xl md:text-4xl">
           Select Payment Method
         </h1>
         <div className="flex max-w-2xl flex-col gap-2 sm:mx-auto sm:items-center md:flex-row md:justify-center">
@@ -155,143 +338,121 @@ export default function PaymentChoice() {
           Pay with your favorite Nepali wallet. Just tap one card and finish in
           under a minute!
         </p>
-      </section>
-      {/* Payment Cards */}
-      <main className="mx-auto w-full max-w-5xl px-2">
-        <div className="grid grid-cols-1 gap-x-15 gap-y-7 sm:grid-cols-2">
-          {PAYMENTS.map((p, i) => {
-            const tilt = i === 0 ? tilt1 : tilt2;
+      </header>
+
+      {/* Cards Grid */}
+      <main className="mx-auto w-full max-w-6xl px-6 pb-12">
+        <div className="grid grid-cols-1 gap-20 sm:grid-cols-2">
+          {PAYMENTS.map((p, idx) => {
+            const hook = tiltHooks[idx];
+            const isSelected = selectedMethod === p.key;
             return (
               <div
                 key={p.key}
-                ref={tilt.ref}
-                tabIndex={0}
-                onMouseMove={tiltLockedArr[i] ? undefined : tilt.handleMove}
-                onMouseLeave={(e) => {
-                  // If button is pressed/hovering, keep locked -- otherwise unlock
-                  setTiltLock(i, false);
-                  tilt.handleLeave(e);
+                ref={hook.ref}
+                onMouseMove={locked[idx] ? undefined : hook.handlePointer}
+                onTouchStart={() => setLock(idx, true)}
+                onTouchEnd={() => setLock(idx, false)}
+                onMouseLeave={() => {
+                  setLock(idx, false);
+                  hook.reset();
                 }}
-                onTouchStart={
-                  tiltLockedArr[i]
-                    ? undefined
-                    : (e) => {
-                        tilt.ref.current.style.transform =
-                          "perspective(1400px) rotateX(5deg) scale3d(1.04,1.04,1.04)";
-                        tilt.ref.current.style.boxShadow =
-                          "0 8px 32px 5px #fffdbb99, 0 2px 33px 2px #a7ffea44";
-                      }
-                }
-                onTouchEnd={(e) => {
-                  setTiltLock(i, false);
-                  tilt.handleLeave(e);
-                }}
-                className={
-                  `relative flex flex-col items-center gap-1 rounded-[2.3rem] bg-gradient-to-br p-7 pb-6 ${p.bgGradient} shadow-xl ring-2 transition-all hover:shadow-2xl ${p.ring} ${p.glow} outline-none hover:scale-[1.038] focus:scale-[1.03] active:scale-[0.97] ` +
-                  " " +
-                  "payment-card"
-                }
-                onClick={() => {
-                  // Card click: Only navigate to payment if NOT clicking button (i.e., click bubble-up avoided by button)
-                  handlePayment(p.key);
-                }}
-                style={{
-                  minHeight: "320px",
-                  boxShadow:
-                    "0 8px 44px 0 rgba(69,150,255,0.14), 0 4px 16px 0 rgba(105,95,255,0.12)",
-                  transition:
-                    "transform .22s cubic-bezier(.15,.98,.48,1.13), box-shadow .15s",
-                  zIndex: 2 + i,
-                }}
+                className={`relative hover:cursor-progress isolate flex flex-col items-center gap-4 rounded-3xl p-8 pt-10 ${p.bgGradient} transform-gpu bg-white/5 bg-clip-padding ring-1 ring-white/6 backdrop-blur-md transition-shadow duration-300 will-change-transform ${
+                  isSelected ? "ring-4 ring-white/40" : ""
+                }`}
+                style={{ minHeight: 320, cursor: "pointer" }}
+                onClick={() => handlePayment(p.key)}
               >
-                {/* Glow Border */}
-                <div className="pointer-events-none absolute -inset-1.5 z-20 rounded-[2.8rem] bg-gradient-to-br from-white/40 via-cyan-300/10 to-transparent blur-[6px]" />
-                {/* logo */}
-                <img
-                  src={p.img}
-                  alt={p.label}
-                  className={
-                    `mb-5 h-20 w-auto drop-shadow-xl transition-transform duration-200 group-hover:scale-[1.10]` +
-                    (p.key === "khalti" ? " brightness-[1.12]" : "")
-                  }
-                  draggable="false"
+                {/* ... keep rest of the card UI same */}
+                <div
+                  className="pointer-events-none absolute -inset-1 rounded-3xl opacity-80 blur-[12px]"
+                  style={{
+                    background:
+                      "linear-gradient(120deg, rgba(0,255,213,0.12), rgba(165,95,255,0.08) 40%, rgba(0,200,255,0.02) 80%)",
+                  }}
                 />
-                {/* Name */}
-                <h2
-                  className={
-                    "mb-2 text-3xl font-black tracking-tight text-gray-900 drop-shadow-md dark:text-gray-100"
-                  }
-                  style={{ textShadow: "0 2px 18px #b9e2fa40" }}
+                <div
+                  className="relative z-20 -mt-6 flex items-center justify-center rounded-full bg-white/6 shadow-inner"
+                  style={{ height: 130, width: 130 }}
                 >
+                  <img src={p.img} alt={p.label} draggable={false} />
+                </div>
+                <h3 className="z-20 text-3xl font-extrabold tracking-tight text-white drop-shadow">
                   {p.label}
-                </h2>
-                {/* Info */}
-                <p className="mb-5 text-base font-medium whitespace-pre-line text-gray-700 dark:text-gray-200/90">
+                </h3>
+                <p className="z-20 max-w-xs text-center whitespace-pre-line text-white/70">
                   {p.desc}
                 </p>
-                {/* Action */}
-                <button
-                  className={`relative z-10 mt-auto rounded-lg px-7 py-2.5 text-lg font-extrabold tracking-tight text-white uppercase shadow-lg ring-2 ring-white/10 outline-none hover:cursor-pointer focus:outline-none ${p.button.bg} drop-shadow-md transition-all`}
-                  tabIndex={-1}
-                  // Mouse: Lock tilt on mouse enter, unlock on mouse leave
-                  onMouseEnter={() => setTiltLock(i, true)}
-                  onMouseLeave={() => setTiltLock(i, false)}
-                  // Touch: Lock on touch start, unlock on touch end/cancel
-                  onTouchStart={() => setTiltLock(i, true)}
-                  onTouchEnd={() => setTiltLock(i, false)}
-                  // Stop event bubbling to card
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    handlePayment(p.key);
-                  }}
+                <div className="z-30 mt-auto flex w-full justify-center">
+                  <button
+                    onMouseEnter={() => setLock(idx, true)}
+                    onMouseLeave={() => setLock(idx, false)}
+                    onClick={() => setSelectedMethod(p.key)}
+                    className={`relative inline-flex items-center hover:cursor-pointer gap-3 rounded-full px-6 py-3 text-sm font-semibold tracking-wide text-white uppercase shadow-2xl ${p.button.bg} transform-gpu focus:outline-none active:scale-95`}
+                  >
+                    <span className="absolute -top-3 -left-3 h-3 w-3 animate-pulse rounded-full bg-white/30 blur-sm" />
+                    {p.button.text}
+                  </button>
+                </div>
+                <Sparkles className="pointer-events-none absolute top-4 right-4 h-8 w-8 animate-[spin_4.8s_linear_infinite] text-cyan-200/60 opacity-90" />
+                <div
+                  aria-hidden
+                  className="pointer-events-none absolute inset-0 z-10 overflow-hidden rounded-3xl opacity-20 mix-blend-overlay"
                 >
-                  <span className="absolute -top-3 -left-3 z-50 h-3 w-3 animate-pulse cursor-pointer rounded-full bg-white/30 opacity-80 blur-[2.5px]" />
-                  {p.button.text}
-                </button>
-                {/* Animated Sparkles */}
-                <Sparkles className="animate-spin-slow pointer-events-none absolute top-3 right-2 h-8 w-8 text-cyan-300/50" />
+                  <svg className="h-full w-full" preserveAspectRatio="none">
+                    <defs>
+                      <pattern
+                        id={`p-${p.key}`}
+                        width="20"
+                        height="20"
+                        patternUnits="userSpaceOnUse"
+                      >
+                        <path
+                          d="M20 0 L0 0 0 20"
+                          stroke="rgba(255,255,255,0.03)"
+                          strokeWidth="1"
+                        />
+                      </pattern>
+                    </defs>
+                    <rect
+                      width="100%"
+                      height="100%"
+                      fill={`url(#p-${p.key})`}
+                    />
+                  </svg>
+                </div>
               </div>
             );
           })}
         </div>
-      </main>
-      {/* Info & Policy */}
-      <footer className="mx-auto mt-12 flex max-w-xl flex-col items-center gap-0.5 px-3 pb-8 text-center text-sm text-gray-400 dark:text-gray-400/80">
-        <div className="mb-1.5 flex items-center justify-center gap-2 text-xs md:text-sm">
-          <ShieldCheck size={18} className="text-cyan-500" />
-          End-to-end encrypted • PCI validated Certified
+        {/* Proceed button */}
+        <div className="mt-8 flex justify-center">
+          <button
+            onClick={handleProceed}
+            className="rounded-full hover:cursor-pointer bg-blue-600 px-8 py-3 font-semibold text-white transition hover:bg-blue-700"
+          >
+            Proceed
+          </button>
         </div>
-        <span>
-          By choosing a payment, you agree to our{" "}
-          <span className="cursor-pointer text-cyan-600 underline underline-offset-2 transition hover:text-cyan-900 dark:text-cyan-400 dark:hover:text-white">
-            Terms & Conditions
-          </span>{" "}
-          and{" "}
-          <span className="cursor-pointer text-cyan-600 underline underline-offset-2 transition hover:text-cyan-900 dark:text-cyan-400 dark:hover:text-white">
-            Privacy Policy
-          </span>
-          .
-        </span>
+      </main>
+
+      {/* Footer */}
+      <footer className="mx-auto max-w-3xl px-6 pb-10 text-center text-sm text-white/60">
+        <div className="mx-auto mb-2 flex items-center justify-center gap-2 text-xs">
+          <ShieldCheck size={16} />
+          End-to-end encrypted • PCI validated
+        </div>
+        By choosing a payment you agree to our{" "}
+        <span className="underline">Terms</span> &{" "}
+        <span className="underline">Privacy</span>.
       </footer>
-      {/* Responsive Animations */}
+
+      {/* Inline CSS */}
       <style>{`
-        .payment-card:active, .payment-card:focus-visible {
-          outline: 2px solid #03d8af;
-        }
-        @media (max-width: 600px) {
-          .payment-card {
-            min-height: 260px !important;
-            padding: 1.6rem 0.9rem !important;
-          }
-        }
-        /* Animation for Sparkles icon */
-        .animate-spin-slow {
-          animation: spin 3.6s linear infinite;
-        }
-        @keyframes spin {
-          0% { transform: rotate(0deg);}
-          100% { transform: rotate(360deg);}
-        }
+        .animate-[spin_4.8s_linear_infinite] { animation: spin 4.8s linear infinite; }
+        @keyframes spin { 0% { transform: rotate(0deg);} 100% { transform: rotate(360deg);} }
+        .payment-card, .isolate { will-change: transform; backface-visibility: hidden; }
+        @media (max-width: 640px) { .isolate { padding: 1.25rem !important; } }
       `}</style>
     </div>
   );

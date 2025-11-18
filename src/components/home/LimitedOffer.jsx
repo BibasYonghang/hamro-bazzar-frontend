@@ -9,8 +9,7 @@ export default function SpecialOffer({
   backgroundImage = "/component-image/promotion-bg-image.png",
   showCountdown = true,
   countdownDays = 4, // default 3 days
-  primaryButton = { text: "Shop Now", link: "/offer-product" },
-  secondaryButton = { text: "View Collections", link: "/collections" }
+  primaryButton = { text: "Shop Now", link: "/offered-products" },
 }) {
   // ---------- Countdown Logic ----------
   const [timeLeft, setTimeLeft] = useState({
@@ -187,14 +186,6 @@ export default function SpecialOffer({
             </Link>
           )}
 
-          {secondaryButton && (
-            <Link
-              to={secondaryButton.link}
-              className="w-38 flex items-center justify-center bg-white/20 backdrop-blur-sm hover:bg-white/30 text-white font-semibold rounded-full border border-white/30 shadow-lg transition-all duration-300 hover:scale-105 hover:shadow-xl sm:h-13 h-10"
-            >
-              {secondaryButton.text}
-            </Link>
-          )}
         </div>
       </div>
 

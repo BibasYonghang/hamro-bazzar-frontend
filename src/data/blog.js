@@ -12,7 +12,7 @@ const blogs = [
       <h2>2. Wearables</h2>
       <p>Smartwatches and fitness trackers are essential for health and productivity.</p>
     `,
-    image: "/images/blog/gadgets.jpg",
+    image: "https://res.cloudinary.com/dorwxf5yq/image/upload/v1763454028/Gemini_Generated_Image_y4op8ty4op8ty4op_f93gku.png",
     date: "2025-09-15",
     author: "Hamro Bazaar Team",
   },
@@ -29,7 +29,7 @@ const blogs = [
       <h2>2. Check reviews</h2>
       <p>Always read product reviews before making a purchase.</p>
     `,
-    image: "/images/blog/online-safety.jpg",
+    image: "https://res.cloudinary.com/dorwxf5yq/image/upload/v1763454062/is-online-shopping-safe_baac5z.jpg",
     date: "2025-09-12",
     author: "Hamro Bazaar Team",
   },
@@ -46,7 +46,7 @@ const blogs = [
       <h2>2. Statement Accessories</h2>
       <p>Bold accessories are in – from chunky necklaces to oversized hats.</p>
     `,
-    image: "/images/blog/fashion.jpg",
+    image: "https://res.cloudinary.com/dorwxf5yq/image/upload/v1763454103/Holding_rpxjfn.jpg",
     date: "2025-09-10",
     author: "Hamro Bazaar Team",
   },
@@ -63,7 +63,7 @@ const blogs = [
       <h2>2. Robot Vacuums</h2>
       <p>Save time and effort with automated cleaning devices.</p>
     `,
-    image: "/images/blog/home-appliances.jpg",
+    image: "https://res.cloudinary.com/dorwxf5yq/image/upload/v1763454133/Best-Appliance-Deals-2.jpg_s5ibtt.webp",
     date: "2025-09-08",
     author: "Hamro Bazaar Team",
   },

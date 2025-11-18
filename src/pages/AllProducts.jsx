@@ -533,13 +533,7 @@ export default function AllProducts() {
                       {product.price && (
                         <div className="">
                           <div className="text-2xl font-bold text-blue-600">
-                            Rs.{Math.floor((80 / 100) * product.price)}
-                          </div>
-                          <div className="text-lg font-bold text-gray-600">
-                            <span className="mr-3 line-through">
-                              Rs.{Math.floor(product.price)}{" "}
-                            </span>{" "}
-                            20% OFF
+                            Rs.{" "}{product.price}
                           </div>
                         </div>
                       )}
