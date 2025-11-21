@@ -26,7 +26,7 @@ export default function HomeFurnitureProducts() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/home-furniture");
+        const res = await fetch("https://hamro-bazzar.onrender.com/api/home-furniture");
         const data = await res.json();
         setProducts(data);
         setLoading(false);

@@ -29,11 +29,11 @@ export default function GamingProducts() {
     const fetchProducts = async () => {
       try {
         // Try gaming endpoint first, fallback to products with Gaming category filter
-        const res = await fetch("http://localhost:5000/api/gaming");
+        const res = await fetch("https://hamro-bazzar.onrender.com/api/gaming");
         if (!res.ok) {
           // If gaming endpoint doesn't exist, fetch all products and filter
           const allProductsRes = await fetch(
-            "http://localhost:5000/api/products",
+            "https://hamro-bazzar.onrender.com/api/products",
           );
           const allProducts = await allProductsRes.json();
           const gamingProducts = allProducts.filter(
@@ -52,7 +52,7 @@ export default function GamingProducts() {
         // Fallback: try fetching all products and filtering
         try {
           const allProductsRes = await fetch(
-            "http://localhost:5000/api/gaming",
+            "https://hamro-bazzar.onrender.com/api/gaming",
           );
           const allProducts = await allProductsRes.json();
           const gamingProducts = allProducts.filter(

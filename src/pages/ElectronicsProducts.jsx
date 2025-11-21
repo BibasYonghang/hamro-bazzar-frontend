@@ -26,7 +26,7 @@ export default function ElectronicsProducts() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/electronics");
+        const res = await fetch("https://hamro-bazzar.onrender.com/api/electronics");
         const data = await res.json();
         setProducts(data);
         setLoading(false);

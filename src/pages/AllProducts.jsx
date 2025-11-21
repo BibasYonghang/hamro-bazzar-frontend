@@ -48,7 +48,9 @@ export default function AllProducts() {
     const fetchProducts = async () => {
       try {
         // Try to fetch all products from /api/products
-        const res = await fetch("http://localhost:5000/api/all-products");
+        const res = await fetch(
+          "https://hamro-bazzar.onrender.com/api/all-products",
+        );
         if (res.ok) {
           const data = await res.json();
           setProducts(data);
@@ -56,16 +58,16 @@ export default function AllProducts() {
           // If that doesn't work, fetch from all category endpoints
           const [electronics, furniture, gaming, personalCare] =
             await Promise.all([
-              fetch("http://localhost:5000/api/electronics")
+              fetch("https://hamro-bazzar.onrender.com/api/electronics")
                 .then((r) => r.json())
                 .catch(() => []),
-              fetch("http://localhost:5000/api/home-furniture")
+              fetch("https://hamro-bazzar.onrender.com/api/home-furniture")
                 .then((r) => r.json())
                 .catch(() => []),
-              fetch("http://localhost:5000/api/gaming")
+              fetch("https://hamro-bazzar.onrender.com/api/gaming")
                 .then((r) => r.json())
                 .catch(() => []),
-              fetch("http://localhost:5000/api/personal-care")
+              fetch("https://hamro-bazzar.onrender.com/api/personal-care")
                 .then((r) => r.json())
                 .catch(() => []),
             ]);

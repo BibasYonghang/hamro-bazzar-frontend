@@ -28,7 +28,7 @@ export default function PersonalCareProducts() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/personal-care");
+        const res = await fetch("https://hamro-bazzar.onrender.com/personal-care");
         const data = await res.json();
         setProducts(data);
         setLoading(false);

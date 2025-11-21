@@ -24,28 +24,28 @@ export default function ProductList() {
       image: "/featured-products-image/electronics.png",
       link: "/electronics",
       icon: "⚡",
-      api: "http://localhost:5000/api/category-electronics"
+      api: "https://hamro-bazzar.onrender.com/api/category-electronics"
     },
     {
       name: "Personal Care",
       image: "/featured-products-image/personal-care.png",
       link: "/personal-care",
       icon: "✨",
-      api: "http://localhost:5000/api/category-personal-care"
+      api: "https://hamro-bazzar.onrender.com/api/category-personal-care"
     },
     {
       name: "Gaming",
       image: "/featured-products-image/gaming.png",
       link: "/gaming",
       icon: "🎮",
-      api: "http://localhost:5000/api/category-gaming"
+      api: "https://hamro-bazzar.onrender.com/api/category-gaming"
     },
     {
       name: "Home Furniture",
       image: "/featured-products-image/home-furniture.png",
       link: "/home-furniture",
       icon: "🏠",
-      api: "http://localhost:5000/api/category-home-furniture"
+      api: "https://hamro-bazzar.onrender.com/api/category-home-furniture"
     },
   ];
 

@@ -57,7 +57,7 @@ export default function ProductDetails() {
           setLoading(true);
           setNotFound(false);
 
-          const res = await fetch(`http://localhost:5000/api/all-products`);
+          const res = await fetch(`https://hamro-bazzar.onrender.com/api/all-products`);
           if (res.ok) {
             const products = await res.json();
             const foundProduct = products.find(
@@ -80,7 +80,7 @@ export default function ProductDetails() {
 
             for (const category of categories) {
               const categoryRes = await fetch(
-                `http://localhost:5000/api/${category}`,
+                `https://hamro-bazzar.onrender.com/api/${category}`,
               );
               if (categoryRes.ok) {
                 const categoryProducts = await categoryRes.json();

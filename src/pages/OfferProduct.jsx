@@ -28,7 +28,7 @@ export default function offerProduct() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/offered-products");
+        const res = await fetch("https://hamro-bazzar.onrender.com/api/offered-products");
         const data = await res.json();
         setProducts(data);
         setLoading(false);

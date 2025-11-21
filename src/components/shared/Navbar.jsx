@@ -40,7 +40,7 @@ const Navbar = () => {
 
     for (const endpoint of endpoints) {
       try {
-        const res = await fetch(`http://localhost:5000/api/${endpoint}`);
+        const res = await fetch(`https://hamro-bazzar.onrender.com/api/${endpoint}`);
         if (!res.ok) continue;
 
         const data = await res.json();
