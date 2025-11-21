@@ -231,7 +231,7 @@ export default function ElectronicsProducts() {
               <Link
                 to={`/products/${product._id}`}
                 key={product._id}
-                className={`group transform overflow-hidden rounded-xl bg-white shadow-md transition-all duration-500 hover:-translate-y-2 hover:shadow-xl ${
+                className={`group transform overflow-hidden rounded-xl bg-white shadow-md hover:cursor-zoom-in hover:shadow-xl ${
                   viewMode === "list" ? "flex gap-4" : ""
                 } ${
                   isVisible
@@ -261,7 +261,7 @@ export default function ElectronicsProducts() {
                   />
                   {product.price && (
                     <div className="absolute top-3 right-3 rounded-full bg-blue-600 px-3 py-1 text-sm font-semibold text-white">
-                      ${product.price}
+                      Rs. {product.price}
                     </div>
                   )}
                 </div>
@@ -294,25 +294,22 @@ export default function ElectronicsProducts() {
                     <button
                       onClick={(e) => {
                         e.preventDefault();
-                        // Add to cart logic here
-                      }}
-                      className="rounded-lg bg-blue-600 p-2 text-white transition-colors hover:cursor-pointer hover:bg-blue-700"
-                      title="Add to cart"
-                    >
-                      Add <ShoppingCart className="inline h-5 w-5" />
-                    </button>
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
                         navigate(`/products/${product._id}`, {
                           state: { product },
                         });
                       }}
-                      className="rounded-lg bg-blue-800 p-2 text-white transition-colors hover:cursor-pointer hover:bg-blue-900"
+                      className="rounded-lg bg-blue-600 px-4 py-2 text-white transition-colors hover:cursor-pointer hover:bg-blue-700"
+                      title="Add to cart"
+                    >
+                      See Details
+                    </button>
+                    <Link
+                      to="/payment-choice"
+                      className="rounded-lg bg-blue-800 px-4 py-2 text-white transition-colors hover:cursor-pointer hover:bg-blue-900"
                       title="Add to cart"
                     >
                       Buy Now
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </Link>

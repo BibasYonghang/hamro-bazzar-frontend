@@ -1,8 +1,8 @@
+
 import React, { useRef, useState, useEffect } from "react";
-import { ShoppingCart, ArrowLeft, Star } from "lucide-react";
+import { ShoppingCart, ArrowLeft, Star, Search } from "lucide-react";
 import { Link, useLocation, useParams, useNavigate } from "react-router-dom";
 
-// 3D Card Animation hook
 function use3DTilt(maxAngle = 22) {
   const ref = useRef(null);
   const [tilt, setTilt] = useState({ x: 0, y: 0, active: false });
@@ -47,32 +47,96 @@ export default function ProductDetails() {
 
   const [product, setProduct] = useState(location.state?.product || null);
   const [loading, setLoading] = useState(!product);
+  const [notFound, setNotFound] = useState(false);
   const tilt = use3DTilt();
   const [mounted, setMounted] = useState(false);
 
-  const [cart, setCart] = useState([]);
+  useEffect(() => {
+    const fetchProduct = async () => {
+      if (!product && id) {
+        try {
+          setLoading(true);
+          setNotFound(false);
 
-  // Scroll to top on mount
+          const res = await fetch(`http://localhost:5000/api/all-products`);
+          if (res.ok) {
+            const products = await res.json();
+            const foundProduct = products.find((p) => String(p.id) === String(id));
+
+            if (foundProduct) {
+              setProduct(foundProduct);
+            } else {
+              setNotFound(true);
+            }
+          } else {
+            const categories = ["electronics", "home-furniture", "gaming", "personal-care"];
+            let found = false;
+
+            for (const category of categories) {
+              const categoryRes = await fetch(`http://localhost:5000/api/${category}`);
+              if (categoryRes.ok) {
+                const categoryProducts = await categoryRes.json();
+                const foundProduct = categoryProducts.find(
+                  (p) => String(p.id) === String(id)
+                );
+
+                if (foundProduct) {
+                  setProduct(foundProduct);
+                  found = true;
+                  break;
+                }
+              }
+            }
+
+            if (!found) setNotFound(true);
+          }
+        } catch (error) {
+          console.error("Error fetching product:", error);
+          setNotFound(true);
+        } finally {
+          setLoading(false);
+        }
+      }
+    };
+
+    fetchProduct();
+  }, [id, product]);
+
   useEffect(() => {
     window.scrollTo(0, 0);
     setTimeout(() => setMounted(true), 60);
   }, []);
 
-  const handleAddToCart = () => {
-    if (product) {
-      setCart((prev) => [...prev, product]);
-      alert(`${product.name || "Product"} added to cart!`);
-    }
-  };
 
-  const handleBuyNow = () => {
-    if (product) navigate("/checkout", { state: { product } });
-  };
-
-  if (loading)
+  if (loading) {
     return (
-      <p className="mt-20 text-center text-white">Loading product details...</p>
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-indigo-800 via-blue-900 to-gray-950">
+        <div className="text-center text-white">
+          <div className="mb-4 inline-block h-12 w-12 animate-spin rounded-full border-4 border-blue-400 border-t-transparent"></div>
+          <p className="text-xl">Loading product details...</p>
+        </div>
+      </div>
     );
+  }
+
+  if (notFound || !product) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-indigo-800 via-blue-900 to-gray-950">
+        <div className="text-center text-white">
+          <Search className="mx-auto mb-4 h-20 w-20 text-blue-300" />
+          <h1 className="text-3xl font-bold mb-4">Product Not Found</h1>
+          <p className="text-blue-200 mb-6">The product you're looking for doesn't exist or may have been removed.</p>
+          <Link
+            to="/all-products"
+            className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 text-white font-semibold hover:bg-blue-700 transition-colors"
+          >
+            <ArrowLeft size={20} />
+            Back to All Products
+          </Link>
+        </div>
+      </div>
+    );
+  }
 
   // Safe destructuring with defaults
   const {
@@ -134,6 +198,9 @@ export default function ProductDetails() {
                   boxShadow:
                     "0 12px 48px 0 rgba(46,85,139,0.25), 0 2px 16px 0 rgba(70,175,255,0.11)",
                 }}
+                onError={(e) => {
+                  e.target.src = "https://via.placeholder.com/600x600?text=Product+Image";
+                }}
               />
               <div className="pointer-events-none absolute right-0 bottom-0 left-0 z-30 h-28 rounded-b-3xl bg-gradient-to-t from-indigo-950/90 via-transparent to-transparent lg:h-32"></div>
               <div
@@ -143,7 +210,7 @@ export default function ProductDetails() {
                   filter: "drop-shadow(0 0 10px #3b82f6d3)",
                 }}
               >
-                ${price.toLocaleString()}
+                Rs. {price.toLocaleString()}
               </div>
             </div>
           </div>
@@ -165,21 +232,10 @@ export default function ProductDetails() {
                 Total Price
               </p>
               <p className="text-lg font-black text-blue-100 drop-shadow md:text-xl">
-                ${price.toLocaleString()}
+                Rs. {price.toLocaleString()}
               </p>
             </div>
             <div className="flex gap-3">
-              <button
-                onClick={handleAddToCart}
-                className="group relative flex items-center gap-3 rounded-2xl bg-gradient-to-tr from-blue-600 via-indigo-700 to-indigo-950 px-4 py-2 text-base font-extrabold tracking-tight text-white uppercase shadow-2xl ring-2 ring-blue-400/30 transition-all duration-200 hover:scale-105 hover:cursor-pointer hover:from-indigo-800 hover:to-blue-900 hover:shadow-blue-500/20 active:scale-97 md:text-xl"
-              >
-                <span className="animate-ping-once absolute top-3 left-3 inline-flex h-3 w-3 rounded-full bg-blue-300/90 blur-sm"></span>
-                <ShoppingCart size={22} className="drop-shadow-lg" />
-                <span className="drop-shadow-[0_2px_2px_rgba(0,0,0,0.1)]">
-                  Add to Cart
-                </span>
-              </button>
-
               <Link
                 to="/payment-choice"
                 className="group relative flex items-center gap-3 rounded-2xl bg-gradient-to-tr from-indigo-800 via-blue-700 to-blue-900 px-4 py-2 text-base font-extrabold tracking-tight text-white uppercase shadow-2xl ring-2 ring-blue-400/30 transition-all duration-200 hover:scale-105 hover:cursor-pointer hover:from-indigo-900 hover:to-blue-800 hover:shadow-blue-500/20 active:scale-97 md:text-xl"
@@ -202,14 +258,6 @@ export default function ProductDetails() {
             {name}
           </h1>
           <div className="mb-4 flex items-center gap-3">
-            <span className="inline-flex items-center rounded-full bg-gradient-to-tr from-yellow-300/80 to-yellow-400 px-3 py-1.5 text-sm font-extrabold text-stone-900 shadow-lg ring-2 ring-yellow-200/60 sm:text-base">
-              <Star
-                size={16}
-                className="mr-1 inline text-yellow-500 drop-shadow-lg"
-                fill="currentColor"
-              />
-              {rating || 0}
-            </span>
             <span className="ml-1 text-sm text-blue-100/75 drop-shadow md:text-base">
               ({reviews?.toLocaleString() || 0} reviews)
             </span>
@@ -225,7 +273,7 @@ export default function ProductDetails() {
               </span>
             </h2>
             <ul className="grid grid-cols-1 gap-y-3 sm:grid-cols-2 sm:gap-x-4">
-              {highlights.length > 0 ? (
+              {highlights && highlights.length > 0 ? (
                 highlights.map((point, index) => (
                   <li
                     key={index}

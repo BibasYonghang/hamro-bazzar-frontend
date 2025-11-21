@@ -299,10 +299,9 @@ export default function GamingProducts() {
             }
           >
             {filteredProducts.map((product, idx) => (
-              <Link
-                to="/product-details"
+              <div
                 key={product._id}
-                className={`group transform overflow-hidden rounded-xl border border-purple-500/30 bg-gray-800 shadow-lg transition-all duration-500 hover:-translate-y-2 hover:border-purple-500/60 hover:shadow-2xl ${
+                className={`group transform overflow-hidden rounded-xl border border-purple-500/30 bg-gray-800 shadow-lg hover:cursor-zoom-in hover:border-purple-500/60 hover:shadow-2xl ${
                   viewMode === "list" ? "flex gap-2" : ""
                 } ${
                   isVisible
@@ -373,29 +372,25 @@ export default function GamingProducts() {
                     <button
                       onClick={(e) => {
                         e.preventDefault();
-                        alert(`Added ${product.name} to cart!`);
-                      }}
-                      className="hover:bg-pruple-700 flex items-center justify-center gap-1 rounded-lg bg-purple-600 px-7 py-2 text-sm text-white shadow-md hover:cursor-pointer"
-                    >
-                      <ShoppingCart className="h-4 w-4" />
-                      Add
-                    </button>
-
-                    {/* Buy Now */}
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
                         navigate(`/products/${product._id}`, {
                           state: { product },
                         });
                       }}
+                      className="hover:bg-pruple-700 flex items-center justify-center gap-1 rounded-lg hover:bg-purple-700 bg-purple-600 px-7 py-2 text-sm text-white shadow-md hover:cursor-pointer"
+                    >
+                      See Details
+                    </button>
+
+                    {/* Buy Now */}
+                    <Link
+                      to="/payment-choice"
                       className="rounded-lg bg-purple-600 px-7 py-2 text-sm text-white shadow-md hover:cursor-pointer hover:bg-purple-700"
                     >
                       Buy Now
-                    </button>
+                    </Link>
                   </div>
                 </div>
-              </Link>
+              </div>
             ))}
           </div>
         )}

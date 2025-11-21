@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import {
@@ -10,8 +10,6 @@ import {
   ShoppingCart,
   SlidersHorizontal,
   X,
-  ChevronDown,
-  ChevronUp,
   Sparkles,
   TrendingUp,
 } from "lucide-react";
@@ -32,21 +30,19 @@ export default function AllProducts() {
   const productsRef = useRef(null);
   const navigate = useNavigate();
 
-  // Get max price for range slider
-  const maxPrice = Math.max(...products.map((p) => p.price || 0), 1000);
+  // Get max price for range slider - useMemo to optimize
+  const maxPrice = useMemo(() => {
+    if (products.length === 0) return 1000;
+    const prices = products.map((p) => p.price || 0);
+    return Math.max(...prices, 1000);
+  }, [products]);
 
   // Update price range when products load
   useEffect(() => {
     if (products.length > 0) {
-      const calculatedMax = Math.max(
-        ...products.map((p) => p.price || 0),
-        1000,
-      );
-      if (priceRange[1] === 10000 || priceRange[1] < calculatedMax) {
-        setPriceRange([0, calculatedMax]);
-      }
+      setPriceRange([0, maxPrice]);
     }
-  }, [products.length]);
+  }, [products.length, maxPrice]);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -58,39 +54,31 @@ export default function AllProducts() {
           setProducts(data);
         } else {
           // If that doesn't work, fetch from all category endpoints
-          const [electronics, furniture, personalCare] = await Promise.all([
-            fetch("http://localhost:5000/api/electronics")
-              .then((r) => r.json())
-              .catch(() => []),
-            fetch("http://localhost:5000/api/home-furniture")
-              .then((r) => r.json())
-              .catch(() => []),
-            fetch("http://localhost:5000/api/personal-care")
-              .then((r) => r.json())
-              .catch(() => []),
+          const [electronics, furniture, gaming, personalCare] =
+            await Promise.all([
+              fetch("http://localhost:5000/api/electronics")
+                .then((r) => r.json())
+                .catch(() => []),
+              fetch("http://localhost:5000/api/home-furniture")
+                .then((r) => r.json())
+                .catch(() => []),
+              fetch("http://localhost:5000/api/gaming")
+                .then((r) => r.json())
+                .catch(() => []),
+              fetch("http://localhost:5000/api/personal-care")
+                .then((r) => r.json())
+                .catch(() => []),
+            ]);
+          setProducts([
+            ...electronics,
+            ...furniture,
+            ...gaming,
+            ...personalCare,
           ]);
-          setProducts([...electronics, ...furniture, ...personalCare]);
         }
         setLoading(false);
       } catch (error) {
         console.error("Error fetching products:", error);
-        // Fallback: try individual endpoints
-        try {
-          const [electronics, furniture, personalCare] = await Promise.all([
-            fetch("http://localhost:5000/api/electronics")
-              .then((r) => r.json())
-              .catch(() => []),
-            fetch("http://localhost:5000/api/home-furniture")
-              .then((r) => r.json())
-              .catch(() => []),
-            fetch("http://localhost:5000/api/personal-care")
-              .then((r) => r.json())
-              .catch(() => []),
-          ]);
-          setProducts([...electronics, ...furniture, ...personalCare]);
-        } catch (fallbackError) {
-          console.error("Fallback fetch also failed:", fallbackError);
-        }
         setLoading(false);
       }
     };
@@ -456,10 +444,9 @@ export default function AllProducts() {
               }
             >
               {paginatedProducts.map((product, idx) => (
-                <Link
-                  to={`/products/${product._id}`}
+                <div
                   key={product._id}
-                  className={`group transform overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-lg transition-all duration-500 hover:-translate-y-2 hover:border-blue-200 hover:shadow-2xl ${
+                  className={`group transform overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-lg hover:cursor-zoom-in hover:border-blue-200 ${
                     viewMode === "list" ? "flex gap-6" : ""
                   } ${
                     isVisible
@@ -489,7 +476,7 @@ export default function AllProducts() {
                     />
                     {product.price && (
                       <div className="absolute top-4 right-4 rounded-full bg-gradient-to-r from-blue-600 to-indigo-600 px-4 py-2 text-sm font-bold text-white shadow-lg">
-                        ${product.price}
+                        Rs. {product.price}
                       </div>
                     )}
                     {product.featured && (
@@ -533,29 +520,12 @@ export default function AllProducts() {
                       {product.price && (
                         <div className="">
                           <div className="text-2xl font-bold text-blue-600">
-                            Rs.{" "}{product.price}
+                            Rs. {product.price}
                           </div>
                         </div>
                       )}
-                      {product.rating && (
-                        <div className="mt-2 flex items-center gap-1">
-                          <Star className="h-4 w-4 fill-yellow-400 text-yellow-400" />
-                          <span className="text-sm font-medium text-gray-600">
-                            {product.rating}
-                          </span>
-                        </div>
-                      )}
                     </div>
-                    <div className="mt-4 flex items-center justify-between border-t border-gray-100 pt-4">
-                      <button
-                        onClick={(e) => {
-                          e.preventDefault();
-                        }}
-                        className="transform rounded-xl bg-gradient-to-r from-blue-600 to-indigo-600 px-7 py-2 text-white shadow-md transition-all duration-200 hover:scale-105 hover:cursor-pointer hover:from-blue-700 hover:to-indigo-700 hover:shadow-lg"
-                        title="Add to cart"
-                      >
-                        Add <ShoppingCart className="inline h-5 w-5" />
-                      </button>
+                    <div className="flex items-center justify-between border-t border-gray-100 pt-4">
                       <button
                         onClick={(e) => {
                           e.preventDefault();
@@ -563,14 +533,22 @@ export default function AllProducts() {
                             state: { product },
                           });
                         }}
+                        clas
+                        className="transform rounded-lg bg-gradient-to-r from-blue-600 to-indigo-600 px-7 py-2 text-white shadow-md transition-all duration-200 hover:scale-105 hover:cursor-pointer hover:from-blue-700 hover:to-indigo-700 hover:shadow-lg"
+                        title="Add to cart"
+                      >
+                        See Details
+                      </button>
+                      <Link
+                        to="/payment-choice"
                         className="transform rounded-lg bg-gradient-to-r from-purple-800 to-indigo-900 px-7 py-2 text-white shadow-lg transition-all duration-200 hover:scale-105 hover:cursor-pointer hover:from-purple-700 hover:to-indigo-700 hover:shadow-xl"
                         title="Add to cart"
                       >
                         Buy Now
-                      </button>
+                      </Link>
                     </div>
                   </div>
-                </Link>
+                </div>
               ))}
             </div>
 

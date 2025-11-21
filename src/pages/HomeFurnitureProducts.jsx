@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import {
   Search,
   Filter,
@@ -227,7 +227,7 @@ export default function HomeFurnitureProducts() {
                   }}
                 />
                 <div className="absolute top-3 right-3 rounded-full bg-gradient-to-r from-amber-600 to-orange-600 px-3 py-1 text-sm font-semibold text-white shadow-lg">
-                  ${product.price}
+                  Rs. {product.price}
                 </div>
               </div>
 
@@ -264,26 +264,22 @@ export default function HomeFurnitureProducts() {
                   <button
                     onClick={(e) => {
                       e.preventDefault();
-                      alert(`Added ${product.name} to cart!`);
-                    }}
-                    className="flex items-center justify-center gap-1 rounded-lg bg-amber-600 px-7 py-2 text-sm text-white shadow-md hover:cursor-pointer hover:bg-amber-700"
-                  >
-                    <ShoppingCart className="h-4 w-4" />
-                    Add
-                  </button>
-
-                  {/* Buy Now */}
-                  <button
-                    onClick={(e) => {
-                      e.preventDefault();
                       navigate(`/products/${product._id}`, {
                         state: { product },
                       });
                     }}
+                    className="flex items-center justify-center gap-1 rounded-lg bg-amber-600 px-7 py-2 text-sm text-white shadow-md hover:cursor-pointer hover:bg-amber-700"
+                  >
+                    See Details
+                  </button>
+
+                  {/* Buy Now */}
+                  <Link
+                    to="/payment-choice"
                     className="rounded-lg bg-orange-600 px-7 py-2 text-sm text-white shadow-md hover:cursor-pointer hover:bg-orange-700"
                   >
                     Buy Now
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>

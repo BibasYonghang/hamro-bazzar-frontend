@@ -235,7 +235,7 @@ export default function offerProduct() {
               <Link
                 to={`/products/${product._id}`}
                 key={product._id}
-                className={`group transform overflow-hidden rounded-xl border border-sky-50 bg-white shadow-md transition-all duration-500 hover:-translate-y-2 hover:border-sky-200 hover:shadow-2xl ${
+                className={`group transform overflow-hidden rounded-xl border border-sky-50 bg-white shadow-md hover:cursor-zoom-in hover:border-sky-200 hover:shadow-2xl ${
                   viewMode === "list" ? "flex gap-4" : ""
                 } ${
                   isVisible
@@ -265,7 +265,7 @@ export default function offerProduct() {
                   />
                   {product.price && (
                     <div className="absolute top-3 right-3 rounded-full bg-gradient-to-r from-sky-600 to-blue-600 px-3 py-1 text-sm font-semibold text-white shadow-lg">
-                      ${product.price}
+                      Rs. {product.price}
                     </div>
                   )}
                   {/* Badge for featured/new products */}
@@ -311,26 +311,22 @@ export default function offerProduct() {
                     <button
                       onClick={(e) => {
                         e.preventDefault();
-                        // Add to cart logic here
-                      }}
-                      className="transform rounded-lg bg-gradient-to-r from-sky-600 to-blue-600 px-7 py-2 text-white shadow-md transition-all duration-200 hover:scale-105 hover:cursor-pointer hover:from-sky-700 hover:to-blue-700 hover:shadow-lg"
-                      title="Add to cart"
-                    >
-                      <span>Add</span>{" "}
-                      <ShoppingCart className="inline h-5 w-5" />
-                    </button>
-                    <button
-                      onClick={(e) => {
-                        e.preventDefault();
                         navigate(`/products/${product._id}`, {
                           state: { product },
                         });
                       }}
+                      className="transform rounded-lg bg-gradient-to-r from-sky-600 to-blue-600 px-7 py-2 text-white shadow-md transition-all duration-200 hover:scale-105 hover:cursor-pointer hover:from-sky-700 hover:to-blue-700 hover:shadow-lg"
+                      title="Add to cart"
+                    >
+                      See Details
+                    </button>
+                    <Link
+                      to="/payment-choice"
                       className="transform rounded-lg bg-gradient-to-r from-sky-800 to-blue-900 px-7 py-2 text-white shadow-md transition-all duration-200 hover:scale-105 hover:cursor-pointer hover:from-sky-700 hover:to-blue-700 hover:shadow-lg"
                       title="Add to cart"
                     >
                       Buy Now
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </Link>
