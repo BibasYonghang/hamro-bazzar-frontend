@@ -55,8 +55,8 @@ function App() {
           <Route path="/products/:id" element={<ProductDetails />} />
           <Route path="/payment-choice" element={<PaymentChoice />} />
 
-          <Route path="payment-success" element={<PaymentSuccess />} />
-          <Route path="payment-failure" element={<PaymentFailure />} />
+          <Route path="/payment-success" element={<PaymentSuccess />} />
+          <Route path="/payment-failure" element={<PaymentFailure />} />
           <Route path="/thank-you" element={<ThankYou />} />
         </Routes>
       </main>
