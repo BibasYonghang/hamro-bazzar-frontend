@@ -321,6 +321,7 @@ export default function PersonalCareProducts() {
                     </button>
                     <Link
                       to="/payment-choice"
+                      state={{ product: product }}
                       className="transform rounded-lg bg-gradient-to-r from-pink-800 to-rose-900 px-7 py-2 text-white shadow-md transition-all duration-200 hover:scale-105 hover:cursor-pointer hover:from-pink-700 hover:to-rose-700 hover:shadow-lg"
                       title="Add to cart"
                     >

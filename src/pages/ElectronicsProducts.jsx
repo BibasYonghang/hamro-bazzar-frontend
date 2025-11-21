@@ -305,6 +305,7 @@ export default function ElectronicsProducts() {
                     </button>
                     <Link
                       to="/payment-choice"
+                      state={{ product: product }}
                       className="rounded-lg bg-blue-800 px-4 py-2 text-white transition-colors hover:cursor-pointer hover:bg-blue-900"
                       title="Add to cart"
                     >

@@ -5,6 +5,7 @@ import { isAuthenticated } from "../auth";
 import { APP_URL } from "../config";
 import axios from "axios";
 import { toast } from "react-hot-toast";
+import { useLocation } from "react-router-dom";
 
 // -----------------------------
 // Utilities: clamp & lerp
@@ -182,6 +183,8 @@ const PAYMENTS = [
 // Component
 // -----------------------------
 export default function PaymentChoice3D() {
+  const location = useLocation();
+  const product = location.state?.product;
   const { token } = isAuthenticated();
   const navigate = useNavigate();
 
@@ -225,8 +228,15 @@ export default function PaymentChoice3D() {
       return;
     }
 
+    if (!product) {
+      toast.error("No product selected!");
+      return;
+    }
+
     const paymentData = {
-      amount: 1000,
+      amount: product.price, // ✅ locked price
+      productName: product.name,
+      productId: product._id,
       phone: "9801234567",
       fullName: "Bibas Yonghang",
     };
@@ -357,7 +367,7 @@ export default function PaymentChoice3D() {
                   setLock(idx, false);
                   hook.reset();
                 }}
-                className={`relative hover:cursor-progress isolate flex flex-col items-center gap-4 rounded-3xl p-8 pt-10 ${p.bgGradient} transform-gpu bg-white/5 bg-clip-padding ring-1 ring-white/6 backdrop-blur-md transition-shadow duration-300 will-change-transform ${
+                className={`relative isolate flex flex-col items-center gap-4 rounded-3xl p-8 pt-10 hover:cursor-progress ${p.bgGradient} transform-gpu bg-white/5 bg-clip-padding ring-1 ring-white/6 backdrop-blur-md transition-shadow duration-300 will-change-transform ${
                   isSelected ? "ring-4 ring-white/40" : ""
                 }`}
                 style={{ minHeight: 320, cursor: "pointer" }}
@@ -388,7 +398,7 @@ export default function PaymentChoice3D() {
                     onMouseEnter={() => setLock(idx, true)}
                     onMouseLeave={() => setLock(idx, false)}
                     onClick={() => setSelectedMethod(p.key)}
-                    className={`relative inline-flex items-center hover:cursor-pointer gap-3 rounded-full px-6 py-3 text-sm font-semibold tracking-wide text-white uppercase shadow-2xl ${p.button.bg} transform-gpu focus:outline-none active:scale-95`}
+                    className={`relative inline-flex items-center gap-3 rounded-full px-6 py-3 text-sm font-semibold tracking-wide text-white uppercase shadow-2xl hover:cursor-pointer ${p.button.bg} transform-gpu focus:outline-none active:scale-95`}
                   >
                     <span className="absolute -top-3 -left-3 h-3 w-3 animate-pulse rounded-full bg-white/30 blur-sm" />
                     {p.button.text}
@@ -429,7 +439,7 @@ export default function PaymentChoice3D() {
         <div className="mt-8 flex justify-center">
           <button
             onClick={handleProceed}
-            className="rounded-full hover:cursor-pointer bg-blue-600 px-8 py-3 font-semibold text-white transition hover:bg-blue-700"
+            className="rounded-full bg-blue-600 px-8 py-3 font-semibold text-white transition hover:cursor-pointer hover:bg-blue-700"
           >
             Proceed
           </button>

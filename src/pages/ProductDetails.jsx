@@ -1,4 +1,3 @@
-
 import React, { useRef, useState, useEffect } from "react";
 import { ShoppingCart, ArrowLeft, Star, Search } from "lucide-react";
 import { Link, useLocation, useParams, useNavigate } from "react-router-dom";
@@ -61,7 +60,9 @@ export default function ProductDetails() {
           const res = await fetch(`http://localhost:5000/api/all-products`);
           if (res.ok) {
             const products = await res.json();
-            const foundProduct = products.find((p) => String(p.id) === String(id));
+            const foundProduct = products.find(
+              (p) => String(p.id) === String(id),
+            );
 
             if (foundProduct) {
               setProduct(foundProduct);
@@ -69,15 +70,22 @@ export default function ProductDetails() {
               setNotFound(true);
             }
           } else {
-            const categories = ["electronics", "home-furniture", "gaming", "personal-care"];
+            const categories = [
+              "electronics",
+              "home-furniture",
+              "gaming",
+              "personal-care",
+            ];
             let found = false;
 
             for (const category of categories) {
-              const categoryRes = await fetch(`http://localhost:5000/api/${category}`);
+              const categoryRes = await fetch(
+                `http://localhost:5000/api/${category}`,
+              );
               if (categoryRes.ok) {
                 const categoryProducts = await categoryRes.json();
                 const foundProduct = categoryProducts.find(
-                  (p) => String(p.id) === String(id)
+                  (p) => String(p.id) === String(id),
                 );
 
                 if (foundProduct) {
@@ -107,7 +115,6 @@ export default function ProductDetails() {
     setTimeout(() => setMounted(true), 60);
   }, []);
 
-
   if (loading) {
     return (
       <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-indigo-800 via-blue-900 to-gray-950">
@@ -124,11 +131,14 @@ export default function ProductDetails() {
       <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-indigo-800 via-blue-900 to-gray-950">
         <div className="text-center text-white">
           <Search className="mx-auto mb-4 h-20 w-20 text-blue-300" />
-          <h1 className="text-3xl font-bold mb-4">Product Not Found</h1>
-          <p className="text-blue-200 mb-6">The product you're looking for doesn't exist or may have been removed.</p>
+          <h1 className="mb-4 text-3xl font-bold">Product Not Found</h1>
+          <p className="mb-6 text-blue-200">
+            The product you're looking for doesn't exist or may have been
+            removed.
+          </p>
           <Link
             to="/all-products"
-            className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 text-white font-semibold hover:bg-blue-700 transition-colors"
+            className="inline-flex items-center gap-2 rounded-xl bg-blue-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-blue-700"
           >
             <ArrowLeft size={20} />
             Back to All Products
@@ -199,7 +209,8 @@ export default function ProductDetails() {
                     "0 12px 48px 0 rgba(46,85,139,0.25), 0 2px 16px 0 rgba(70,175,255,0.11)",
                 }}
                 onError={(e) => {
-                  e.target.src = "https://via.placeholder.com/600x600?text=Product+Image";
+                  e.target.src =
+                    "https://via.placeholder.com/600x600?text=Product+Image";
                 }}
               />
               <div className="pointer-events-none absolute right-0 bottom-0 left-0 z-30 h-28 rounded-b-3xl bg-gradient-to-t from-indigo-950/90 via-transparent to-transparent lg:h-32"></div>
@@ -238,6 +249,7 @@ export default function ProductDetails() {
             <div className="flex gap-3">
               <Link
                 to="/payment-choice"
+                state={{ product: product }}
                 className="group relative flex items-center gap-3 rounded-2xl bg-gradient-to-tr from-indigo-800 via-blue-700 to-blue-900 px-4 py-2 text-base font-extrabold tracking-tight text-white uppercase shadow-2xl ring-2 ring-blue-400/30 transition-all duration-200 hover:scale-105 hover:cursor-pointer hover:from-indigo-900 hover:to-blue-800 hover:shadow-blue-500/20 active:scale-97 md:text-xl"
               >
                 Buy Now

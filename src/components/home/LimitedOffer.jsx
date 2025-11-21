@@ -13,10 +13,10 @@ export default function SpecialOffer({
 }) {
   // ---------- Countdown Logic ----------
   const [timeLeft, setTimeLeft] = useState({
-    days: 0,
-    hours: 0,
-    minutes: 0,
-    seconds: 0,
+    days: 1,
+    hours: 16,
+    minutes: 18,
+    seconds: 18,
   });
 
   // Calculate time left based on a fixed end time
@@ -65,42 +65,43 @@ export default function SpecialOffer({
     return () => clearTimeout(timer);
   }, []);
 
+  // to reset the timing agiain
+  // localStorage.removeItem("specialOfferEndTime");
+
   return (
-    <section className="relative w-[97vw] mx-auto h-[90vh] overflow-hidden rounded-2xl shadow-2xl">
+    <section className="relative mx-auto h-[90vh] w-[97vw] overflow-hidden rounded-2xl shadow-2xl">
       {/* Background Image */}
       <div className="absolute inset-0">
         <img
           src={backgroundImage}
           alt="Special Offer Background"
-          className="w-full h-full object-cover object-center animate-zoom-in"
+          className="animate-zoom-in h-full w-full object-cover object-center"
         />
         <div className="absolute inset-0 bg-gradient-to-b from-black/60 via-black/50 to-black/60" />
         {/* Animated gradient overlay */}
-        <div className="absolute inset-0 bg-gradient-to-r from-green-600/20 via-transparent to-green-900 animate-pulse-slow"></div>
+        <div className="animate-pulse-slow absolute inset-0 bg-gradient-to-r from-green-600/20 via-transparent to-green-900"></div>
       </div>
 
       {/* Countdown Overlay - Top Right */}
       {showCountdown && (
         <div
-          className={`absolute top-6 right-6 bg-white/20 backdrop-blur-md rounded-xl shadow-2xl z-20 border border-white/30 transition-all duration-1000 sm:px-6 px-3 sm:py-3 py-2 ${
-            isVisible
-              ? "opacity-100 translate-x-0"
-              : "opacity-0 translate-x-10"
+          className={`absolute top-6 right-6 z-20 rounded-xl border border-white/30 bg-white/20 px-3 py-2 shadow-2xl backdrop-blur-md transition-all duration-1000 sm:px-6 sm:py-3 ${
+            isVisible ? "translate-x-0 opacity-100" : "translate-x-10 opacity-0"
           }`}
         >
-          <div className="flex text-white font-bold text-lg sm:gap-4 gap-2">
+          <div className="flex gap-2 text-lg font-bold text-white sm:gap-4">
             {Object.entries(timeLeft).map(([label, value], idx) => (
               <div
                 key={label}
-                className="text-center transform transition-all duration-300 hover:scale-110"
+                className="transform text-center transition-all duration-300 hover:scale-110"
                 style={{
                   animationDelay: `${idx * 100}ms`,
                 }}
               >
-                <div className="sm:text-2xl text-lg bg-white/10 rounded-lg px-2 py-1 mb-1">
+                <div className="mb-1 rounded-lg bg-white/10 px-2 py-1 text-lg sm:text-2xl">
                   {String(value).padStart(2, "0")}
                 </div>
-                <span className="uppercase sm:text-xs text-[11px] opacity-80">
+                <span className="text-[11px] uppercase opacity-80 sm:text-xs">
                   {label}
                 </span>
               </div>
@@ -110,17 +111,17 @@ export default function SpecialOffer({
       )}
 
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto h-full flex flex-col justify-center items-center text-center px-6 sm:mt-0 mt-5">
+      <div className="relative z-10 mx-auto mt-5 flex h-full max-w-7xl flex-col items-center justify-center px-6 text-center sm:mt-0">
         {/* Badge */}
         {badge && (
           <div
             className={`relative mb-6 transition-all duration-1000 ${
               isVisible
-                ? "opacity-100 translate-y-0 animate-bounce-slow"
-                : "opacity-0 -translate-y-10"
+                ? "animate-bounce-slow translate-y-0 opacity-100"
+                : "-translate-y-10 opacity-0"
             }`}
           >
-            <span className="bg-gradient-to-r from-green-600 to-emerald-600 text-white px-6 py-2 rounded-full text-sm font-medium shadow-2xl border border-white/20">
+            <span className="rounded-full border border-white/20 bg-gradient-to-r from-green-600 to-emerald-600 px-6 py-2 text-sm font-medium text-white shadow-2xl">
               {badge}
             </span>
           </div>
@@ -128,10 +129,8 @@ export default function SpecialOffer({
 
         {/* Title */}
         <h1
-          className={`font-bold text-white leading-tight drop-shadow-2xl text-2xl sm:text-3xl lg:text-5xl transition-all duration-1000 ${
-            isVisible
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-10"
+          className={`text-2xl leading-tight font-bold text-white drop-shadow-2xl transition-all duration-1000 sm:text-3xl lg:text-5xl ${
+            isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
           }`}
           style={{ transitionDelay: "200ms" }}
         >
@@ -139,22 +138,20 @@ export default function SpecialOffer({
             word.toLowerCase() === "adventure" ? (
               <span
                 key={i}
-                className="text-green-400 animate-pulse inline-block"
+                className="inline-block animate-pulse text-green-400"
               >
                 {word}{" "}
               </span>
             ) : (
               <span key={i}>{word} </span>
-            )
+            ),
           )}
         </h1>
 
         {/* Subtitle */}
         <p
-          className={`mt-6 text-gray-200 max-w-2xl text-base md:text-xl transition-all duration-1000 ${
-            isVisible
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-10"
+          className={`mt-6 max-w-2xl text-base text-gray-200 transition-all duration-1000 md:text-xl ${
+            isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
           }`}
           style={{ transitionDelay: "400ms" }}
         >
@@ -163,20 +160,18 @@ export default function SpecialOffer({
 
         {/* Buttons */}
         <div
-          className={`mt-10 flex flex-col sm:flex-row gap-4 transition-all duration-1000 ${
-            isVisible
-              ? "opacity-100 translate-y-0"
-              : "opacity-0 translate-y-10"
+          className={`mt-10 flex flex-col gap-4 transition-all duration-1000 sm:flex-row ${
+            isVisible ? "translate-y-0 opacity-100" : "translate-y-10 opacity-0"
           }`}
           style={{ transitionDelay: "600ms" }}
         >
           {primaryButton && (
             <Link
-              className="relative w-38 group overflow-hidden bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-full transition-all duration-300 hover:cursor-pointer hover:shadow-2xl hover:scale-105 sm:h-13 h-10 border border-white/20"
+              className="group relative h-10 w-38 overflow-hidden rounded-full border border-white/20 bg-gradient-to-r from-green-600 to-emerald-600 text-white transition-all duration-300 hover:scale-105 hover:cursor-pointer hover:shadow-2xl sm:h-13"
               to={primaryButton.link}
             >
-              <span className="absolute inset-0 h-full w-full bg-green-500 scale-x-0 group-hover:scale-x-100 origin-center transition-transform duration-300 ease-in-out z-0"></span>
-              <span className="relative z-10 flex items-center justify-center h-full w-full gap-2 font-semibold">
+              <span className="absolute inset-0 z-0 h-full w-full origin-center scale-x-0 bg-green-500 transition-transform duration-300 ease-in-out group-hover:scale-x-100"></span>
+              <span className="relative z-10 flex h-full w-full items-center justify-center gap-2 font-semibold">
                 {primaryButton.text}{" "}
                 <ArrowRight
                   size={18}
@@ -185,7 +180,6 @@ export default function SpecialOffer({
               </span>
             </Link>
           )}
-
         </div>
       </div>
 

@@ -276,6 +276,7 @@ export default function HomeFurnitureProducts() {
                   {/* Buy Now */}
                   <Link
                     to="/payment-choice"
+                    state={{ product: product }}
                     className="rounded-lg bg-orange-600 px-7 py-2 text-sm text-white shadow-md hover:cursor-pointer hover:bg-orange-700"
                   >
                     Buy Now

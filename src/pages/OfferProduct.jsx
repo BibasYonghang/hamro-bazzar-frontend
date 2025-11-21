@@ -322,6 +322,7 @@ export default function offerProduct() {
                     </button>
                     <Link
                       to="/payment-choice"
+                      state={{ product: product }}
                       className="transform rounded-lg bg-gradient-to-r from-sky-800 to-blue-900 px-7 py-2 text-white shadow-md transition-all duration-200 hover:scale-105 hover:cursor-pointer hover:from-sky-700 hover:to-blue-700 hover:shadow-lg"
                       title="Add to cart"
                     >

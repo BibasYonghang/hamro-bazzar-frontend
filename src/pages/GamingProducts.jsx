@@ -376,7 +376,7 @@ export default function GamingProducts() {
                           state: { product },
                         });
                       }}
-                      className="hover:bg-pruple-700 flex items-center justify-center gap-1 rounded-lg hover:bg-purple-700 bg-purple-600 px-7 py-2 text-sm text-white shadow-md hover:cursor-pointer"
+                      className="hover:bg-pruple-700 flex items-center justify-center gap-1 rounded-lg bg-purple-600 px-7 py-2 text-sm text-white shadow-md hover:cursor-pointer hover:bg-purple-700"
                     >
                       See Details
                     </button>
@@ -384,6 +384,7 @@ export default function GamingProducts() {
                     {/* Buy Now */}
                     <Link
                       to="/payment-choice"
+                      state={{ product: product }}
                       className="rounded-lg bg-purple-600 px-7 py-2 text-sm text-white shadow-md hover:cursor-pointer hover:bg-purple-700"
                     >
                       Buy Now
