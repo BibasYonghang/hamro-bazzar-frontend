@@ -1,1 +1,1 @@
-export const APP_URL = "https://hamro-bazzar.onrender.com";
+export const APP_URL = "http://localhost:5000";
