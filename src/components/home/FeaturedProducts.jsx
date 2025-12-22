@@ -10,6 +10,8 @@ export default function FeaturedProducts() {
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const navigate = useNavigate();
 
+  const API_BASE = import.meta.env.VITE_BASE_URL;
+
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 100);
     return () => clearTimeout(timer);
@@ -18,9 +20,8 @@ export default function FeaturedProducts() {
   useEffect(() => {
     const fetchFeaturedProducts = async () => {
       try {
-        const response = await fetch(
-          "https://hamro-bazzar.onrender.com/api/featured-products"
-        );
+        const response = await fetch(`${API_BASE}/api/featured-products`);
+        console.log(`${API_BASE}/api/featured-products`);
         const data = await response.json();
         if (Array.isArray(data) && data.length > 0) {
           setFeaturedProducts(data);
@@ -28,7 +29,7 @@ export default function FeaturedProducts() {
           setFeaturedProducts(fallbackProducts);
         }
       } catch (error) {
-        console.log(error);
+        console.error(error);
         setFeaturedProducts(fallbackProducts);
       }
     };
@@ -68,14 +69,14 @@ export default function FeaturedProducts() {
               }`}
               style={{
                 transitionDelay: `${idx * 50}ms`,
-                cursor: "pointer"
+                cursor: "pointer",
               }}
               onClick={() =>
                 navigate(`/products/${_id}`, { state: { product } })
               }
               tabIndex={0}
               role="button"
-              onKeyDown={e => {
+              onKeyDown={(e) => {
                 if (e.key === "Enter" || e.key === " ") {
                   navigate(`/products/${_id}`, { state: { product } });
                 }
@@ -87,7 +88,7 @@ export default function FeaturedProducts() {
                   src={image}
                   alt={name}
                   className="h-full w-full transition-transform duration-500 group-hover:scale-110"
-                  onError={e => {
+                  onError={(e) => {
                     e.target.src =
                       "https://via.placeholder.com/300x300?text=Product";
                   }}

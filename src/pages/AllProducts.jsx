@@ -29,6 +29,8 @@ export default function AllProducts() {
   const heroRef = useRef(null);
   const productsRef = useRef(null);
   const navigate = useNavigate();
+  
+  const API_BASE = import.meta.env.VITE_BASE_URL;
 
   // Get max price for range slider - useMemo to optimize
   const maxPrice = useMemo(() => {
@@ -49,7 +51,7 @@ export default function AllProducts() {
       try {
         // Try to fetch all products from /api/products
         const res = await fetch(
-          "https://hamro-bazzar.onrender.com/api/all-products",
+          `${API_BASE}/api/all-products`,
         );
         if (res.ok) {
           const data = await res.json();
@@ -58,16 +60,16 @@ export default function AllProducts() {
           // If that doesn't work, fetch from all category endpoints
           const [electronics, furniture, gaming, personalCare] =
             await Promise.all([
-              fetch("https://hamro-bazzar.onrender.com/api/electronics")
+              fetch(`${API_BASE}/api/electronics`)
                 .then((r) => r.json())
                 .catch(() => []),
-              fetch("https://hamro-bazzar.onrender.com/api/home-furniture")
+              fetch(`${API_BASE}/api/home-furniture`)
                 .then((r) => r.json())
                 .catch(() => []),
-              fetch("https://hamro-bazzar.onrender.com/api/gaming")
+              fetch(`${API_BASE}/api/gaming`)
                 .then((r) => r.json())
                 .catch(() => []),
-              fetch("https://hamro-bazzar.onrender.com/api/personal-care")
+              fetch(`${API_BASE}/api/personal-care`)
                 .then((r) => r.json())
                 .catch(() => []),
             ]);

@@ -6,7 +6,7 @@ export default function SpecialOffer({
   title = "Gear Up For Your Next Adventure",
   subtitle = "Discover premium hiking gear and outdoor essentials. Free shipping on orders over $50.",
   badge = "🔥 Limited Time Offer – 30% OFF",
-  backgroundImage = "/component-image/promotion-bg-image.png",
+  backgroundImage = "/images/home-page-images/promotion-bg-image.png",
   showCountdown = true,
   countdownDays = 4, // default 3 days
   primaryButton = { text: "Shop Now", link: "/offered-products" },

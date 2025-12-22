@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 export default function ProductList() {
   const [isVisible, setIsVisible] = useState(false);
 
+  const API_BASE = import.meta.env.VITE_BASE_URL;
+
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 200);
     return () => clearTimeout(timer);
@@ -12,9 +14,9 @@ export default function ProductList() {
 
   // Maintain separate product states for each category
   const [categoryProducts, setCategoryProducts] = useState({
-    "Electronics": [],
+    Electronics: [],
     "Personal Care": [],
-    "Gaming": [],
+    Gaming: [],
     "Home Furniture": [],
   });
 
@@ -24,44 +26,44 @@ export default function ProductList() {
       image: "/featured-products-image/electronics.png",
       link: "/electronics",
       icon: "⚡",
-      api: "https://hamro-bazzar.onrender.com/api/category-electronics"
+      api: `${API_BASE}/api/category-electronics`,
     },
     {
       name: "Personal Care",
       image: "/featured-products-image/personal-care.png",
       link: "/personal-care",
       icon: "✨",
-      api: "https://hamro-bazzar.onrender.com/api/category-personal-care"
+      api: `${API_BASE}/api/category-personal-care`,
     },
     {
       name: "Gaming",
       image: "/featured-products-image/gaming.png",
       link: "/gaming",
       icon: "🎮",
-      api: "https://hamro-bazzar.onrender.com/api/category-gaming"
+      api: `${API_BASE}/api/category-gaming`,
     },
     {
       name: "Home Furniture",
       image: "/featured-products-image/home-furniture.png",
       link: "/home-furniture",
       icon: "🏠",
-      api: "https://hamro-bazzar.onrender.com/api/category-home-furniture"
+      api: `${API_BASE}/api/category-home-furniture`,
     },
   ];
 
   // Fetch all products for each category once when mounted
   useEffect(() => {
-    featuredProductsDiv.forEach(category => {
+    featuredProductsDiv.forEach((category) => {
       fetch(category.api)
-        .then(res => res.json())
-        .then(data => {
-          setCategoryProducts(prev => ({
+        .then((res) => res.json())
+        .then((data) => {
+          setCategoryProducts((prev) => ({
             ...prev,
             [category.name]: Array.isArray(data) ? data : [],
           }));
         })
-        .catch(err => {
-          setCategoryProducts(prev => ({
+        .catch((err) => {
+          setCategoryProducts((prev) => ({
             ...prev,
             [category.name]: [],
           }));
@@ -116,9 +118,11 @@ export default function ProductList() {
                       to={link}
                       className="group relative overflow-hidden rounded-lg bg-gradient-to-br from-gray-50 to-gray-100"
                     >
-                      <div className="relative  h-[23vh] overflow-hidden sm:h-[25vh]">
+                      <div className="relative h-[23vh] overflow-hidden sm:h-[25vh]">
                         <img
-                          src={item.image || "/featured-products-image/default.png"}
+                          src={
+                            item.image || "/featured-products-image/default.png"
+                          }
                           alt={item.name ? `${name} - ${item.name}` : `Product`}
                           className="h-full w-full transform transition-transform duration-500 group-hover:scale-110"
                           onError={(e) => {
@@ -135,7 +139,7 @@ export default function ProductList() {
                     </Link>
                   ))
                 ) : (
-                  <div className="col-span-2 text-center text-gray-400 py-6">
+                  <div className="col-span-2 py-6 text-center text-gray-400">
                     <span>No products found.</span>
                   </div>
                 )}

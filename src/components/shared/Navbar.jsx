@@ -7,6 +7,8 @@ const Navbar = () => {
   const [searchError, setSearchError] = useState("");
   const navigate = useNavigate();
 
+  const API_BASE = import.meta.env.VITE_BASE_URL;
+
   const navLinks = [
     {
       name: "Home",
@@ -40,19 +42,19 @@ const Navbar = () => {
 
     for (const endpoint of endpoints) {
       try {
-        const res = await fetch(`https://hamro-bazzar.onrender.com/api/${endpoint}`);
+        const res = await fetch(`${API_BASE}/api/${endpoint}`);
         if (!res.ok) continue;
 
         const data = await res.json();
 
         // Try exact match first
         let found = data.find(
-          (p) => p.name?.toLowerCase() === productName.toLowerCase(),
+          (p) => p.name?.toLowerCase() === productName.toLowerCase()
         );
         if (!found) {
           // Fallback to partial match
           found = data.find((p) =>
-            p.name?.toLowerCase().includes(productName.toLowerCase()),
+            p.name?.toLowerCase().includes(productName.toLowerCase())
           );
         }
 
@@ -100,7 +102,7 @@ const Navbar = () => {
       <div className="flex flex-wrap items-center justify-between gap-3 sm:flex-nowrap">
         <Link to="/" className="flex items-center">
           <img
-            src="/hamro-bazzar-logo.png"
+            src="/images/hamro-bazzar-logo.png"
             alt="Hamro Bazzar Logo"
             className="h-10 sm:h-12 md:h-[60px]"
           />

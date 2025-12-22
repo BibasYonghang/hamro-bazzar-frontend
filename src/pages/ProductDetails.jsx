@@ -50,6 +50,9 @@ export default function ProductDetails() {
   const tilt = use3DTilt();
   const [mounted, setMounted] = useState(false);
 
+    const API_BASE = import.meta.env.VITE_BASE_URL;
+
+
   useEffect(() => {
     const fetchProduct = async () => {
       if (!product && id) {
@@ -57,7 +60,7 @@ export default function ProductDetails() {
           setLoading(true);
           setNotFound(false);
 
-          const res = await fetch(`https://hamro-bazzar.onrender.com/api/all-products`);
+          const res = await fetch(`${API_BASE}/api/all-products`);
           if (res.ok) {
             const products = await res.json();
             const foundProduct = products.find(
@@ -80,7 +83,7 @@ export default function ProductDetails() {
 
             for (const category of categories) {
               const categoryRes = await fetch(
-                `https://hamro-bazzar.onrender.com/api/${category}`,
+                `${API_BASE}/api/${category}`,
               );
               if (categoryRes.ok) {
                 const categoryProducts = await categoryRes.json();

@@ -22,12 +22,12 @@ const Footer = () => {
     <footer className="relative h-[98vh] w-full text-blue-800 md:h-[80vh] lg:h-[70vh]">
       <div className="absolute h-20 w-full bg-gradient-to-br from-white to-transparent"></div>
       <img
-        src="/footer-background.png"
+        src="/images/footer-background.png"
         alt=""
         className="h-full w-full object-cover object-[center_10%]"
       />
       <img
-        src="/hamro-bazzar-logo.png"
+        src="/images/hamro-bazzar-logo.png"
         alt=""
         className="absolute top-3 h-30 md:h-35 lg:h-40"
       />

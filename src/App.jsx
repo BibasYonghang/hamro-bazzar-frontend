@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom";
 import Home from "./pages/Home";
-import CartPage from "./pages/CartPage";
-import CheckoutPage from "./pages/CheckoutPage";
-import Cart from "./pages/Cart";
-import Blog from "./pages/Blog";
-import BlogDetail from "./pages/BlogDetail";
+import CartPage from "./pages/cart/CartPage";
+import CheckoutPage from "./pages/payment/CheckoutPage";
+import Cart from "./pages/cart/Cart";
+import Blog from "./pages/blogs/Blog";
+import BlogDetail from "./pages/blogs/BlogDetail";
 import OfferProduct from "./pages/OfferProduct";
 import NotFound from "./pages/NotFound";
 import Collections from "./pages/Collections";
@@ -18,10 +18,10 @@ import HomeFurnitureProducts from "./pages/HomeFurnitureProducts";
 import AllProducts from "./pages/AllProducts";
 import ProductDetails from "./pages/ProductDetails";
 import ScrollToTop from "./components/shared/ScrollToTop.jsx";
-import PaymentChoice from "./pages/PaymentChoice.jsx";
-import PaymentFailure from "./pages/PaymentFailure.jsx";
-import PaymentSuccess from "./pages/PaymentSucess.jsx";
-import ThankYou from "./pages/ThankYou.jsx";
+import PaymentChoice from "./pages/payment/PaymentChoice.jsx";
+import PaymentFailure from "./pages/payment/PaymentFailure.jsx";
+import PaymentSuccess from "./pages/payment/PaymentSucess.jsx";
+import ThankYou from "./pages/payment/ThankYou.jsx";
 
 function App() {
   // 1. Create cart state

@@ -1,8 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { Sparkles, ShieldCheck, CreditCard, ArrowLeft } from "lucide-react";
-import { isAuthenticated } from "../auth";
-import { APP_URL } from "../config";
+import { isAuthenticated } from "../../auth.js";
 import axios from "axios";
 import { toast } from "react-hot-toast";
 import { useLocation } from "react-router-dom";
@@ -191,6 +190,8 @@ export default function PaymentChoice3D() {
   const [locked, setLocked] = useState([false, false]);
   const [selectedMethod, setSelectedMethod] = useState(null); // NEW STATE
 
+  const API_BASE = import.meta.env.VITE_BASE_URL;
+
   const scene = useSceneTilt({ intensity: 12, ease: 0.09 });
   const tiltHooks = [
     use4DTilt({ maxAngle: 44, scale: 1.095 }),
@@ -244,7 +245,7 @@ export default function PaymentChoice3D() {
     try {
       if (selectedMethod === "esewa") {
         const { data } = await axios.post(
-          `${APP_URL}/api/generate-signature`,
+          `${API_BASE}/api/generate-signature`,
           paymentData,
           {
             headers: {

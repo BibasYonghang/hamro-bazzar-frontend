@@ -12,25 +12,25 @@ export default function HeroSection() {
   const categories = [
     {
       name: "Electronics",
-      image: "/categories-image/electronics.png",
+      image: "/images/categories-images/electronics.png",
       link: "/electronics",
       icon: "⚡",
     },
     {
       name: "Personal Care",
-      image: "/categories-image/personal-care.png",
+      image: "/images/categories-images/personal-care.png",
       link: "/personal-care",
       icon: "✨",
     },
     {
       name: "Gaming",
-      image: "/categories-image/gaming.png",
+      image: "/images/categories-images/gaming.png",
       link: "/gaming",
       icon: "🎮",
     },
     {
       name: "Home Furniture",
-      image: "/categories-image/home-furniture.png",
+      image: "/images/categories-images/home-furniture.png",
       link: "/home-furniture",
       icon: "🏠",
     },
@@ -40,7 +40,7 @@ export default function HeroSection() {
     <div className="relative h-[115vh] overflow-hidden sm:h-[127vh] lg:h-[100vh] xl:h-[95vh]">
       <section className="relative h-full w-full rounded-lg">
         <img
-          src="/component-image/home-bg-image.png"
+          src="/images/home-page-images/home-bg-image.png"
           alt=""
           className="animate-fade-in h-full w-full object-cover object-[center_70%]"
         />

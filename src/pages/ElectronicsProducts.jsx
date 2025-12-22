@@ -23,10 +23,13 @@ export default function ElectronicsProducts() {
 
   const navigate = useNavigate();
 
+  
+  const API_BASE = import.meta.env.VITE_BASE_URL;
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch("https://hamro-bazzar.onrender.com/api/electronics");
+        const res = await fetch(`${API_BASE}/api/electronics`);
         const data = await res.json();
         setProducts(data);
         setLoading(false);

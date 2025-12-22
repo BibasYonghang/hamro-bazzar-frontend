@@ -25,10 +25,12 @@ export default function offerProduct() {
 
   const navigate = useNavigate();
 
+  const API_BASE = import.meta.env.VITE_BASE_URL;
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch("https://hamro-bazzar.onrender.com/api/offered-products");
+        const res = await fetch(`${API_BASE}/api/offered-products`);
         const data = await res.json();
         setProducts(data);
         setLoading(false);

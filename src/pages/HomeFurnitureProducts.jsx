@@ -23,10 +23,12 @@ export default function HomeFurnitureProducts() {
 
   const navigate = useNavigate();
 
+  const API_BASE = import.meta.env.VITE_BASE_URL;
+
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch("https://hamro-bazzar.onrender.com/api/home-furniture");
+        const res = await fetch(`${API_BASE}/api/home-furniture`);
         const data = await res.json();
         setProducts(data);
         setLoading(false);

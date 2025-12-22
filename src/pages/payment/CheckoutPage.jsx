@@ -1,6 +1,6 @@
 // CheckoutPage.jsx
 import React, { useState } from 'react';
-import CheckoutForm from '../components/checkout/CheckoutForm';
+import CheckoutForm from '../../components/checkout/CheckoutForm';
 
 const CheckoutPage = ({ cartItems, onCheckout }) => {
   const [orderPlaced, setOrderPlaced] = useState(false);

@@ -23,18 +23,18 @@ export default function GamingProducts() {
   const heroRef = useRef(null);
   const productsRef = useRef(null);
 
+  const API_BASE = import.meta.env.VITE_BASE_URL;
+
   const navigate = useNavigate();
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         // Try gaming endpoint first, fallback to products with Gaming category filter
-        const res = await fetch("https://hamro-bazzar.onrender.com/api/gaming");
+        const res = await fetch(`${API_BASE}/api/gaming`);
         if (!res.ok) {
           // If gaming endpoint doesn't exist, fetch all products and filter
-          const allProductsRes = await fetch(
-            "https://hamro-bazzar.onrender.com/api/products",
-          );
+          const allProductsRes = await fetch(`${API_BASE}/api/products`);
           const allProducts = await allProductsRes.json();
           const gamingProducts = allProducts.filter(
             (p) =>
@@ -51,9 +51,7 @@ export default function GamingProducts() {
         console.error("Error fetching gaming products:", error);
         // Fallback: try fetching all products and filtering
         try {
-          const allProductsRes = await fetch(
-            "https://hamro-bazzar.onrender.com/api/gaming",
-          );
+          const allProductsRes = await fetch(`${API_BASE}/api/gaming`);
           const allProducts = await allProductsRes.json();
           const gamingProducts = allProducts.filter(
             (p) =>
