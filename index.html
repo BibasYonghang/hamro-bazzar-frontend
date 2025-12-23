@@ -1,72 +1,96 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1.0, maximum-scale=5.0"
-    />
 
-    <!-- Title -->
-    <title>Hamro Bazzar | Best Online eCommerce Shop</title>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
 
-    <!-- Description -->
-    <meta
-      name="description"
-      content="Shop the latest products at Your Store – the best online eCommerce website. Fast shipping, secure checkout, and exclusive deals."
-    />
+  <!-- Title -->
+  <title>Hamro Bazzar | Best Online eCommerce Shop</title>
 
-    <!-- Keywords (less relevant for modern SEO, but still useful) -->
-    <meta
-      name="keywords"
-      content="ecommerce, online shop, buy online, best deals, online store"
-    />
+  <!-- Description -->
+  <meta name="description"
+    content="Shop the latest products at Hamro Bazzar – the best online eCommerce website. Fast shipping, secure checkout, and exclusive deals." />
 
-    <!-- Author -->
-    <meta name="author" content="Bibas Yonghang" />
+  <!-- Keywords (optional, less relevant today) -->
+  <meta name="keywords" content="ecommerce, online shop, buy online, best deals, online store" />
 
-    <!-- Canonical URL -->
-    <link rel="canonical" href="https://hamro-bazzar-six.vercel.app/" />
+  <!-- Author -->
+  <meta name="author" content="Bibas Yonghang" />
 
-    <!-- Favicon -->
-    <link rel="icon" href="/favicon.ico" />
-    <!-- <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
-    <link rel="manifest" href="/site.webmanifest" /> -->
+  <!-- Canonical URL -->
+  <link rel="canonical" href="https://hamro-bazzar-six.vercel.app/" />
 
-    <!-- Open Graph / Facebook -->
-    <meta property="og:title" content="Your Store | Best Online eCommerce Shop" />
-    <meta
-      property="og:description"
-      content="Discover amazing products at unbeatable prices. Shop now at Your Store!"
-    />
-    <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://hamro-bazzar-six.vercel.app/" />
-    <meta property="og:image" content="https://hamro-bazzar-six.vercel.app/og-image.jpg" />
-    <meta property="og:site_name" content="Your Store" />
+  <!-- Favicons -->
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/hamro-bazzar-logo.png" />
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/hamro-bazzar-logo.png" />
+  <link rel="shortcut icon" href="/images/hamro-bazzar-logo.png" type="image/png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/hamro-bazzar-logo.png" />
 
-    <!-- Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Your Store | Best Online eCommerce Shop" />
-    <meta
-      name="twitter:description"
-      content="Shop online for exclusive products at Your Store – fast delivery and secure checkout."
-    />
-    <meta
-      name="twitter:image"
-      content="https://hamro-bazzar-six.vercel.app/og-image.jpg"
-    />
+  <!-- Open Graph / Facebook -->
+  <meta property="og:title" content="Hamro Bazzar | Best Online eCommerce Shop" />
+  <meta property="og:description" content="Discover amazing products at unbeatable prices. Shop now at Hamro Bazzar!" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://hamro-bazzar-six.vercel.app/" />
+  <meta property="og:image" content="https://hamro-bazzar-six.vercel.app/images/hamro-bazzar-logo.png" />
+  <meta property="og:site_name" content="Hamro Bazzar" />
 
-    <!-- Theme Color -->
-    <meta name="theme-color" content="#2563eb" />
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Hamro Bazzar | Best Online eCommerce Shop" />
+  <meta name="twitter:description"
+    content="Shop online for exclusive products at Hamro Bazzar – fast delivery and secure checkout." />
+  <meta name="twitter:image" content="https://hamro-bazzar-six.vercel.app/images/hamro-bazzar-logo.png" />
 
-    <!-- Robots -->
-    <meta name="robots" content="index, follow" />
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+  <!-- Theme Color -->
+  <meta name="theme-color" content="#2563eb" />
+
+  <!-- Robots -->
+  <meta name="robots" content="index, follow" />
+
+  <!-- Security Meta Tags -->
+  <meta http-equiv="Referrer-Policy" content="strict-origin-when-cross-origin" />
+  <meta http-equiv="X-Content-Type-Options" content="nosniff" />
+
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Store",
+    "name": "Hamro Bazzar",
+    "url": "https://hamro-bazzar-six.vercel.app/",
+    "logo": "https://hamro-bazzar-six.vercel.app/images/hamro-bazzar-logo.png",
+    "description": "Shop the latest products at Hamro Bazzar – the best online eCommerce website. Fast shipping, secure checkout, and exclusive deals.",
+    "address": {
+      "@type": "PostalAddress",
+      "streetAddress": "Your Street Address Here",
+      "addressLocality": "City Name",
+      "addressRegion": "Province/State",
+      "postalCode": "Postal Code",
+      "addressCountry": "NP"
+    },
+    "geo": {
+      "@type": "GeoCoordinates",
+      "latitude": 27.7,
+      "longitude": 85.3
+    },
+    "hasMap": "https://www.google.com/maps/place/Your+Store+Location",
+    "telephone": "+977-01-00000000",
+    "email": "info@hamrobazzar.com",
+    "sameAs": [
+      "https://www.facebook.com/YourPage",
+      "https://twitter.com/YourHandle",
+      "https://www.instagram.com/YourProfile"
+    ]
+  }
+  </script>
+
+</head>
+
+<body>
+  <div id="root"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
 </html>

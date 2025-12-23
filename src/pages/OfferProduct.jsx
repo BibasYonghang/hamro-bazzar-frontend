@@ -30,7 +30,7 @@ export default function offerProduct() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/offered-products`);
+        const res = await fetch(`${API_BASE}/offered-products`);
         const data = await res.json();
         setProducts(data);
         setLoading(false);

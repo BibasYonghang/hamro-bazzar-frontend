@@ -30,7 +30,7 @@ export default function PersonalCareProducts() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/personal-care`);
+        const res = await fetch(`${API_BASE}/personal-care`);
         const data = await res.json();
         setProducts(data);
         setLoading(false);

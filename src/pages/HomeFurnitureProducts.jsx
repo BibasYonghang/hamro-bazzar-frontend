@@ -28,7 +28,7 @@ export default function HomeFurnitureProducts() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/home-furniture`);
+        const res = await fetch(`${API_BASE}/home-furniture`);
         const data = await res.json();
         setProducts(data);
         setLoading(false);

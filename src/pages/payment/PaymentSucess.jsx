@@ -237,6 +237,8 @@ const PaymentSuccess = () => {
     processPayment();
   }, [navigate, token, order]);
 
+  console.log("ORDER DATA SENT:", order);
+
   return (
     <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-gradient-to-br from-green-50 via-emerald-50 to-teal-50 px-4">
       {/* 4D Particle Canvas */}

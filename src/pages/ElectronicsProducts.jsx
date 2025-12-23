@@ -29,7 +29,7 @@ export default function ElectronicsProducts() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/electronics`);
+        const res = await fetch(`${API_BASE}/electronics`);
         const data = await res.json();
         setProducts(data);
         setLoading(false);

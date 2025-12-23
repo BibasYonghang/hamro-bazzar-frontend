@@ -42,7 +42,7 @@ const Navbar = () => {
 
     for (const endpoint of endpoints) {
       try {
-        const res = await fetch(`${API_BASE}/api/${endpoint}`);
+        const res = await fetch(`${API_BASE}/${endpoint}`);
         if (!res.ok) continue;
 
         const data = await res.json();

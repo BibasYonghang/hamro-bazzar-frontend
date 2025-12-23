@@ -245,7 +245,7 @@ export default function PaymentChoice3D() {
     try {
       if (selectedMethod === "esewa") {
         const { data } = await axios.post(
-          `${API_BASE}/api/generate-signature`,
+          `${API_BASE}/generate-signature`,
           paymentData,
           {
             headers: {

@@ -26,28 +26,28 @@ export default function ProductList() {
       image: "/featured-products-image/electronics.png",
       link: "/electronics",
       icon: "⚡",
-      api: `${API_BASE}/api/category-electronics`,
+      api: `${API_BASE}/category-electronics`,
     },
     {
       name: "Personal Care",
       image: "/featured-products-image/personal-care.png",
       link: "/personal-care",
       icon: "✨",
-      api: `${API_BASE}/api/category-personal-care`,
+      api: `${API_BASE}/category-personal-care`,
     },
     {
       name: "Gaming",
       image: "/featured-products-image/gaming.png",
       link: "/gaming",
       icon: "🎮",
-      api: `${API_BASE}/api/category-gaming`,
+      api: `${API_BASE}/category-gaming`,
     },
     {
       name: "Home Furniture",
       image: "/featured-products-image/home-furniture.png",
       link: "/home-furniture",
       icon: "🏠",
-      api: `${API_BASE}/api/category-home-furniture`,
+      api: `${API_BASE}/category-home-furniture`,
     },
   ];
 

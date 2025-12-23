@@ -20,8 +20,8 @@ export default function FeaturedProducts() {
   useEffect(() => {
     const fetchFeaturedProducts = async () => {
       try {
-        const response = await fetch(`${API_BASE}/api/featured-products`);
-        console.log(`${API_BASE}/api/featured-products`);
+        const response = await fetch(`${API_BASE}/featured-products`);
+        console.log(`${API_BASE}/featured-products`);
         const data = await response.json();
         if (Array.isArray(data) && data.length > 0) {
           setFeaturedProducts(data);

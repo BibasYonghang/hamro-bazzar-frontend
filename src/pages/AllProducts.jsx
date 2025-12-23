@@ -49,9 +49,9 @@ export default function AllProducts() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        // Try to fetch all products from /api/products
+        // Try to fetch all products from /products
         const res = await fetch(
-          `${API_BASE}/api/all-products`,
+          `${API_BASE}/all-products`,
         );
         if (res.ok) {
           const data = await res.json();
@@ -60,16 +60,16 @@ export default function AllProducts() {
           // If that doesn't work, fetch from all category endpoints
           const [electronics, furniture, gaming, personalCare] =
             await Promise.all([
-              fetch(`${API_BASE}/api/electronics`)
+              fetch(`${API_BASE}/electronics`)
                 .then((r) => r.json())
                 .catch(() => []),
-              fetch(`${API_BASE}/api/home-furniture`)
+              fetch(`${API_BASE}/home-furniture`)
                 .then((r) => r.json())
                 .catch(() => []),
-              fetch(`${API_BASE}/api/gaming`)
+              fetch(`${API_BASE}/gaming`)
                 .then((r) => r.json())
                 .catch(() => []),
-              fetch(`${API_BASE}/api/personal-care`)
+              fetch(`${API_BASE}/personal-care`)
                 .then((r) => r.json())
                 .catch(() => []),
             ]);

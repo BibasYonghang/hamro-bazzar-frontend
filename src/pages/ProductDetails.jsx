@@ -60,7 +60,7 @@ export default function ProductDetails() {
           setLoading(true);
           setNotFound(false);
 
-          const res = await fetch(`${API_BASE}/api/all-products`);
+          const res = await fetch(`${API_BASE}/all-products`);
           if (res.ok) {
             const products = await res.json();
             const foundProduct = products.find(

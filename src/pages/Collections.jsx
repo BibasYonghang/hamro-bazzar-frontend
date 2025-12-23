@@ -13,7 +13,7 @@ export default function Collections() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const res = await fetch(`${API_BASE}/api/products`);
+        const res = await fetch(`${API_BASE}/products`);
         const data = await res.json();
         setProducts(data);
         setLoading(false);
