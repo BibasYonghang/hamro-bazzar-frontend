@@ -1,12 +1,104 @@
-# React + Vite
+# 🛒 Hamro Bazzar – Online eCommerce Platform
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**Hamro Bazzar** is a modern eCommerce web application built to provide a fast, secure, and user-friendly online shopping experience. The platform focuses on performance, SEO, and clean UI while supporting secure checkout and scalable backend integration.
 
-Currently, two official plugins are available:
+🔗 **Live Demo:** https://hamro-bazzar-six.vercel.app/
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## 🚀 Features
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- 🛍️ Browse and explore products easily  
+- 🔐 Secure checkout flow  
+- ⚡ Fast performance with optimized frontend  
+- 📱 Fully responsive (mobile, tablet, desktop)  
+- 🔍 SEO optimized with:
+  - Meta tags
+  - Open Graph
+  - Twitter Cards
+  - JSON-LD structured data  
+- 🌐 Deployed on **Vercel**
+
+---
+
+## 🧑‍💻 Tech Stack
+
+### Frontend
+- React
+- Vite
+- JavaScript (ES6+)
+- HTML5
+- Tailwind 
+
+### Backend 
+- Node.js
+- Express.js
+- MongoDB
+
+### Deployment
+- **Vercel** (Frontend)
+- **Render** (Backend)
+
+---
+
+## 📁 Project Structure
+
+hamro-bazzar/
+├── public/
+│ └── images/
+│    └── hamro-bazzar-logo.png
+├── src/
+│ ├── components/
+│ ├── pages/
+│ ├── App.jsx
+│ └── main.jsx
+├── index.html
+├── package.json
+└── README.md
+
+## ⚙️ Environment Variables
+
+Create a `.env` file in the root of your project:
+
+VITE_API_BASE_URL=https://your-backend-api.com
+⚠️ Never commit .env files to GitHub.
+
+🛠️ Installation & Setup
+Clone the repository
+git clone https://github.com/your-username/hamro-bazzar.git
+Install dependencies
+
+npm install
+Run locally
+
+npm run dev
+Open in browser:
+
+http://localhost:5173
+📈 SEO & Performance
+Canonical URL configured
+
+Structured data using Schema.org (Store)
+
+Open Graph and Twitter preview support
+
+Optimized favicon and metadata
+
+🧠 Future Improvements
+User authentication (login/signup)
+
+Order history & tracking
+
+Payment gateway integration
+
+Admin dashboard
+
+Product reviews & ratings
+
+👨‍💻 Author
+Bibas Yonghang
+Frontend / MERN Stack Developer
+
+📄 License
+This project is not under any license
+
