@@ -195,10 +195,10 @@ export default function AllProducts() {
             }`}
           >
             <Sparkles className="h-10 w-10 animate-pulse" />
-            <h1 className="text-5xl font-bold md:text-6xl">All Products</h1>
+            <h1 className="text-4xl font-bold md:text-6xl">All Products</h1>
           </div>
           <p
-            className={`mb-6 max-w-3xl text-xl text-blue-100 transition-all duration-1000 md:text-2xl ${
+            className={`mb-6 max-w-3xl text-md text-blue-100 transition-all duration-1000 md:text-xl ${
               isVisible
                 ? "translate-y-0 opacity-100"
                 : "translate-y-10 opacity-0"
@@ -209,25 +209,25 @@ export default function AllProducts() {
             need, all in one place.
           </p>
           <div
-            className={`flex items-center gap-6 text-blue-100 transition-all duration-1000 ${
+            className={`flex items-center md:gap-6 gap-2 text-blue-100 transition-all duration-1000 ${
               isVisible
                 ? "translate-y-0 opacity-100"
                 : "translate-y-10 opacity-0"
             }`}
             style={{ transitionDelay: "400ms" }}
           >
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-1">
               <TrendingUp className="h-6 w-6" />
-              <span className="text-lg font-medium">
+              <span className="md:text-lg text-md font-medium">
                 {products.length}+ Products
               </span>
             </div>
             <span className="text-blue-200">•</span>
-            <span className="text-lg font-medium">
+            <span className="md:text-lg text-md font-medium">
               {categories.length - 1} Categories
             </span>
             <span className="text-blue-200">•</span>
-            <span className="text-lg font-medium">Premium Quality</span>
+            <span className="md:text-lg text-md font-medium">Premium Quality</span>
           </div>
         </div>
       </div>

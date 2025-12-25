@@ -114,12 +114,12 @@ export default function HomeFurnitureProducts() {
             }`}
           >
             <Home className="h-8 w-8 animate-pulse" />
-            <h1 className="text-4xl font-bold md:text-5xl">
+            <h1 className="text-3xl font-bold md:text-5xl">
               Home Furniture & Décor
             </h1>
           </div>
           <p
-            className={`mb-4 max-w-2xl text-xl text-amber-100 transition-all duration-1000 ${
+            className={`mb-4 max-w-2xl text-md md:text-xl text-amber-100 transition-all duration-1000 ${
               isVisible
                 ? "translate-y-0 opacity-100"
                 : "translate-y-10 opacity-0"

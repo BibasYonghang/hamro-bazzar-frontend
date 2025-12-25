@@ -39,7 +39,7 @@ export default function BlogDetail() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-50">
         <div className="text-center">
-          <h1 className="text-4xl font-bold text-gray-800 mb-4">Blog Not Found</h1>
+          <h1 className="md:text-4xl text-2xl font-bold text-gray-800 mb-4">Blog Not Found</h1>
           <p className="text-gray-600 mb-8">The blog post you're looking for doesn't exist.</p>
           <Link
             to="/blog"
@@ -112,7 +112,7 @@ export default function BlogDetail() {
       </div>
 
       {/* Blog Content */}
-      <article className=" mx-auto px-6 py-16">
+      <article className=" mx-auto px-2 py-16">
         <div
           ref={contentRef}
           className={`bg-white rounded-2xl shadow-xl overflow-hidden border border-gray-100 transition-all duration-1000 ${
@@ -135,7 +135,7 @@ export default function BlogDetail() {
           </div>
 
           {/* Article Content */}
-          <div className="p-8 md:p-12">
+          <div className="p-4 md:p-10">
             <div
               className="prose prose-lg max-w-none prose-headings:text-gray-800 prose-headings:font-bold prose-p:text-gray-700 prose-p:leading-relaxed prose-a:text-green-600 prose-a:no-underline hover:prose-a:underline prose-strong:text-gray-900 prose-ul:text-gray-700 prose-ol:text-gray-700 prose-li:text-gray-700"
               dangerouslySetInnerHTML={{ __html: blog.content }}

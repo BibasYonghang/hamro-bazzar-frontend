@@ -161,10 +161,10 @@ export default function GamingProducts() {
             }`}
           >
             <Gamepad2 className="h-8 w-8 animate-pulse" />
-            <h1 className="text-4xl font-bold md:text-5xl">Gaming Zone</h1>
+            <h1 className="text-3xl font-bold md:text-5xl">Gaming Zone</h1>
           </div>
           <p
-            className={`mb-4 max-w-2xl text-xl text-purple-100 transition-all duration-1000 ${
+            className={`mb-4 max-w-2xl md:text-xl text-md text-purple-100 transition-all duration-1000 ${
               isVisible
                 ? "translate-y-0 opacity-100"
                 : "translate-y-10 opacity-0"
@@ -185,15 +185,15 @@ export default function GamingProducts() {
           >
             <div className="flex items-center gap-2">
               <Trophy className="h-5 w-5 text-yellow-400" />
-              <span className="text-lg">Pro Gaming Gear</span>
+              <span className="text-md md:text-lg">Pro Gaming Gear</span>
             </div>
             <span className="text-purple-300">•</span>
             <div className="flex items-center gap-2">
               <Zap className="h-5 w-5 text-yellow-400" />
-              <span className="text-lg">High Performance</span>
+              <span className="text-md md:text-lg">High Performance</span>
             </div>
             <span className="text-purple-300">•</span>
-            <span className="text-lg">Competitive Prices</span>
+            <span className="text-md md:text-lg">Competitive Prices</span>
           </div>
         </div>
       </div>

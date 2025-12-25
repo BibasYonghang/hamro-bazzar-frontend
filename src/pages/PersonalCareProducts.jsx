@@ -115,12 +115,12 @@ export default function PersonalCareProducts() {
             }`}
           >
             <Sparkles className="h-8 w-8 animate-pulse" />
-            <h1 className="text-4xl font-bold md:text-5xl">
+            <h1 className="text-3xl font-bold md:text-5xl">
               Personal Care & Beauty
             </h1>
           </div>
           <p
-            className={`max-w-2xl text-xl text-pink-100 transition-all duration-1000 ${
+            className={`max-w-2xl md:text-xl text-md text-pink-100 transition-all duration-1000 ${
               isVisible
                 ? "translate-y-0 opacity-100"
                 : "translate-y-10 opacity-0"
@@ -140,7 +140,7 @@ export default function PersonalCareProducts() {
             style={{ transitionDelay: "400ms" }}
           >
             <Heart className="h-5 w-5 animate-pulse fill-pink-200" />
-            <span className="text-lg">
+            <span className="md:text-lg text-md">
               Premium Quality • Natural Ingredients • Affordable Prices
             </span>
           </div>
