@@ -60,12 +60,12 @@ hamro-bazzar/
 
 Create a `.env` file in the root of your project:
 
-VITE_API_BASE_URL=https://your-backend-api.com
+VITE_API_BASE_URL=https://your-backend-api.com(eg)
 ⚠️ Never commit .env files to GitHub.
 
 🛠️ Installation & Setup
 Clone the repository
-git clone https://github.com/your-username/hamro-bazzar.git
+git clone 
 Install dependencies
 
 npm install
