@@ -58,15 +58,17 @@ hamro-bazzar/
 ```
 ## ⚙️ Environment Variables
 
-Create a `.env.production` and `.env.development` file in the root of your project:
+---
 
-⚠️ Never commit .env.production and .env.development files to GitHub.
+Create a `.env.production` and `.env.development` file in the root of your project.
+
+⚠️ Never commit `.env.production` and `.env.development` files to GitHub.
 
 🛠️ Installation & Setup
 Clone the repository
 `git clone`
 
-Install dependencies
+Install dependencies 
 `npm install`
 
 Run locally
@@ -77,18 +79,18 @@ http://localhost:5173
 
 
 📈 SEO & Performance
-`Canonical URL configured
-Structured data using Schema.org (Store)
-Open Graph and Twitter preview support
-Optimized favicon and metadata`
+- Canonical URL configured
+- Structured data using Schema.org (Store)
+- Open Graph and Twitter preview support
+- Optimized favicon and metadata
 
 
 🧠 Future Improvements
-`User authentication (login/signup)
-Order history & tracking
-Payment gateway integration
-Admin dashboard
-Product reviews & ratings`
+- User authentication (login/signup)
+- Order history & tracking
+- Payment gateway integration
+- Admin dashboard
+- Product reviews & ratings
 
 
 👨‍💻 Author
@@ -97,5 +99,6 @@ MERN Stack Developer`
 
 
 📄 License
-`This project is not under any license`
+This project is not under any license
 
+---
