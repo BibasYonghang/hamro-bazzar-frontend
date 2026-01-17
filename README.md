@@ -93,9 +93,10 @@ http://localhost:5173
 - Product reviews & ratings
 
 
-👨‍💻 Author
-`Bibas Yonghang
-MERN Stack Developer`
+### 👨‍💻 Author
+MERN Stack Developer
+
+Bibas Yonghang
 
 
 📄 License
