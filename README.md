@@ -42,7 +42,7 @@
 ---
 
 ## 📁 Project Structure
-
+```bash
 hamro-bazzar/
 ├── public/
 │ └── images/
@@ -55,50 +55,47 @@ hamro-bazzar/
 ├── index.html
 ├── package.json
 └── README.md
-
+```
 ## ⚙️ Environment Variables
 
-Create a `.env` file in the root of your project:
+Create a `.env.production` and `.env.development` file in the root of your project:
 
-VITE_API_BASE_URL=https://your-backend-api.com(eg)
-⚠️ Never commit .env files to GitHub.
+⚠️ Never commit .env.production and .env.development files to GitHub.
 
 🛠️ Installation & Setup
 Clone the repository
-git clone 
+`git clone`
+
 Install dependencies
+`npm install`
 
-npm install
 Run locally
+`npm run dev`
 
-npm run dev
 Open in browser:
-
 http://localhost:5173
+
+
 📈 SEO & Performance
-Canonical URL configured
-
+`Canonical URL configured
 Structured data using Schema.org (Store)
-
 Open Graph and Twitter preview support
+Optimized favicon and metadata`
 
-Optimized favicon and metadata
 
 🧠 Future Improvements
-User authentication (login/signup)
-
+`User authentication (login/signup)
 Order history & tracking
-
 Payment gateway integration
-
 Admin dashboard
+Product reviews & ratings`
 
-Product reviews & ratings
 
 👨‍💻 Author
-Bibas Yonghang
-Frontend / MERN Stack Developer
+`Bibas Yonghang
+MERN Stack Developer`
+
 
 📄 License
-This project is not under any license
+`This project is not under any license`
 
