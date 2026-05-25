@@ -30,7 +30,7 @@ export default function AllProducts() {
   const productsRef = useRef(null);
   const navigate = useNavigate();
   
-  const API_BASE = import.meta.env.VITE_BASE_URL;
+  const API_BASE = import.meta.env.VITE_BACKEND_URL;
 
   // Get max price for range slider - useMemo to optimize
   const maxPrice = useMemo(() => {

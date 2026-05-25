@@ -14,7 +14,7 @@ const PaymentSuccess = () => {
   const shippingInfo = JSON.parse(localStorage.getItem("shippingInfo")) || {};
   const { user, token } = isAuthenticated() || {};
 
-  const APP_URL = import.meta.env.VITE_BASE_URL;
+  const APP_URL = import.meta.env.VITE_BACKEND_URL;
 
   const order = {
     orderItems: cartItems,

@@ -190,7 +190,7 @@ export default function PaymentChoice3D() {
   const [locked, setLocked] = useState([false, false]);
   const [selectedMethod, setSelectedMethod] = useState(null); // NEW STATE
 
-  const API_BASE = import.meta.env.VITE_BASE_URL;
+  const API_BASE = import.meta.env.VITE_BACKEND_URL;
 
   const scene = useSceneTilt({ intensity: 12, ease: 0.09 });
   const tiltHooks = [

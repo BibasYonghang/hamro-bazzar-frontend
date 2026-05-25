@@ -10,7 +10,7 @@ export default function FeaturedProducts() {
   const [featuredProducts, setFeaturedProducts] = useState([]);
   const navigate = useNavigate();
 
-  const API_BASE = import.meta.env.VITE_BASE_URL;
+  const API_BASE = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 100);
