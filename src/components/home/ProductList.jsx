@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 export default function ProductList() {
   const [isVisible, setIsVisible] = useState(false);
 
-  const API_BASE = import.meta.env.VITE_BASE_URL;
+  const API_BASE = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     const timer = setTimeout(() => setIsVisible(true), 200);

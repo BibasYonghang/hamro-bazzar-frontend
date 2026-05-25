@@ -8,7 +8,7 @@ export default function Collections() {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef(null);
 
-  const API_BASE = import.meta.env.VITE_BASE_URL;
+  const API_BASE = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     const fetchProducts = async () => {

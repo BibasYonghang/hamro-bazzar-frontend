@@ -23,7 +23,7 @@ export default function GamingProducts() {
   const heroRef = useRef(null);
   const productsRef = useRef(null);
 
-  const API_BASE = import.meta.env.VITE_BASE_URL;
+  const API_BASE = import.meta.env.VITE_BACKEND_URL;
 
   const navigate = useNavigate();
 

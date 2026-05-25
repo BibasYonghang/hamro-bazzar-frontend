@@ -50,7 +50,7 @@ export default function ProductDetails() {
   const tilt = use3DTilt();
   const [mounted, setMounted] = useState(false);
 
-    const API_BASE = import.meta.env.VITE_BASE_URL;
+    const API_BASE = import.meta.env.VITE_BACKEND_URL;
 
 
   useEffect(() => {

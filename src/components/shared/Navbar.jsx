@@ -7,7 +7,7 @@ const Navbar = () => {
   const [searchError, setSearchError] = useState("");
   const navigate = useNavigate();
 
-  const API_BASE = import.meta.env.VITE_BASE_URL;
+  const API_BASE = import.meta.env.VITE_BACKEND_URL;
 
   const navLinks = [
     {
