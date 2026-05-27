@@ -22,6 +22,7 @@ import PaymentChoice from "./pages/payment/PaymentChoice.jsx";
 import PaymentFailure from "./pages/payment/PaymentFailure.jsx";
 import PaymentSuccess from "./pages/payment/PaymentSucess.jsx";
 import ThankYou from "./pages/payment/ThankYou.jsx";
+import AIChatWidget from "./components/ai/AIChatWidget.jsx";
 
 function App() {
   // 1. Create cart state
@@ -61,6 +62,7 @@ function App() {
         </Routes>
       </main>
       <Footer />
+      <AIChatWidget />
     </div>
   );
 }

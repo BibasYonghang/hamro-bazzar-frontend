@@ -68,7 +68,7 @@ const PaymentFailure = () => {
 
     return (
         <div className="flex items-center  justify-center bg-gradient-to-tr from-red-50 to-pink-50 px-4 overflow-hidden">
-            <style jsx>{`
+            <style>{`
                 @keyframes float {
                     0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
                     25% { transform: translateY(-10px) rotate(-2deg) scale(1.05); }

@@ -252,7 +252,7 @@ const PaymentSuccess = () => {
         <div className="absolute top-1/3 right-1/3 w-28 h-28 bg-teal-300 rounded-full opacity-25 animate-pulse filter blur-xl"></div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         @keyframes float4D {
           0%,
           100% {
