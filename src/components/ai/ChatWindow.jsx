@@ -54,11 +54,15 @@ const ChatWindow = () => {
     sendMessage(question);
   };
 
+  const showSuggestions =
+    messages.length === 0 ||
+    messages[messages.length - 1]?.role === "assistant";
+
   return (
     <div className="fixed bottom-6 right-3 sm:right-6 z-50 flex h-[85vh] w-[340px] sm:w-[400px] flex-col  rounded-3xl border border-slate-200 bg-white shadow-[0_20px_80px_rgba(0,0,0,0.15)]">
       {/* HEADER */}
 
-      <div className="flex items-center justify-between border-b rounded-xl border-slate-200 bg-white px-6 py-5">
+      <div className="flex items-center justify-between border-b rounded-xl not-first: border-slate-200 bg-white px-6 py-5">
         <div className="flex items-center gap-3">
           <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-indigo-600 text-white shadow-lg">
             <RobotIcon />
@@ -78,7 +82,7 @@ const ChatWindow = () => {
       <div className="flex-1 overflow-y-auto bg-[#f8fafc] px-4 py-6">
         {/* SUGGESTED QUESTIONS */}
 
-        {messages.length === 0 && (
+        {showSuggestions && (
           <div className="mb-6">
             <p className="mb-3 text-xs font-semibold uppercase tracking-wider text-slate-500">
               Suggested Questions
@@ -132,11 +136,11 @@ const ChatWindow = () => {
                   <div
                     className={`rounded-3xl px-4 py-3 text-sm leading-relaxed shadow-sm ${
                       isUser
-                        ? "bg-slate-900 text-white"
+                        ? "bg-blue-300 text-white"
                         : "border border-slate-200 bg-white text-slate-800"
                     }`}
                   >
-                    {message.content}
+                    {message.text}
                   </div>
                 </div>
               </div>
