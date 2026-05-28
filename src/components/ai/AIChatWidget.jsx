@@ -31,7 +31,6 @@ const AIChatWidget = () => {
             hover:scale-110 hover:cursor-pointer hover:shadow-[0_15px_50px_rgba(59,130,246,0.6)]
             active:scale-95
           `}
-          title="Open shopping assistant"
         >
           <MessageCircle size={24} />
         </button>
