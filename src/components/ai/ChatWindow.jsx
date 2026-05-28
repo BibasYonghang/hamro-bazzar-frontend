@@ -124,7 +124,7 @@ const ChatWindow = () => {
                   <div
                     className={`flex h-9 w-9 shrink-0 items-center justify-center rounded-full ${
                       isUser
-                        ? "bg-blue-700 text-white"
+                        ? "bg-blue-600 text-white"
                         : "bg-indigo-600 text-white"
                     }`}
                   >
@@ -136,7 +136,7 @@ const ChatWindow = () => {
                   <div
                     className={`rounded-3xl px-4 py-3 text-sm leading-relaxed shadow-sm ${
                       isUser
-                        ? "bg-blue-300 text-white"
+                        ? "bg-blue-600 text-white"
                         : "border border-slate-200 bg-white text-slate-800"
                     }`}
                   >
@@ -153,7 +153,7 @@ const ChatWindow = () => {
             <div className="flex justify-start">
               <div className="flex items-center gap-3">
                 <div className="flex h-9 w-9 items-center justify-center rounded-full bg-indigo-600 text-white">
-                  <Bot size={16} />
+                  <RobotIcon  />
                 </div>
 
                 <div className="rounded-3xl border border-slate-200 bg-white px-5 py-4 shadow-sm">
