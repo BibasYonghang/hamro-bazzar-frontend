@@ -10,6 +10,7 @@ import {
   ShoppingCart,
   Zap,
 } from "lucide-react";
+import ProductSkeleton from "../components/skeletons/ProductSkeletons";
 
 export default function ElectronicsProducts() {
   const [products, setProducts] = useState([]);
@@ -23,7 +24,6 @@ export default function ElectronicsProducts() {
 
   const navigate = useNavigate();
 
-  
   const API_BASE = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
@@ -78,18 +78,7 @@ export default function ElectronicsProducts() {
       return 0;
     });
 
-  if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-center">
-          <div className="mb-4 inline-block h-12 w-12 animate-spin rounded-full border-b-2 border-blue-600"></div>
-          <p className="text-lg text-gray-600">
-            Loading electronics products...
-          </p>
-        </div>
-      </div>
-    );
-  }
+  if (loading) return <ProductSkeleton />;
 
   return (
     <div className="min-h-screen bg-gray-50">

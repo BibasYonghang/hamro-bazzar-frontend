@@ -13,6 +13,7 @@ import {
   Sparkles,
   TrendingUp,
 } from "lucide-react";
+import ProductSkeleton from "../components/skeletons/ProductSkeletons";
 
 export default function AllProducts() {
   const [products, setProducts] = useState([]);
@@ -29,10 +30,9 @@ export default function AllProducts() {
   const heroRef = useRef(null);
   const productsRef = useRef(null);
   const navigate = useNavigate();
-  
+
   const API_BASE = import.meta.env.VITE_BACKEND_URL;
 
-  // Get max price for range slider - useMemo to optimize
   const maxPrice = useMemo(() => {
     if (products.length === 0) return 1000;
     const prices = products.map((p) => p.price || 0);
@@ -49,10 +49,7 @@ export default function AllProducts() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        // Try to fetch all products from /products
-        const res = await fetch(
-          `${API_BASE}/all-products`,
-        );
+        const res = await fetch(`${API_BASE}/all-products`);
         if (res.ok) {
           const data = await res.json();
           setProducts(data);
@@ -159,18 +156,7 @@ export default function AllProducts() {
     setCurrentPage(1);
   }, [search, selectedCategory, priceRange, sortBy]);
 
-  if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-blue-50 to-white">
-        <div className="text-center">
-          <div className="mb-4 inline-block h-16 w-16 animate-spin rounded-full border-4 border-blue-600 border-t-transparent"></div>
-          <p className="text-xl font-medium text-gray-600">
-            Loading all products...
-          </p>
-        </div>
-      </div>
-    );
-  }
+  if (loading) return <ProductSkeleton />;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 via-white to-gray-50">
@@ -227,7 +213,9 @@ export default function AllProducts() {
               {categories.length - 1} Categories
             </span>
             <span className="text-blue-200">•</span>
-            <span className="md:text-lg text-md font-medium">Premium Quality</span>
+            <span className="md:text-lg text-md font-medium">
+              Premium Quality
+            </span>
           </div>
         </div>
       </div>

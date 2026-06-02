@@ -1,6 +1,6 @@
-import React, { useMemo } from 'react';
-import { Link } from 'react-router-dom';
-import { Home, ArrowLeft, ShoppingBag, Sparkles } from 'lucide-react';
+import React, { useMemo } from "react";
+import { Link } from "react-router-dom";
+import { Home, ArrowLeft, ShoppingBag, Sparkles } from "lucide-react";
 
 const NotFound = () => {
   // Generate fixed positions for particles to avoid re-rendering issues
@@ -15,14 +15,14 @@ const NotFound = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center relative overflow-hidden">
+    <div className=" py-8 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 flex items-center justify-center relative overflow-hidden">
       {/* Animated Background Elements */}
       <div className="absolute inset-0 overflow-hidden">
         {/* Floating circles */}
         <div className="absolute top-20 left-20 w-72 h-72 bg-blue-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob"></div>
         <div className="absolute top-40 right-20 w-72 h-72 bg-purple-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-2000"></div>
         <div className="absolute -bottom-8 left-1/2 w-72 h-72 bg-pink-200 rounded-full mix-blend-multiply filter blur-xl opacity-30 animate-blob animation-delay-4000"></div>
-        
+
         {/* Floating particles */}
         {particles.map((particle) => (
           <div
@@ -40,9 +40,8 @@ const NotFound = () => {
 
       {/* Main Content */}
       <div className="relative z-10 text-center px-6 max-w-4xl mx-auto">
-        {/* Animated 404 */}
-        <div className="mb-8">
-          <h1 className="text-9xl md:text-[12rem] font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 via-purple-600 to-pink-600 animate-pulse">
+        <div className="mb-5">
+          <h1 className="text-8xl font-black text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-sky-600 animate-pulse">
             404
           </h1>
           <div className="flex items-center justify-center gap-2 mt-4">
@@ -53,12 +52,13 @@ const NotFound = () => {
         </div>
 
         {/* Error Message */}
-        <div className="mb-8 space-y-4">
+        <div className="mb-5 space-y-2">
           <h2 className="text-4xl md:text-5xl font-bold text-gray-800 animate-fade-in">
-            Oops! Page Not Found
+            <span className="text-sky-600"> Oops!</span> Page Not Found
           </h2>
           <p className="text-xl md:text-2xl text-gray-600 animate-fade-in animation-delay-300">
-            The page you're looking for seems to have wandered off into the digital void.
+            The page you're looking for seems to have wandered off into the
+            digital void.
           </p>
           <p className="text-lg text-gray-500 animate-fade-in animation-delay-500">
             Don't worry, let's get you back on track!
@@ -66,24 +66,24 @@ const NotFound = () => {
         </div>
 
         {/* Action Buttons */}
-        <div className="flex flex-col sm:flex-row gap-4 justify-center items-center mb-12 animate-fade-in animation-delay-700">
+        <div className="grid md:grid-cols-3 gap-4  justify-center items-center mb-12 animate-fade-in animation-delay-700">
           <Link
             to="/"
-            className="group flex items-center gap-2 px-8 py-4 bg-gradient-to-r from-blue-600 to-indigo-600 text-white rounded-xl font-semibold text-lg shadow-lg hover:shadow-2xl transform hover:scale-105 transition-all duration-300"
+            className="group flex items-center justify-center gap-2 px-8 py-4 border-2 border-gray-300 hover:border-sky-500 bg-sky-600 text-white rounded-xl font-semibold text-lg shadow-lg hover:shadow-2xl transform hover:-translate-y-1 transition-all duration-300"
           >
             <Home className="w-5 h-5 group-hover:animate-bounce" />
             Go to Home
           </Link>
           <Link
             to="/all-products"
-            className="group flex items-center gap-2 px-8 py-4 bg-white text-gray-800 rounded-xl font-semibold text-lg border-2 border-gray-300 shadow-lg hover:shadow-2xl hover:border-blue-500 transform hover:scale-105 transition-all duration-300"
+            className="group flex items-center justify-center gap-2 px-8 py-4 bg-white text-gray-800 rounded-xl font-semibold text-lg border-2 border-gray-300 shadow-lg hover:shadow-2xl hover:border-blue-500 transform hover:-translate-y-1 transition-all duration-300"
           >
             <ShoppingBag className="w-5 h-5 group-hover:animate-bounce" />
             Browse Products
           </Link>
           <button
             onClick={() => window.history.back()}
-            className="group flex items-center gap-2 px-8 py-4 bg-white text-gray-800 rounded-xl font-semibold text-lg border-2 border-gray-300 shadow-lg hover:shadow-2xl hover:border-purple-500 transform hover:scale-105 transition-all duration-300"
+            className="group flex items-center justify-center hover:cursor-pointer gap-2 px-8 py-4 bg-white text-gray-800 rounded-xl font-semibold text-lg border-2 border-gray-300 shadow-lg hover:shadow-2xl hover:border-sky-500 transform hover:-translate-y-1 transition-all duration-300"
           >
             <ArrowLeft className="w-5 h-5 group-hover:animate-bounce" />
             Go Back
@@ -104,7 +104,9 @@ const NotFound = () => {
             className="p-4 bg-white/80 backdrop-blur-sm rounded-xl hover:bg-white hover:shadow-lg transform hover:scale-105 transition-all duration-300 border border-gray-200"
           >
             <div className="text-2xl mb-2">✨</div>
-            <div className="text-sm font-medium text-gray-700">Personal Care</div>
+            <div className="text-sm font-medium text-gray-700">
+              Personal Care
+            </div>
           </Link>
           <Link
             to="/home-furniture"

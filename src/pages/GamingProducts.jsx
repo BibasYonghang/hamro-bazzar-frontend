@@ -12,6 +12,7 @@ import {
   Trophy,
   Zap,
 } from "lucide-react";
+import ProductSkeleton from "../components/skeletons/ProductSkeletons";
 
 export default function GamingProducts() {
   const [products, setProducts] = useState([]);
@@ -123,16 +124,8 @@ export default function GamingProducts() {
       return 0;
     });
 
-  if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-gradient-to-b from-purple-900 via-indigo-900 to-black">
-        <div className="text-center">
-          <div className="mb-4 inline-block h-12 w-12 animate-spin rounded-full border-b-2 border-purple-500"></div>
-          <p className="text-lg text-gray-300">Loading gaming products...</p>
-        </div>
-      </div>
-    );
-  }
+    if (loading) return <ProductSkeleton />;
+  
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 via-purple-900 to-black">

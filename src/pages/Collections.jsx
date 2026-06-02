@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { ShoppingBag, Star } from "lucide-react";
+import ProductSkeleton from "../components/skeletons/ProductSkeletons";
 
 export default function Collections() {
   const [products, setProducts] = useState([]);
@@ -51,16 +52,7 @@ export default function Collections() {
     };
   }, [products]);
 
-  if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-center">
-          <div className="mb-4 inline-block h-12 w-12 animate-spin rounded-full border-4 border-blue-600 border-t-transparent"></div>
-          <p className="text-lg text-gray-600">Loading collections...</p>
-        </div>
-      </div>
-    );
-  }
+  if (loading) return <ProductSkeleton />;
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">

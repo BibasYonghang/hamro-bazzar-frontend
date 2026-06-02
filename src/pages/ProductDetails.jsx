@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { ShoppingCart, ArrowLeft, Star, Search } from "lucide-react";
 import { Link, useLocation, useParams, useNavigate } from "react-router-dom";
+import ProductDetailsSkeleton from "../components/skeletons/ProductDetailsSkeleton";
 
 function use3DTilt(maxAngle = 22) {
   const ref = useRef(null);
@@ -50,8 +51,7 @@ export default function ProductDetails() {
   const tilt = use3DTilt();
   const [mounted, setMounted] = useState(false);
 
-    const API_BASE = import.meta.env.VITE_BACKEND_URL;
-
+  const API_BASE = import.meta.env.VITE_BACKEND_URL;
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -82,9 +82,7 @@ export default function ProductDetails() {
             let found = false;
 
             for (const category of categories) {
-              const categoryRes = await fetch(
-                `${API_BASE}/api/${category}`,
-              );
+              const categoryRes = await fetch(`${API_BASE}/api/${category}`);
               if (categoryRes.ok) {
                 const categoryProducts = await categoryRes.json();
                 const foundProduct = categoryProducts.find(
@@ -118,16 +116,7 @@ export default function ProductDetails() {
     setTimeout(() => setMounted(true), 60);
   }, []);
 
-  if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center bg-gradient-to-br from-indigo-800 via-blue-900 to-gray-950">
-        <div className="text-center text-white">
-          <div className="mb-4 inline-block h-12 w-12 animate-spin rounded-full border-4 border-blue-400 border-t-transparent"></div>
-          <p className="text-xl">Loading product details...</p>
-        </div>
-      </div>
-    );
-  }
+  if (loading) return <ProductDetailsSkeleton />;
 
   if (notFound || !product) {
     return (
