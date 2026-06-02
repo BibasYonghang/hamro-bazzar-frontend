@@ -11,7 +11,6 @@ export default function SpecialOffer({
   countdownDays = 4, // default 3 days
   primaryButton = { text: "Shop Now", link: "/offered-products" },
 }) {
-  // ---------- Countdown Logic ----------
   const [timeLeft, setTimeLeft] = useState({
     days: 1,
     hours: 16,
@@ -36,7 +35,6 @@ export default function SpecialOffer({
 
   useEffect(() => {
     if (showCountdown) {
-      // 1️⃣ Check localStorage for existing countdown end time
       let savedEndTime = localStorage.getItem("specialOfferEndTime");
 
       if (!savedEndTime) {
@@ -49,7 +47,6 @@ export default function SpecialOffer({
 
       savedEndTime = parseInt(savedEndTime, 10);
 
-      // 2️⃣ Start updating the countdown every second
       const timer = setInterval(() => {
         setTimeLeft(calculateTimeLeft(savedEndTime));
       }, 1000);
@@ -65,11 +62,8 @@ export default function SpecialOffer({
     return () => clearTimeout(timer);
   }, []);
 
-  // to reset the timing agiain
-  // localStorage.removeItem("specialOfferEndTime");
-
   return (
-    <section className="relative mx-auto h-[90vh] w-[97vw] overflow-hidden rounded-2xl shadow-2xl">
+    <section className="relative mx-auto h-[90vh] w-[97vw] overflow-hidden rounded-md shadow-2xl">
       {/* Background Image */}
       <div className="absolute inset-0">
         <img

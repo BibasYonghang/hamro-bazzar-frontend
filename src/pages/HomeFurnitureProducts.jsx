@@ -10,6 +10,7 @@ import {
   Home,
   Sofa,
 } from "lucide-react";
+import ProductSkeleton from "../components/skeletons/ProductSkeletons";
 
 export default function HomeFurnitureProducts() {
   const [products, setProducts] = useState([]);
@@ -76,19 +77,8 @@ export default function HomeFurnitureProducts() {
       if (sortBy === "name") return a.name.localeCompare(b.name);
       return 0;
     });
-
-  if (loading) {
-    return (
-      <div className="flex min-h-screen items-center justify-center">
-        <div className="text-center">
-          <div className="mb-4 inline-block h-12 w-12 animate-spin rounded-full border-b-2 border-amber-600"></div>
-          <p className="text-lg text-gray-600">
-            Loading home furniture products...
-          </p>
-        </div>
-      </div>
-    );
-  }
+    
+  if (loading) return <ProductSkeleton />;
 
   return (
     <div className="bg-gradient-to-b from-amber-50 via-orange-50 to-white">
